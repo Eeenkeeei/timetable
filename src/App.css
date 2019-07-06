@@ -31,3 +31,17 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 600px){
+  .topBarMax {
+    display: none !important;
+  }
+
+  .topBarMin {
+    display: flex !important;
+  }
+}
+
+a {
+  text-decoration: none;
+}
