@@ -6,7 +6,7 @@ import {BrowserRouter, Link} from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
 import DefPage from "./pages/DefPage";
 import {Button, Menu} from "@material-ui/core";
-import {Main} from "./components/Main";
+import Main from "./components/Main";
 
 const App: React.FC = () => {
     return (

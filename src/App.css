@@ -35,10 +35,13 @@
 @media (max-width: 600px){
   .topBarMax {
     display: none !important;
+    text-align: right !important;
   }
 
   .topBarMin {
     display: flex !important;
+    text-align: right !important;
+
   }
 }
 
