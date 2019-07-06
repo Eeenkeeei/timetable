@@ -71,7 +71,7 @@ export class DialogLoginForm extends React.Component {
                     Вход
                 </Typography>
 
-                <Dialog open={true} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Вход</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
@@ -80,7 +80,7 @@ export class DialogLoginForm extends React.Component {
                         <TextField
                             autoFocus
                             margin="dense"
-                            id="name"
+                            id="login"
                             label="Email"
                             type="email"
                             fullWidth
@@ -88,7 +88,7 @@ export class DialogLoginForm extends React.Component {
                         />
                         <TextField
                             margin="dense"
-                            id="name"
+                            id="pass"
                             label="Пароль"
                             type="password"
                             fullWidth
