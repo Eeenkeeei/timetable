@@ -1,15 +1,16 @@
 import {Switch, Route, Link, NavLink} from 'react-router-dom'
 import React from 'react'
-import {AppBar, Button, Menu, Toolbar} from "@material-ui/core";
+import {AppBar, Button, Menu, Toolbar, Typography} from "@material-ui/core";
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import {theme} from "../Theme";
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from "@material-ui/core/MenuItem";
 import {pagesForMenus} from "../pages/AppPagesList";
+import {DialogLoginForm} from "./Dialogs/DialogLoginForm";
 
 
 interface pageData {
-    path: string;
+    path: string | null;
     buttonText: string;
     isLogged: boolean
     component: any
@@ -18,7 +19,8 @@ interface pageData {
 export default class Main extends React.Component {
 
     public state = {
-        menuEl: null
+        menuEl: null,
+        mobileOpenDialogLoginForm: false
     };
 
 
@@ -34,16 +36,24 @@ export default class Main extends React.Component {
         })
     };
 
+    public dialogLoginFormHandler = () => {
+        this.handleClose()
+        // @ts-ignore
+        const dialogLoginForm = new DialogLoginForm()
+        dialogLoginForm.setState({open: true})
+    };
+
+
     public render() {
         return (
             <Switch>
                 <MuiThemeProvider theme={theme}>
-                    <div color={"primary"}>
+
+                    <div>
 
                         {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
                         <AppBar>
                             <Toolbar className="topBarMin">
-
                                 <Button color="secondary" aria-controls="customized-menu" aria-haspopup="true"
                                         onClick={this.handleClick}>
                                     <MenuIcon/>
@@ -52,17 +62,39 @@ export default class Main extends React.Component {
                                     id="customized-menu" anchorEl={this.state.menuEl} keepMounted
                                     open={Boolean(this.state.menuEl)} onClose={this.handleClose}
                                     style={{marginTop: '2rem'}}>
+                                    {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
+                                    <div>
+                                        <MenuItem>
+                                           <DialogLoginForm/>
+                                        </MenuItem>
+                                    </div>
                                     {pagesForMenus.pages.map((dataPage: pageData) => {
-                                        return (
-                                            <div key={dataPage.buttonText}>
-                                                <NavLink to={dataPage.path} style={{color:"black"}} activeStyle={{color:"black", fontWeight:"bold"}}>
-                                                    <MenuItem onClick={this.handleClose}>
-                                                        {dataPage.buttonText}
-                                                    </MenuItem>
-                                                </NavLink>
-                                            </div>
-                                        )
-                                    })}
+                                            if (dataPage.path !== null) {
+                                                return (
+                                                    <div key={dataPage.buttonText}>
+                                                        <NavLink to={dataPage.path} style={{color: "black"}}
+                                                                 activeStyle={{color: "black", fontWeight: "bold"}}>
+                                                            <MenuItem onClick={this.handleClose}>
+                                                                <Typography variant="button">{dataPage.buttonText}</Typography>
+                                                            </MenuItem>
+                                                        </NavLink>
+                                                    </div>
+                                                )
+                                            } else {
+                                                if (dataPage.buttonText === 'Вход') {
+                                                    return null
+                                                }
+                                                return (
+                                                    <div key={dataPage.buttonText}>
+                                                        <MenuItem onClick={this.handleClose}>
+                                                            <Typography variant="button">{dataPage.buttonText}</Typography>
+                                                        </MenuItem>
+                                                    </div>
+                                                )
+                                            }
+                                        }
+                                    )}
+
                                 </Menu>
                             </Toolbar>
                         </AppBar>
@@ -70,28 +102,50 @@ export default class Main extends React.Component {
                         {/* МЕНЮ В ПОЛНОЙ ВЕРСИИ */}
                         <AppBar>
                             <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
+                                {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
+                                    <DialogLoginForm/>
                                 {pagesForMenus.pages.map((dataPage: pageData) => {
-                                    return (
-                                        <div key={dataPage.buttonText}>
-                                            <Link to={dataPage.path}>
+                                    if (dataPage.path !== null) {
+                                        return (
+                                            <div key={dataPage.buttonText}>
+                                                <Link to={dataPage.path}>
+                                                    <Button color="secondary">
+                                                        {dataPage.buttonText}
+                                                    </Button>
+                                                </Link>
+                                            </div>
+                                        )
+                                    } else {
+                                        if (dataPage.buttonText === 'Вход') {
+                                            return null
+                                        }
+                                        return (
+                                            <div key={dataPage.buttonText}>
                                                 <Button color="secondary">
                                                     {dataPage.buttonText}
                                                 </Button>
-                                            </Link>
-                                        </div>
-                                    )
+                                            </div>
+                                        )
+                                    }
                                 })}
+
                             </Toolbar>
                         </AppBar>
 
                         {/*{ ТЕЛО ВСЕЙ СТРАНИЦЫ }*/}
                         <div style={{marginTop: '5rem'}}>
+
+
                             {pagesForMenus.pages.map((dataPage: pageData) => {
-                                return (
-                                    <div key={dataPage.buttonText}>
-                                        <Route exact path={dataPage.path} component={dataPage.component}/>
-                                    </div>
-                                )
+                                if (dataPage.path !== null) {
+                                    return (
+                                        <div key={dataPage.buttonText}>
+                                            <Route exact path={dataPage.path} component={dataPage.component}/>
+                                        </div>
+                                    )
+                                } else {
+                                    return null
+                                }
                             })}
                         </div>
                     </div>

@@ -1,6 +1,5 @@
 import * as React from "react";
 import Http from "../serverApi/http";
-import {serverApi} from "../AppConstants";
 
 interface StartPageProps {
     match: any

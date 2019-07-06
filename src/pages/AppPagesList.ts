@@ -4,8 +4,8 @@ import RegisterPage from "./RegisterPage";
 export const pagesForMenus =  {
     pages:
         [
-            {path: '/start', buttonText: 'Вход', isLogged: false, component: StartPage},
-            {path: '/registration', buttonText: 'Регистрация', isLogged: false, component: RegisterPage},
+            {path: null, buttonText: 'Вход', isLogged: false, component: null},
+            {path: null, buttonText: 'Регистрация', isLogged: false, component: null},
             {path: '/help', buttonText: 'Помощь', isLogged: false, component: null}
         ]
 };
