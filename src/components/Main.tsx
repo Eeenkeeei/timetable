@@ -1,12 +1,12 @@
 import {Switch, Route, Link, NavLink} from 'react-router-dom'
-import StartPage from "../pages/StartPage";
-import RegisterPage from "../pages/RegisterPage";
 import React from 'react'
-import {AppBar, Button, Menu, Paper, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Menu, Toolbar} from "@material-ui/core";
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import {theme} from "../Theme";
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from "@material-ui/core/MenuItem";
+import {pagesForMenus} from "../pages/AppPagesList";
+
 
 interface pageData {
     path: string;
@@ -15,25 +15,12 @@ interface pageData {
     component: any
 }
 
-interface pageDataArray {
-    pages: pageData[]
-}
-
 export default class Main extends React.Component {
 
     public state = {
         menuEl: null
     };
 
-    public pagesForMenus: pageDataArray =
-        {
-            pages:
-                [
-                    {path: '/start', buttonText: 'Вход', isLogged: false, component: StartPage},
-                    {path: '/registration', buttonText: 'Регистрация', isLogged: false, component: RegisterPage},
-                    {path: '/help', buttonText: 'Помощь', isLogged: false, component: null}
-                ]
-        };
 
     public handleClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
         this.setState({
@@ -65,7 +52,7 @@ export default class Main extends React.Component {
                                     id="customized-menu" anchorEl={this.state.menuEl} keepMounted
                                     open={Boolean(this.state.menuEl)} onClose={this.handleClose}
                                     style={{marginTop: '2rem'}}>
-                                    {this.pagesForMenus.pages.map((dataPage: pageData) => {
+                                    {pagesForMenus.pages.map((dataPage: pageData) => {
                                         return (
                                             <div key={dataPage.buttonText}>
                                                 <NavLink to={dataPage.path} style={{color:"black"}} activeStyle={{color:"black", fontWeight:"bold"}}>
@@ -83,7 +70,7 @@ export default class Main extends React.Component {
                         {/* МЕНЮ В ПОЛНОЙ ВЕРСИИ */}
                         <AppBar>
                             <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
-                                {this.pagesForMenus.pages.map((dataPage: pageData) => {
+                                {pagesForMenus.pages.map((dataPage: pageData) => {
                                     return (
                                         <div key={dataPage.buttonText}>
                                             <Link to={dataPage.path}>
@@ -99,7 +86,7 @@ export default class Main extends React.Component {
 
                         {/*{ ТЕЛО ВСЕЙ СТРАНИЦЫ }*/}
                         <div style={{marginTop: '5rem'}}>
-                            {this.pagesForMenus.pages.map((dataPage: pageData) => {
+                            {pagesForMenus.pages.map((dataPage: pageData) => {
                                 return (
                                     <div key={dataPage.buttonText}>
                                         <Route exact path={dataPage.path} component={dataPage.component}/>
