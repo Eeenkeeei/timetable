@@ -10,8 +10,8 @@ export default class Http {
 
     public url = serverApi;
 
-    public login (data: loginData) {
-        return fetch(`${this.url}/login`, {
+    public login (data: loginData, path: string) {
+        return fetch(this.url + '/' + path, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
