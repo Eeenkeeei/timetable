@@ -70,7 +70,8 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                         })
                     }
 
-                    if (result === 'Registration complete') {
+                    if (result.token !== undefined) {
+                        console.log(result)
                         this.setState({
                             registrationState: 'Вы успешно зарегистрированы'
                         })
