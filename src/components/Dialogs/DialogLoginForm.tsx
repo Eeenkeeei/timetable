@@ -14,6 +14,7 @@ import {LocalStorage} from "../../serverApi/localStorage";
 
 interface DialogLoginFormProps {
     mobile: boolean
+    isLoginSuccess: any;
 }
 
 interface DialogLoginFormState {
@@ -79,6 +80,7 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
                                         this.setState({
                                             openDialogWindow: false
                                         })
+                                        this.props.isLoginSuccess()
 
                                     }, (error) => {
                                         console.log(error)

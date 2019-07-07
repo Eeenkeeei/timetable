@@ -14,6 +14,7 @@ import {LocalStorage} from "../../serverApi/localStorage";
 
 interface DialogRegisterFormProps {
     mobile: boolean
+    isLoginSuccess: any;
 }
 
 interface DialogRegisterFormState {
@@ -69,6 +70,7 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                         isLoading: false
                     });
                     if (result === 'Passwords Not Confrimed'){
+                        console.log(result)
                         this.setState({
                             registrationState: 'Введенные пароли не совпадают'
                         })
@@ -89,7 +91,8 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                                         // КОНЕЧНЫЕ ДАННЫЕ
                                         this.setState({
                                             openDialogWindow: false
-                                        })
+                                        });
+                                        this.props.isLoginSuccess()
 
                                     }, (error) => {
                                         console.log(error)
