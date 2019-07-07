@@ -57,10 +57,17 @@ export default class Main extends React.Component {
                 .then(
                     (result) => {
                         console.log(result)
-                        this.setState({
-                            isDataConfirmed: true
-                        })
-
+                        if (result.email !== undefined){
+                            this.setState({
+                                isDataConfirmed: true
+                            })
+                        } else {
+                            this.setState({
+                                isDataConfirmed: false
+                            }, ()=>{
+                                storage.logOut()
+                            })
+                        }
                     }, (error) => {
                         console.log(error)
                     }
