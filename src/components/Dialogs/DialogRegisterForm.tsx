@@ -10,24 +10,28 @@ import {
 } from "@material-ui/core";
 import Http from "../../serverApi/http";
 
-interface DialogLoginFormProps {
+interface DialogRegisterFormProps {
     mobile: boolean
 }
 
-interface DialogLoginFormState {
+interface DialogRegisterFormState {
     openDialogWindow: boolean,
     email: string,
     password: string,
-    isLoading: boolean
+    confirmPassword: string,
+    isLoading: boolean,
+    registrationState: string
 }
 
-export class DialogLoginForm extends React.Component<DialogLoginFormProps, DialogLoginFormState> {
+export class DialogRegisterForm extends React.Component<DialogRegisterFormProps, DialogRegisterFormState> {
 
     state = {
         openDialogWindow: false,
         email: '',
         password: '',
-        isLoading: false
+        confirmPassword: '',
+        isLoading: false,
+        registrationState: ''
     };
 
     public handleOpenLoginDialog = () => {
@@ -51,22 +55,43 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
         const data = {
             email: this.state.email,
             password: this.state.password,
-
+            confirmPassword: this.state.confirmPassword
         };
-        http.postConfig(data, '/auth')
+        http.postConfig(data, '/registration')
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
                         isLoading: false
-                    })
+                    });
+                    if (result === 'Passwords Not Confrimed'){
+                        this.setState({
+                            registrationState: 'Введенные пароли не совпадают'
+                        })
+                    }
+
+                    if (result === 'Registration complete') {
+                        this.setState({
+                            registrationState: 'Вы успешно зарегистрированы'
+                        })
+                    }
+
+                    if (result === 'This email already registered'){
+                        this.setState({
+                            registrationState: 'Этот Email уже занят'
+                        })
+                    }
+
+                    if (result === '8 symbols') {
+                        this.setState({
+                            registrationState: 'Длина пароля должна быть не менее 8 символов'
+                        })
+                    }
                 },
                 (error) => {
                     console.log(error)
                 }
             );
-
-
     };
 
     public handleEmailChange = (event: any) => {
@@ -81,21 +106,27 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
         })
     };
 
+    public handleConfirmPasswordChange = (event: any) => {
+        this.setState({
+            confirmPassword: event.target.value
+        })
+    };
+
     public render() {
         return (
             <div>
 
                 {this.props.mobile === true ?
                     <div onClick={this.handleOpenLoginDialog} style={{height: '2rem', width: '7rem'}}>
-                        <Typography variant="button">Вход</Typography>
+                        <Typography variant="button">Регистрация</Typography>
                     </div>
                     :
                     <Button color="secondary" onClick={this.handleOpenLoginDialog}>
-                        Вход
+                        Регистрация
                     </Button>}
 
                 <Dialog open={this.state.openDialogWindow} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Вход</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Регистрация</DialogTitle>
                     <div style={{marginLeft: 'auto', marginRight: 'auto'}}>
                         <Fade
                             in={this.state.isLoading}
@@ -109,8 +140,11 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
                     </div>
                     <DialogContent>
                         <DialogContentText>
-                            Введите логин (email) и пароль
+                            Для регистрации необходимо ввести свой email и пароль. Введенные пароли должны совпадать
                         </DialogContentText>
+
+                        <Typography variant="button">{this.state.registrationState}</Typography>
+
                         <TextField
                             autoFocus
                             margin="dense"
@@ -128,10 +162,17 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
                             fullWidth
                             onChange={this.handlePasswordChange}
                         />
+                        <TextField
+                            margin="dense"
+                            id="confirmPass"
+                            label={<Typography>Повторите пароль <span style={{color: 'red'}}>*</span></Typography>}
+                            type="password"
+                            fullWidth
+                            onChange={this.handleConfirmPasswordChange}
+                        />
                     </DialogContent>
 
                     <DialogActions>
-
                         <Button onClick={this.login} color="primary">
                             Войти
                         </Button>

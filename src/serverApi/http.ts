@@ -10,7 +10,7 @@ export default class Http {
 
     public url = serverApi;
 
-    public login (data: loginData, path: string) {
+    public postConfig (data: loginData, path: string) {
         return fetch(this.url + path, {
             method: 'POST',
             headers: {

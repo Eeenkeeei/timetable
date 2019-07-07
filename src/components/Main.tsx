@@ -7,6 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from "@material-ui/core/MenuItem";
 import {pagesForMenus} from "../pages/AppPagesList";
 import {DialogLoginForm} from "./Dialogs/DialogLoginForm";
+import {DialogRegisterForm} from "./Dialogs/DialogRegisterForm";
 
 
 interface pageData {
@@ -36,21 +37,11 @@ export default class Main extends React.Component {
         })
     };
 
-    public dialogLoginFormHandler = () => {
-        this.handleClose()
-        // @ts-ignore
-        const dialogLoginForm = new DialogLoginForm()
-        dialogLoginForm.setState({open: true})
-    };
-
-
     public render() {
         return (
             <Switch>
                 <MuiThemeProvider theme={theme}>
-
                     <div>
-
                         {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
                         <AppBar>
                             <Toolbar className="topBarMin">
@@ -68,6 +59,11 @@ export default class Main extends React.Component {
                                            <DialogLoginForm mobile={true}/>
                                         </MenuItem>
                                     </div>
+                                    <div>
+                                        <MenuItem>
+                                            <DialogRegisterForm mobile={true}/>
+                                        </MenuItem>
+                                    </div>
                                     {pagesForMenus.pages.map((dataPage: pageData) => {
                                             if (dataPage.path !== null) {
                                                 return (
@@ -81,9 +77,6 @@ export default class Main extends React.Component {
                                                     </div>
                                                 )
                                             } else {
-                                                if (dataPage.buttonText === 'Вход') {
-                                                    return null
-                                                }
                                                 return (
                                                     <div key={dataPage.buttonText}>
                                                         <MenuItem onClick={this.handleClose}>
@@ -104,6 +97,7 @@ export default class Main extends React.Component {
                             <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
                                 {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
                                     <DialogLoginForm mobile={false}/>
+                                    <DialogRegisterForm mobile={false}/>
                                 {pagesForMenus.pages.map((dataPage: pageData) => {
                                     if (dataPage.path !== null) {
                                         return (
@@ -116,9 +110,6 @@ export default class Main extends React.Component {
                                             </div>
                                         )
                                     } else {
-                                        if (dataPage.buttonText === 'Вход') {
-                                            return null
-                                        }
                                         return (
                                             <div key={dataPage.buttonText}>
                                                 <Button color="secondary">
