@@ -9,6 +9,8 @@ import {
     TextField, Typography
 } from "@material-ui/core";
 import Http from "../../serverApi/http";
+import {DataStorage} from "../../serverApi/dataStorage";
+import {LocalStorage} from "../../serverApi/localStorage";
 
 interface DialogRegisterFormProps {
     mobile: boolean
@@ -40,7 +42,9 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
         })
     };
 
+
     public handleClose = () => {
+
         this.setState({
             openDialogWindow: false,
 
@@ -57,7 +61,7 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
             password: this.state.password,
             confirmPassword: this.state.confirmPassword
         };
-        http.postConfig(data, '/registration')
+        http.loginForToken(data, '/registration')
             .then(res => res.json())
             .then(
                 (result) => {
@@ -71,9 +75,26 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                     }
 
                     if (result.token !== undefined) {
-                        console.log(result)
+                        console.log(result);
+                        const storage = new DataStorage(new LocalStorage());
+                        storage.add(result.token);
                         this.setState({
-                            registrationState: 'Вы успешно зарегистрированы'
+                            registrationState: 'Вы успешно зарегистрированы. Сейчас Вы будете перенаправлены'
+                        }, ()=>{
+                            http.loginWithToken(result.token, '/user')
+                                .then(res => res.json())
+                                .then (
+                                    (result)=>{
+                                        console.log(result)
+                                        // КОНЕЧНЫЕ ДАННЫЕ
+                                        this.setState({
+                                            openDialogWindow: false
+                                        })
+
+                                    }, (error) => {
+                                        console.log(error)
+                                    }
+                                )
                         })
                     }
 

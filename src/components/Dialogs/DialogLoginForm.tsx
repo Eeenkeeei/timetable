@@ -9,6 +9,8 @@ import {
     TextField, Typography
 } from "@material-ui/core";
 import Http from "../../serverApi/http";
+import {DataStorage} from "../../serverApi/dataStorage";
+import {LocalStorage} from "../../serverApi/localStorage";
 
 interface DialogLoginFormProps {
     mobile: boolean
@@ -19,6 +21,7 @@ interface DialogLoginFormState {
     email: string,
     password: string,
     isLoading: boolean
+    loginState: string
 }
 
 export class DialogLoginForm extends React.Component<DialogLoginFormProps, DialogLoginFormState> {
@@ -27,7 +30,8 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
         openDialogWindow: false,
         email: '',
         password: '',
-        isLoading: false
+        isLoading: false,
+        loginState: ''
     };
 
     public handleOpenLoginDialog = () => {
@@ -53,10 +57,35 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
             password: this.state.password,
 
         };
-        http.postConfig(data, '/auth')
+        http.loginForToken(data, '/auth')
             .then(res => res.json())
             .then(
                 (result) => {
+                    if (result.token === undefined){
+                        this.setState({
+                            loginState: 'Email или пароль введены неверно'
+                        })
+                    } else {
+                        this.setState({
+                            loginState: 'Вы успешно авторизованы. Сейчас Вы будете перенаправлены'
+                        }, ()=>{
+                            const storage = new DataStorage(new LocalStorage());
+                            storage.add(result.token);
+                            http.loginWithToken(result.token, '/user')
+                                .then(res => res.json())
+                                .then (
+                                    (result)=>{
+                                        // КОНЕЧНЫЕ ДАННЫЕ
+                                        this.setState({
+                                            openDialogWindow: false
+                                        })
+
+                                    }, (error) => {
+                                        console.log(error)
+                                    }
+                                )
+                        })
+                    }
                     this.setState({
                         isLoading: false
                     })
@@ -109,8 +138,11 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
                     </div>
                     <DialogContent>
                         <DialogContentText>
-                            Введите логин (email) и пароль
+                            Введите Email и пароль
                         </DialogContentText>
+
+                        <Typography variant="button">{this.state.loginState}</Typography>
+
                         <TextField
                             autoFocus
                             margin="dense"
