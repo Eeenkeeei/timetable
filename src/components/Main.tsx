@@ -65,7 +65,7 @@ export default class Main extends React.Component {
                                     {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
                                     <div>
                                         <MenuItem>
-                                           <DialogLoginForm/>
+                                           <DialogLoginForm mobile={true}/>
                                         </MenuItem>
                                     </div>
                                     {pagesForMenus.pages.map((dataPage: pageData) => {
@@ -103,7 +103,7 @@ export default class Main extends React.Component {
                         <AppBar>
                             <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
                                 {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
-                                    <DialogLoginForm/>
+                                    <DialogLoginForm mobile={false}/>
                                 {pagesForMenus.pages.map((dataPage: pageData) => {
                                     if (dataPage.path !== null) {
                                         return (

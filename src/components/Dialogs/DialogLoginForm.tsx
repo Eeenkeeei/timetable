@@ -10,7 +10,11 @@ import {
 } from "@material-ui/core";
 import Http from "../../serverApi/http";
 
-export class DialogLoginForm extends React.Component {
+interface DialogLoginFormProps {
+    mobile: boolean
+}
+
+export class DialogLoginForm extends React.Component<DialogLoginFormProps> {
 
     state = {
         open: false,
@@ -67,9 +71,16 @@ export class DialogLoginForm extends React.Component {
         return (
             <div>
 
-                <Typography variant="button" onClick={this.handleOpenLoginDialog}>
-                    Вход
-                </Typography>
+                {this.props.mobile === true ?
+                    <div onClick={this.handleOpenLoginDialog} style={{height: '2rem', width: '7rem'}}>
+                        <Typography variant="button">Вход</Typography>
+                    </div>
+                    :
+                    <Button color="secondary" onClick={this.handleOpenLoginDialog}>
+                        Вход
+                    </Button>}
+
+
 
                 <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Вход</DialogTitle>
