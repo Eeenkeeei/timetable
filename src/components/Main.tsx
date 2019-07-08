@@ -1,6 +1,6 @@
 import {Switch, Route, Link, NavLink} from 'react-router-dom'
 import React from 'react'
-import {AppBar, Button, CircularProgress, Fade, Menu, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, CircularProgress, Menu, Toolbar, Typography} from "@material-ui/core";
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import {theme} from "../Theme";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -11,6 +11,7 @@ import {DialogRegisterForm} from "./Dialogs/DialogRegisterForm";
 import {DataStorage} from "../serverApi/dataStorage";
 import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
+import {Input} from "@material-ui/icons";
 
 
 interface pageData {
@@ -20,13 +21,22 @@ interface pageData {
     component: any
 }
 
+interface MainState {
+    menuEl: any,
+    mobileOpenDialogLoginForm: any,
+    isDataConfirmed: any,
+    data: any
+}
+
 export default class Main extends React.Component {
 
+    public storage = new DataStorage(new LocalStorage());
 
-    public state = {
+    public state: MainState = {
         menuEl: null,
         mobileOpenDialogLoginForm: false,
-        isDataConfirmed: null // флаг становится true только в том случае, если пришли данные по токену. Флаг прокидывается в детей и внутри проходят запросы
+        isDataConfirmed: null, // флаг становится true только в том случае, если пришли данные по токену. Флаг прокидывается в детей и внутри проходят запросы
+        data: null
     };
 
 
@@ -42,29 +52,45 @@ export default class Main extends React.Component {
         })
     };
 
-    public isLoginSuccess = () => {
+    public isLoginSuccess = (data:any) => {
         this.setState({
-            isDataConfirmed: true
+            data: data
+        }, ()=>{
+            this.setState({
+                isDataConfirmed: true
+            })
+        })
+    }
+
+    public handleExitButton = () => {
+        this.storage.logOut();
+        this.setState({
+            isDataConfirmed: false,
+            data: null
         })
     }
 
     componentDidMount(): void {
         const storage = new DataStorage(new LocalStorage());
-        const http = new Http()
+        const http = new Http();
         if (storage.getUserData !== null) {
             http.loginWithToken(storage.getUserData, '/user')
                 .then(res => res.json())
                 .then(
                     (result) => {
                         console.log(result)
-                        if (result.email !== undefined){
+                        if (result.email !== undefined) {
                             this.setState({
-                                isDataConfirmed: true
+                                data: result
+                            }, () => {
+                                this.setState({
+                                    isDataConfirmed: true
+                                })
                             })
                         } else {
                             this.setState({
                                 isDataConfirmed: false
-                            }, ()=>{
+                            }, () => {
                                 storage.logOut()
                             })
                         }
@@ -87,16 +113,7 @@ export default class Main extends React.Component {
 
                     <AppBar>
                         <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
-                            <Fade
-                                in={true}
-                                style={{
-                                    transitionDelay: this.state.isDataConfirmed ? '800ms' : '0ms',
-                                }}
-                                unmountOnExit
-                            >
-                                <CircularProgress color="inherit"/>
-                            </Fade>
-
+                            <CircularProgress color="inherit"/>
                         </Toolbar>
                     </AppBar>
                 </MuiThemeProvider>
@@ -230,9 +247,15 @@ export default class Main extends React.Component {
                                         open={Boolean(this.state.menuEl)} onClose={this.handleClose}
                                         style={{marginTop: '2rem'}}>
                                         {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
-                                        CONFIRM
-
+                                        <div>
+                                            <MenuItem onClick={this.handleExitButton}>
+                                                <Input/>&nbsp;&nbsp;Выйти
+                                            </MenuItem>
+                                        </div>
                                     </Menu>
+                                    {this.state.data === null ? null :
+                                        <Typography variant="button">{this.state.data.email}</Typography>}
+
                                 </Toolbar>
                             </AppBar>
 
@@ -240,8 +263,12 @@ export default class Main extends React.Component {
                             <AppBar>
                                 <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
                                     {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
-
-                                    CONFIRM
+                                    <Button onClick={this.handleExitButton} color="secondary">
+                                        <Input/>&nbsp;&nbsp;ВЫХОД
+                                    </Button>
+                                    &nbsp;
+                                    {this.state.data === null ? null :
+                                        <Typography variant="button">{this.state.data.email}</Typography>}
 
                                 </Toolbar>
                             </AppBar>

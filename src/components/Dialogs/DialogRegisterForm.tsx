@@ -69,30 +69,28 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                     this.setState({
                         isLoading: false
                     });
-                    if (result === 'Passwords Not Confrimed'){
-                        console.log(result)
+                    if (result === 'Passwords Not Confirmed') {
+                        console.log(result);
                         this.setState({
                             registrationState: 'Введенные пароли не совпадают'
                         })
                     }
 
                     if (result.token !== undefined) {
-                        console.log(result);
-                        const storage = new DataStorage(new LocalStorage());
-                        storage.add(result.token);
                         this.setState({
                             registrationState: 'Вы успешно зарегистрированы. Сейчас Вы будете перенаправлены'
-                        }, ()=>{
+                        }, () => {
+                            const storage = new DataStorage(new LocalStorage());
+                            storage.add(result.token);
                             http.loginWithToken(result.token, '/user')
                                 .then(res => res.json())
-                                .then (
-                                    (result)=>{
-                                        console.log(result)
+                                .then(
+                                    (result) => {
                                         // КОНЕЧНЫЕ ДАННЫЕ
                                         this.setState({
                                             openDialogWindow: false
                                         });
-                                        this.props.isLoginSuccess()
+                                        this.props.isLoginSuccess(result)
 
                                     }, (error) => {
                                         console.log(error)
@@ -101,7 +99,7 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                         })
                     }
 
-                    if (result === 'This email already registered'){
+                    if (result === 'This email already registered') {
                         this.setState({
                             registrationState: 'Этот Email уже занят'
                         })
@@ -150,18 +148,11 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                         Регистрация
                     </Button>}
 
-                <Dialog open={this.state.openDialogWindow} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                <Dialog open={this.state.openDialogWindow} onClose={this.handleClose}
+                        aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Регистрация</DialogTitle>
                     <div style={{marginLeft: 'auto', marginRight: 'auto'}}>
-                        <Fade
-                            in={this.state.isLoading}
-                            style={{
-                                transitionDelay: this.state.isLoading ? '800ms' : '0ms',
-                            }}
-                            unmountOnExit
-                        >
-                            <CircularProgress/>
-                        </Fade>
+                        {this.state.isLoading ? <CircularProgress/> : null}
                     </div>
                     <DialogContent>
                         <DialogContentText>

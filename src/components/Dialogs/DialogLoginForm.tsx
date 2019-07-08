@@ -56,7 +56,6 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
         const data = {
             email: this.state.email,
             password: this.state.password,
-
         };
         http.loginForToken(data, '/auth')
             .then(res => res.json())
@@ -79,8 +78,8 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
                                         // КОНЕЧНЫЕ ДАННЫЕ
                                         this.setState({
                                             openDialogWindow: false
-                                        })
-                                        this.props.isLoginSuccess()
+                                        });
+                                        this.props.isLoginSuccess(result)
 
                                     }, (error) => {
                                         console.log(error)
@@ -128,15 +127,7 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
                 <Dialog open={this.state.openDialogWindow} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Вход</DialogTitle>
                     <div style={{marginLeft: 'auto', marginRight: 'auto'}}>
-                        <Fade
-                            in={this.state.isLoading}
-                            style={{
-                                transitionDelay: this.state.isLoading ? '800ms' : '0ms',
-                            }}
-                            unmountOnExit
-                        >
-                            <CircularProgress/>
-                        </Fade>
+                        {this.state.isLoading ? <CircularProgress/> : null}
                     </div>
                     <DialogContent>
                         <DialogContentText>
