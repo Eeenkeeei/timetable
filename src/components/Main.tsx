@@ -1,4 +1,4 @@
-import {Switch, Route, Link, NavLink} from 'react-router-dom'
+import {Switch, Route, Link, NavLink, Redirect} from 'react-router-dom'
 import React from 'react'
 import {AppBar, Button, CircularProgress, Menu, Toolbar, Typography} from "@material-ui/core";
 import {MuiThemeProvider} from '@material-ui/core/styles';
@@ -11,11 +11,14 @@ import {DialogRegisterForm} from "./Dialogs/DialogRegisterForm";
 import {DataStorage} from "../serverApi/dataStorage";
 import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
-import {Input} from "@material-ui/icons";
+import {Input, Star} from "@material-ui/icons";
+import CustomizedSnackbars from "./Dialogs/SnackBar";
+import StartPage from "../pages/StartPage";
+import HelpPage from "../pages/HelpPage";
 
 
 interface pageData {
-    path: string | null;
+    path: string;
     buttonText: string;
     isLogged: boolean
     component: any
@@ -39,36 +42,39 @@ export default class Main extends React.Component {
         data: null
     };
 
-
+    // вспомогательное для меню
     public handleClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
         this.setState({
             menuEl: evt.currentTarget
         })
     };
 
+    // открытие - закрытие меню на мобильной версии
     public handleClose = () => {
         this.setState({
             menuEl: null
         })
     };
 
-    public isLoginSuccess = (data:any) => {
+    // поднимается через пропсы с форм регистрации и логина
+    public isLoginSuccess = (data: any) => {
         this.setState({
             data: data
-        }, ()=>{
+        }, () => {
             this.setState({
                 isDataConfirmed: true
             })
         })
-    }
+    };
 
+    // обработчик кнопки выхода
     public handleExitButton = () => {
         this.storage.logOut();
         this.setState({
             isDataConfirmed: false,
             data: null
         })
-    }
+    };
 
     componentDidMount(): void {
         const storage = new DataStorage(new LocalStorage());
@@ -106,193 +112,203 @@ export default class Main extends React.Component {
     }
 
     public render() {
-        // ВОЗВРАЩАЕТСЯ ЕСЛИ ОЖИДАНИЕ ЗАПРОСА
-        if (this.state.isDataConfirmed === null) {
-            return (
+
+        const isLoadingComponent = (
+            <MuiThemeProvider theme={theme}>
+
+                <AppBar>
+                    <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
+                        <CircularProgress color="inherit"/>
+                    </Toolbar>
+                </AppBar>
+            </MuiThemeProvider>
+        );
+
+        const isDataConfirmed = (
+            <Switch>
                 <MuiThemeProvider theme={theme}>
-
-                    <AppBar>
-                        <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
-                            <CircularProgress color="inherit"/>
-                        </Toolbar>
-                    </AppBar>
-                </MuiThemeProvider>
-            )
-        }
-
-        // ВОЗВРАЩАЕТСЯ ЕСЛИ ДАННЫЕ НЕ ПРИШЛИ
-        if (!this.state.isDataConfirmed) {
-            return (
-                <Switch>
-                    <MuiThemeProvider theme={theme}>
-                        <div>
-
-                            {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
-                            <AppBar>
-                                <Toolbar className="topBarMin">
-                                    <Button color="secondary" aria-controls="customized-menu" aria-haspopup="true"
-                                            onClick={this.handleClick}>
-                                        <MenuIcon/>
-                                    </Button>
-                                    <Menu
-                                        id="customized-menu" anchorEl={this.state.menuEl} keepMounted
-                                        open={Boolean(this.state.menuEl)} onClose={this.handleClose}
-                                        style={{marginTop: '2rem'}}>
-                                        {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
-                                        <div>
-                                            <MenuItem>
-                                                <DialogLoginForm mobile={true} isLoginSuccess={this.isLoginSuccess}/>
-                                            </MenuItem>
-                                        </div>
-                                        <div>
-                                            <MenuItem>
-                                                <DialogRegisterForm mobile={true} isLoginSuccess={this.isLoginSuccess}/>
-                                            </MenuItem>
-                                        </div>
+                        {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
+                        <AppBar>
+                            <Toolbar className="topBarMin">
+                                <Button color="secondary" aria-controls="customized-menu" aria-haspopup="true"
+                                        onClick={this.handleClick}>
+                                    <MenuIcon/>
+                                </Button>
+                                <Menu
+                                    id="customized-menu" anchorEl={this.state.menuEl} keepMounted
+                                    open={Boolean(this.state.menuEl)} onClose={this.handleClose}
+                                    style={{marginTop: '2rem'}}>
+                                    {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
+                                    <div>
                                         {pagesForMenus.pages.map((dataPage: pageData) => {
-                                                if (dataPage.path !== null) {
-                                                    return (
-                                                        <div key={dataPage.buttonText}>
-                                                            <NavLink to={dataPage.path} style={{color: "black"}}
-                                                                     activeStyle={{color: "black", fontWeight: "bold"}}>
-                                                                <MenuItem onClick={this.handleClose}>
-                                                                    <Typography
-                                                                        variant="button">{dataPage.buttonText}</Typography>
-                                                                </MenuItem>
-                                                            </NavLink>
-                                                        </div>
-                                                    )
-                                                } else {
-                                                    return (
-                                                        <div key={dataPage.buttonText}>
+                                                return (
+                                                    <div key={dataPage.buttonText + 'logged'}>
+                                                        <NavLink to={dataPage.path} style={{color: "black"}}
+                                                                 activeStyle={{color: "black", fontWeight: "bold"}}>
                                                             <MenuItem onClick={this.handleClose}>
                                                                 <Typography
                                                                     variant="button">{dataPage.buttonText}</Typography>
                                                             </MenuItem>
-                                                        </div>
-                                                    )
-                                                }
+                                                        </NavLink>
+                                                    </div>
+                                                )
+
                                             }
                                         )}
+                                        <MenuItem onClick={this.handleExitButton}>
+                                            <Input/>&nbsp;&nbsp;Выйти
+                                        </MenuItem>
+                                    </div>
+                                </Menu>
+                                {this.state.data === null ? null :
+                                    <Typography variant="button">{this.state.data.email}</Typography>}
+                            </Toolbar>
+                        </AppBar>
 
-                                    </Menu>
-                                </Toolbar>
-                            </AppBar>
-
-                            {/* МЕНЮ В ПОЛНОЙ ВЕРСИИ */}
-                            <AppBar>
-                                <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
-                                    {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
-                                    <DialogLoginForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
-                                    <DialogRegisterForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
-                                    {pagesForMenus.pages.map((dataPage: pageData) => {
-                                        if (dataPage.path !== null) {
-                                            return (
-                                                <div key={dataPage.buttonText}>
-                                                    <Link to={dataPage.path}>
-                                                        <Button color="secondary">
-                                                            {dataPage.buttonText}
-                                                        </Button>
-                                                    </Link>
-                                                </div>
-                                            )
-                                        } else {
-                                            return (
-                                                <div key={dataPage.buttonText}>
-                                                    <Button color="secondary">
-                                                        {dataPage.buttonText}
-                                                    </Button>
-                                                </div>
-                                            )
-                                        }
-                                    })}
-
-                                </Toolbar>
-                            </AppBar>
-
-                            {/*{ ТЕЛО ВСЕЙ СТРАНИЦЫ }*/}
-                            <div style={{marginTop: '5rem'}}>
-
+                        {/* МЕНЮ В ПОЛНОЙ ВЕРСИИ */}
+                        <AppBar>
+                            <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
+                                {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
 
                                 {pagesForMenus.pages.map((dataPage: pageData) => {
-                                    if (dataPage.path !== null) {
-                                        return (
-                                            <div key={dataPage.buttonText}>
-                                                <Route exact path={dataPage.path} component={dataPage.component}/>
-                                            </div>
-                                        )
-                                    } else {
-                                        return null
-                                    }
-                                })}
-                            </div>
-                        </div>
-                    </MuiThemeProvider>
-                </Switch>
-            )
-        } else {
-            return (
-                <Switch>
-                    <MuiThemeProvider theme={theme}>
-                        <div>
-                            {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
-                            <AppBar>
-                                <Toolbar className="topBarMin">
-                                    <Button color="secondary" aria-controls="customized-menu" aria-haspopup="true"
-                                            onClick={this.handleClick}>
-                                        <MenuIcon/>
-                                    </Button>
-                                    <Menu
-                                        id="customized-menu" anchorEl={this.state.menuEl} keepMounted
-                                        open={Boolean(this.state.menuEl)} onClose={this.handleClose}
-                                        style={{marginTop: '2rem'}}>
-                                        {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
-                                        <div>
-                                            <MenuItem onClick={this.handleExitButton}>
-                                                <Input/>&nbsp;&nbsp;Выйти
-                                            </MenuItem>
+                                    return (
+                                        <div key={dataPage.buttonText + 'logged'}>
+                                            <Link to={dataPage.path}>
+                                                <Button color="secondary">
+                                                    {dataPage.buttonText}
+                                                </Button>
+                                            </Link>
                                         </div>
-                                    </Menu>
-                                    {this.state.data === null ? null :
-                                        <Typography variant="button">{this.state.data.email}</Typography>}
+                                    )
 
-                                </Toolbar>
-                            </AppBar>
+                                })}
+                                <Button onClick={this.handleExitButton} color="secondary">
+                                    <Input/>&nbsp;&nbsp;ВЫХОД
+                                </Button>
+                                &nbsp;
+                                {this.state.data === null ? null :
+                                    <Typography variant="button">{this.state.data.email}</Typography>}
+                            </Toolbar>
+                        </AppBar>
 
-                            {/* МЕНЮ В ПОЛНОЙ ВЕРСИИ */}
-                            <AppBar>
-                                <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
+                        {/*{ ТЕЛО ВСЕЙ СТРАНИЦЫ }*/}
+                        <div style={{marginTop: '5rem'}}>
+                            {pagesForMenus.pages.map((dataPage: pageData) => {
+                                return (
+                                    <div key={dataPage.buttonText}>
+                                        <Route exact path={dataPage.path} component={dataPage.component}/>
+                                    </div>
+                                )
+
+                            })}
+                            <Redirect to="/"/>
+                            <Route exact path='/help' component={HelpPage}/>
+
+                        </div>
+                </MuiThemeProvider>
+                <StartPage/>
+            </Switch>
+        );
+
+        const isDataNotConfrimed = (
+            <Switch>
+                <MuiThemeProvider theme={theme}>
+                    <div>
+
+                        {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
+                        <AppBar>
+                            <Toolbar className="topBarMin">
+                                <Button color="secondary" aria-controls="customized-menu" aria-haspopup="true"
+                                        onClick={this.handleClick}>
+                                    <MenuIcon/>
+                                </Button>
+                                <Menu
+                                    id="customized-menu" anchorEl={this.state.menuEl} keepMounted
+                                    open={Boolean(this.state.menuEl)} onClose={this.handleClose}
+                                    style={{marginTop: '2rem'}}>
+                                    {pagesForMenus.pages.map((dataPage: pageData) => {
+                                            return (
+                                                <div key={dataPage.buttonText}>
+                                                    <NavLink to={dataPage.path} style={{color: "black"}}
+                                                             activeStyle={{color: "black", fontWeight: "bold"}}>
+                                                        <MenuItem onClick={this.handleClose}>
+                                                            <Typography
+                                                                variant="button">{dataPage.buttonText}</Typography>
+                                                        </MenuItem>
+                                                    </NavLink>
+                                                </div>
+                                            )
+
+                                        }
+                                    )}
                                     {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
-                                    <Button onClick={this.handleExitButton} color="secondary">
-                                        <Input/>&nbsp;&nbsp;ВЫХОД
-                                    </Button>
-                                    &nbsp;
-                                    {this.state.data === null ? null :
-                                        <Typography variant="button">{this.state.data.email}</Typography>}
 
-                                </Toolbar>
-                            </AppBar>
+                                    <div>
+                                        <MenuItem>
+                                            <DialogLoginForm mobile={true} isLoginSuccess={this.isLoginSuccess}/>
+                                        </MenuItem>
+                                    </div>
+                                    <div>
+                                        <MenuItem>
+                                            <DialogRegisterForm mobile={true} isLoginSuccess={this.isLoginSuccess}/>
+                                        </MenuItem>
+                                    </div>
 
-                            {/*{ ТЕЛО ВСЕЙ СТРАНИЦЫ }*/}
-                            <div style={{marginTop: '5rem'}}>
+                                </Menu>
+                            </Toolbar>
+                        </AppBar>
 
+                        {/* МЕНЮ В ПОЛНОЙ ВЕРСИИ */}
+                        <AppBar>
+                            <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
+                                {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
 
                                 {pagesForMenus.pages.map((dataPage: pageData) => {
-                                    if (dataPage.path !== null) {
-                                        return (
-                                            <div key={dataPage.buttonText}>
-                                                <Route exact path={dataPage.path} component={dataPage.component}/>
-                                            </div>
-                                        )
-                                    } else {
-                                        return null
-                                    }
+                                    return (
+                                        <div key={dataPage.buttonText}>
+                                            <Link to={dataPage.path}>
+                                                <Button color="secondary">
+                                                    {dataPage.buttonText}
+                                                </Button>
+                                            </Link>
+                                        </div>
+                                    )
                                 })}
-                            </div>
+
+                                <DialogLoginForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
+                                <DialogRegisterForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
+
+                            </Toolbar>
+                        </AppBar>
+
+                        {/*{ ТЕЛО ВСЕЙ СТРАНИЦЫ }*/}
+                        <div style={{marginTop: '5rem'}}>
+                            {pagesForMenus.pages.map((dataPage: pageData) => {
+                                if (dataPage.path !== null) {
+                                    return (
+                                        <div key={dataPage.buttonText}>
+                                            <Route exact path={dataPage.path} component={dataPage.component}/>
+                                        </div>
+                                    )
+                                } else {
+                                    return null
+                                }
+                            })}
                         </div>
-                    </MuiThemeProvider>
-                </Switch>
-            )
+                    </div>
+                </MuiThemeProvider>
+            </Switch>
+        );
+
+        // ВОЗВРАЩАЕТСЯ ЕСЛИ ОЖИДАНИЕ ЗАПРОСА
+        if (this.state.isDataConfirmed === null) {
+            return (isLoadingComponent)
+        }
+        // ВОЗВРАЩАЕТСЯ ЕСЛИ ДАННЫЕ НЕ ПРИШЛИ
+        if (!this.state.isDataConfirmed) {
+            return (isDataNotConfrimed)
+        } else {
+            return (isDataConfirmed)
         }
 
     }

@@ -11,6 +11,7 @@ import {
 import Http from "../../serverApi/http";
 import {DataStorage} from "../../serverApi/dataStorage";
 import {LocalStorage} from "../../serverApi/localStorage";
+import CustomizedSnackbars from "./SnackBar";
 
 interface DialogRegisterFormProps {
     mobile: boolean
@@ -190,7 +191,7 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
 
                     <DialogActions>
                         <Button onClick={this.login} color="primary">
-                            Войти
+                            Зарегистрироваться
                         </Button>
                         <Button onClick={this.handleClose} color="primary">
                             Отмена
