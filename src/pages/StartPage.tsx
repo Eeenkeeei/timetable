@@ -12,21 +12,21 @@ export default class StartPage extends React.Component {
                 title: 'Задание на дом',
                 subtitle: '',
                 textBody: 'Добавь домашнее задание на любую дату',
-                img: ''
+                img: 'https://pp.userapi.com/c849032/v849032912/1d354c/o7psD1MZyB8.jpg'
             },
             {
                 id: '1',
                 title: 'Новости',
                 subtitle: '',
                 textBody: 'Получай всегда актуальные новости КАИ и не только',
-                img: ''
+                img: 'https://pp.userapi.com/c849032/v849032912/1d354c/o7psD1MZyB8.jpg'
             },
             {
                 id: '2',
                 title: 'Уведомления',
                 subtitle: 'Псс... хочешь немного уведомлений?',
                 textBody: 'Отклоняй надоедливые уведомления каждый раз, когда они почему-то приходят',
-                img: ''
+                img: 'https://pp.userapi.com/c849032/v849032912/1d354c/o7psD1MZyB8.jpg'
             },
             {
                 id: '3',
@@ -51,7 +51,6 @@ export default class StartPage extends React.Component {
             },
 
         ];
-
         return (
             <div>
                 <div style={{flexGrow: 1}}>

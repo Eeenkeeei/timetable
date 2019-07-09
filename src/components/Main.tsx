@@ -20,7 +20,7 @@ import HelpPage from "../pages/HelpPage";
 interface pageData {
     path: string;
     buttonText: string;
-    isLogged: boolean
+    isDataConfirmed: boolean;
     component: any
 }
 
@@ -147,7 +147,8 @@ export default class Main extends React.Component {
                         </div>
                     </Menu>
                     {this.state.data === null ? null :
-                        <Typography style={{marginLeft: 'auto'}} variant="subtitle2">Привет, {this.state.data.email}</Typography>}
+                        <Typography style={{marginLeft: 'auto'}}
+                                    variant="subtitle2">Привет, {this.state.data.email}</Typography>}
                 </Toolbar>
             </AppBar>
         )
@@ -164,6 +165,7 @@ export default class Main extends React.Component {
                         open={Boolean(this.state.menuEl)} onClose={this.handleClose}
                         style={{marginTop: '2rem'}}>
                         {pagesForMenus.pages.map((dataPage: pageData) => {
+                            if (dataPage.isDataConfirmed === false){
                                 return (
                                     <div key={dataPage.buttonText}>
                                         <NavLink to={dataPage.path} style={{color: "black"}}
@@ -175,6 +177,8 @@ export default class Main extends React.Component {
                                         </NavLink>
                                     </div>
                                 )
+                            }
+
                             }
                         )}
                         {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
@@ -229,34 +233,31 @@ export default class Main extends React.Component {
                                         </Link>
                                     </div>
                                 )
-
                             })}
                             <Button onClick={this.handleExitButton} color="secondary">
                                 <Input/>&nbsp;&nbsp;ВЫХОД
                             </Button>
                             &nbsp;
                             {this.state.data === null ? null :
-                                <Typography style={{marginLeft: 'auto'}} variant="subtitle2">Привет, {this.state.data.email}</Typography>}
+                                <Typography style={{marginLeft: 'auto'}}
+                                            variant="subtitle2">Привет, {this.state.data.email}</Typography>}
                         </Toolbar>
                     </AppBar>
 
                     {/*{ ТЕЛО ВСЕЙ СТРАНИЦЫ }*/}
                     <Container>
 
-                    <div style={{marginTop: '5rem'}}>
-                        {pagesForMenus.pages.map((dataPage: pageData) => {
-                            return (
-                                <div key={dataPage.buttonText}>
-                                    <Route exact path={dataPage.path} component={dataPage.component}/>
-                                </div>
-                            )
-
-                        })}
-                        <Redirect to="/"/>
-                        <Route exact path='/help' component={HelpPage}/>
-                    </div>
+                        <div style={{marginTop: '5rem'}}>
+                            {pagesForMenus.pages.map((dataPage: pageData) => {
+                                return (
+                                    <div key={dataPage.buttonText}>
+                                        <Route exact path={dataPage.path} component={dataPage.component}/>
+                                    </div>
+                                )
+                            })}
+                            <Redirect to="/"/>
+                        </div>
                     </Container>
-
                 </MuiThemeProvider>
                 <StartPage/>
             </Switch>
@@ -265,8 +266,6 @@ export default class Main extends React.Component {
         const isDataNotConfrimed = (
             <Switch>
                 <MuiThemeProvider theme={theme}>
-                    <div>
-
                         {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
 
                         {isDataNotConfirmedMobileMenu}
@@ -276,15 +275,18 @@ export default class Main extends React.Component {
                                 {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
 
                                 {pagesForMenus.pages.map((dataPage: pageData) => {
-                                    return (
-                                        <div key={dataPage.buttonText}>
-                                            <Link to={dataPage.path}>
-                                                <Button color="secondary">
-                                                    {dataPage.buttonText}
-                                                </Button>
-                                            </Link>
-                                        </div>
-                                    )
+                                    if (dataPage.isDataConfirmed === false) {
+                                        return (
+                                            <div key={dataPage.buttonText}>
+                                                <Link to={dataPage.path}>
+                                                    <Button color="secondary">
+                                                        {dataPage.buttonText}
+                                                    </Button>
+                                                </Link>
+                                            </div>
+                                        )
+                                    }
+
                                 })}
 
                                 <DialogLoginForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
@@ -297,15 +299,18 @@ export default class Main extends React.Component {
                         <Container>
                             <div style={{marginTop: '5rem'}}>
                                 {pagesForMenus.pages.map((dataPage: pageData) => {
-                                    return (
-                                        <div key={dataPage.buttonText}>
-                                            <Route exact path={dataPage.path} component={dataPage.component}/>
-                                        </div>
-                                    )
+                                    if (dataPage.isDataConfirmed === false){
+                                        return (
+                                            <div key={dataPage.buttonText}>
+                                                <Route exact path={dataPage.path} component={dataPage.component}/>
+                                            </div>
+                                        )
+                                    }
+
                                 })}
+                                <Redirect to="/"/>
                             </div>
                         </Container>
-                    </div>
                 </MuiThemeProvider>
             </Switch>
         );
