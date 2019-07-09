@@ -147,7 +147,7 @@ export default class Main extends React.Component {
                         </div>
                     </Menu>
                     {this.state.data === null ? null :
-                        <Typography variant="button">{this.state.data.email}</Typography>}
+                        <Typography style={{marginLeft: 'auto'}} variant="subtitle2">Привет, {this.state.data.email}</Typography>}
                 </Toolbar>
             </AppBar>
         )
@@ -175,7 +175,6 @@ export default class Main extends React.Component {
                                         </NavLink>
                                     </div>
                                 )
-
                             }
                         )}
                         {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
@@ -237,7 +236,7 @@ export default class Main extends React.Component {
                             </Button>
                             &nbsp;
                             {this.state.data === null ? null :
-                                <Typography variant="button">{this.state.data.email}</Typography>}
+                                <Typography style={{marginLeft: 'auto'}} variant="subtitle2">Привет, {this.state.data.email}</Typography>}
                         </Toolbar>
                     </AppBar>
 
