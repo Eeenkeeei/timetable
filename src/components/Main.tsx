@@ -76,6 +76,41 @@ export default class Main extends React.Component {
         })
     };
 
+    // событие изменения страницы - проверка данных
+    public changePage = () => {
+        const storage = new DataStorage(new LocalStorage());
+        const http = new Http();
+        if (storage.getUserData !== null) {
+            http.loginWithToken(storage.getUserData, '/user')
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        if (result.email !== undefined) {
+                            this.setState({
+                                data: result
+                            }, () => {
+                                this.setState({
+                                    isDataConfirmed: true
+                                })
+                            })
+                        } else {
+                            this.setState({
+                                isDataConfirmed: false
+                            }, () => {
+                                storage.logOut()
+                            })
+                        }
+                    }, (error) => {
+                        console.log(error)
+                    }
+                );
+        } else {
+            this.setState({
+                isDataConfirmed: false
+            })
+        }
+    }
+
     componentDidMount(): void {
         const storage = new DataStorage(new LocalStorage());
         const http = new Http();
@@ -84,7 +119,6 @@ export default class Main extends React.Component {
                 .then(res => res.json())
                 .then(
                     (result) => {
-                        console.log(result)
                         if (result.email !== undefined) {
                             this.setState({
                                 data: result
@@ -128,7 +162,7 @@ export default class Main extends React.Component {
                         <div>
                             {pagesForMenus.pages.map((dataPage: pageData) => {
                                     return (
-                                        <div key={dataPage.buttonText + 'logged'}>
+                                        <div key={dataPage.buttonText + 'logged'}  onClick={this.changePage}>
                                             <NavLink to={dataPage.path} style={{color: "black"}}
                                                      activeStyle={{color: "black", fontWeight: "bold"}}>
                                                 <MenuItem onClick={this.handleClose}>
@@ -167,7 +201,7 @@ export default class Main extends React.Component {
                         {pagesForMenus.pages.map((dataPage: pageData) => {
                             if (dataPage.isDataConfirmed === false){
                                 return (
-                                    <div key={dataPage.buttonText}>
+                                    <div key={dataPage.buttonText}  onClick={this.changePage}>
                                         <NavLink to={dataPage.path} style={{color: "black"}}
                                                  activeStyle={{color: "black", fontWeight: "bold"}}>
                                             <MenuItem onClick={this.handleClose}>
@@ -202,7 +236,6 @@ export default class Main extends React.Component {
 
         const isLoadingComponent = (
             <MuiThemeProvider theme={theme}>
-
                 <AppBar>
                     <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
                         <CircularProgress color="inherit"/>
@@ -227,7 +260,7 @@ export default class Main extends React.Component {
                                 return (
                                     <div key={dataPage.buttonText + 'logged'}>
                                         <Link to={dataPage.path}>
-                                            <Button color="secondary">
+                                            <Button color="secondary"  onClick={this.changePage}>
                                                 {dataPage.buttonText}
                                             </Button>
                                         </Link>
@@ -246,7 +279,6 @@ export default class Main extends React.Component {
 
                     {/*{ ТЕЛО ВСЕЙ СТРАНИЦЫ }*/}
                     <Container>
-
                         <div style={{marginTop: '5rem'}}>
                             {pagesForMenus.pages.map((dataPage: pageData) => {
                                 return (
@@ -279,14 +311,13 @@ export default class Main extends React.Component {
                                         return (
                                             <div key={dataPage.buttonText}>
                                                 <Link to={dataPage.path}>
-                                                    <Button color="secondary">
+                                                    <Button color="secondary" onClick={this.changePage}>
                                                         {dataPage.buttonText}
                                                     </Button>
                                                 </Link>
                                             </div>
                                         )
                                     }
-
                                 })}
 
                                 <DialogLoginForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
@@ -306,7 +337,6 @@ export default class Main extends React.Component {
                                             </div>
                                         )
                                     }
-
                                 })}
                                 <Redirect to="/"/>
                             </div>
