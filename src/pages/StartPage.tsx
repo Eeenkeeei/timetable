@@ -13,42 +13,42 @@ export default class StartPage extends React.Component {
                 title: 'Задание на дом',
                 subtitle: '',
                 textBody: 'Добавь домашнее задание на любую дату',
-                img: 'https://psv4.userapi.com/c848216/u27991797/docs/d11/90fe7dac2e3c/Screen-Shot-2017-04-27-at-9_32_54-AM.jpg?extra=cbXeM8kTA7ZV7p8uO3Hw8nSvxC4aw97-aCvsm0134kAJ38Qv6uxyrSMK4154aNWwBlzbJajxolkr7K2ZRWPcRG1vpzzdSE-BUEcm_TPvBfjl_O7rvI2gIl74Wd0CO5D_Qs1V_V_n57J0bIY-Kb3pRSY7'
+                img: 'https://1.bp.blogspot.com/-rIHSvpNC0ac/W7AMioDMmZI/AAAAAAAATEY/4Kw38DZpWV0Fry7vz29PaO0YMm5qwy5sQCK4BGAYYCw/w1200-h630-p-k-no-nu/IMedia9_Writing.jpg'
             },
             {
                 id: '1',
                 title: 'Новости',
                 subtitle: '',
                 textBody: 'Получай всегда актуальные новости КАИ и не только',
-                img: 'https://psv4.userapi.com/c848216/u27991797/docs/d17/0913e7b2c895/laptop-header.jpg?extra=QjBepeem_sHiXRAaPXBzn_kRQBnKN-766UGhj6vuYxlkBYfCPp4g8VZeLXdM2bIbXA9MjKRBzpB6QmHVr051ekx64X5sy3DgAawW9o1hAnGONW1I26tbpt0jyCV5dUozWHHJkShlAa7L57tlbXHUCWGZ'
+                img: 'https://i.imgur.com/plWb1GA.jpg'
             },
             {
                 id: '2',
                 title: 'Уведомления',
                 subtitle: 'Псс... хочешь немного уведомлений?',
                 textBody: 'Отклоняй надоедливые уведомления каждый раз, когда они почему-то приходят',
-                img: 'https://psv4.userapi.com/c848420/u27991797/docs/d4/02e06819a0f8/3922152297274a839d5a7d14e0db3e44.jpg?extra=GmBB6qppUF1BxdE88LXbVZE7NBw2Pk-jf5w7xTC8CdHwSg9UWaNzqzGwNCbrllB9aYnrDkrUIH5KCG54zsoztrKAThK11Fj9gjwteLQVC-cs6mWaDZQY6sJkBACMOtU4h-s0gJSF5lET3zhoUpeqf6kI'
+                img: 'http://www.twseo.com.tw/wp-content/uploads/2018/05/a3749ad203d8f65ac6290fde65778583.jpeg'
             },
             {
                 id: '3',
                 title: 'Внеси собственное расписание',
                 subtitle: '',
                 textBody: 'Сервис позволяет тебе внести свое расписание, записывать задания на каждый отдельный предмет и отмечать, если оно было уже выполнено!',
-                img: 'https://psv4.userapi.com/c848216/u27991797/docs/d11/f7c767e1e755/gramotnoe-motivatsionnoe-pismo.jpg?extra=Tq3QBjFGN3R8-BNut6Rh72XDW03LKVoUf8htMiFgUI_AokvJDqj7338GNQSPaTCWkEoRt-7VPw01DF12dRgUWeis1uVpIybMuxzKxU5To7o5Xel72A_IJMPj8CxV-W3_qRfeDmzzr8GNB5lOtn_ju5J6'
+                img: 'https://miro.medium.com/max/4043/0*gzqObH33C3zVLxKg.jpg'
             },
             {
                 id: '4',
                 title: 'Следи за своими задачами',
                 subtitle: '',
                 textBody: 'Внеси свои задачи, чтобы не забыть, что нужно сделать. Редактируй их, отмечай выполненные и просматривай их в отдельном хранилище!',
-                img: 'https://psv4.userapi.com/c848136/u27991797/docs/d15/ac7d6911831c/CoXSx9QWcAAHEZj.jpg?extra=i_D31o0d3zO2vXaiyH0MPE0xhhfPSyVu95LtugPiTorg32h3KVJl9JdZlGxFzkcEPVpL4uPcymMzEXGmv0KTctDdKyO8mps5ylapd4jR3Jmnhmhbi1NkP4709wB3Nk7CReX7Ud3w1cPAh0y_BEU9PRZs'
+                img: 'https://i.imgur.com/plWb1GA.jpg'
             },
             {
                 id: '5',
                 title: 'Сохрани все важные ссылки',
                 subtitle: '',
                 textBody: 'Сохрани важные ссылки, чтобы не забыть прочитать их позже! Редактируй, добавляй теги, используй поиск по названиям и тегам!',
-                img: 'https://psv4.userapi.com/c848216/u27991797/docs/d11/f7c767e1e755/gramotnoe-motivatsionnoe-pismo.jpg?extra=Tq3QBjFGN3R8-BNut6Rh72XDW03LKVoUf8htMiFgUI_AokvJDqj7338GNQSPaTCWkEoRt-7VPw01DF12dRgUWeis1uVpIybMuxzKxU5To7o5Xel72A_IJMPj8CxV-W3_qRfeDmzzr8GNB5lOtn_ju5J6'
+                img: 'https://i.imgur.com/plWb1GA.jpg'
             },
 
         ];
