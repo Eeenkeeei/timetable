@@ -237,7 +237,7 @@ export default class Main extends React.Component {
         const isLoadingComponent = (
             <MuiThemeProvider theme={theme}>
                 <AppBar>
-                    <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
+                    <Toolbar style={{textAlign: 'right'}}>
                         <CircularProgress color="inherit"/>
                     </Toolbar>
                 </AppBar>

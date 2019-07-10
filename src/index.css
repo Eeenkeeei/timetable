@@ -12,3 +12,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+@media only screen and (max-width: 600px){
+  .topBarMax {
+    display: none !important;
+    text-align: right !important;
+  }
+
+
+}
+
+@media only screen and (max-width: 599px){
+  .topBarMin {
+    display: flex !important;
+    text-align: right !important;
+  }
+}
+
+@media only screen and (min-width: 599px){
+  .top {
+    display: none !important;
+    text-align: right !important;
+  }
+}
+
+
+
+
+a {
+  text-decoration: none;
+}

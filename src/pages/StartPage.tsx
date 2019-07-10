@@ -1,13 +1,11 @@
 import * as React from "react";
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
-import {DataStorage} from "../serverApi/dataStorage";
-import {LocalStorage} from "../serverApi/localStorage";
-import Http from "../serverApi/http";
 
 export default class StartPage extends React.Component {
 
 
     public render() {
+        document.title = 'Стартовая страница';
 
         const cardTextArray = [
             {

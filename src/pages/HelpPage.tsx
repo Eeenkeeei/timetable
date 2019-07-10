@@ -8,6 +8,8 @@ export default class HelpPage extends React.Component {
 
 
     public render() {
+        document.title = 'Помощь';
+
         return (
             <div>
                HelpPage
