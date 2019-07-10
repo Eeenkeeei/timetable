@@ -12,6 +12,7 @@ import Http from "../../serverApi/http";
 import {DataStorage} from "../../serverApi/dataStorage";
 import {LocalStorage} from "../../serverApi/localStorage";
 import CustomizedSnackbars from "./SnackBar";
+import {PersonAdd} from "@material-ui/icons";
 
 interface DialogRegisterFormProps {
     mobile: boolean
@@ -142,11 +143,11 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
 
                 {this.props.mobile === true ?
                     <div onClick={this.handleOpenLoginDialog} style={{height: '2rem', width: '7rem'}}>
-                        <Typography variant="button">Регистрация</Typography>
+                        <PersonAdd/>&nbsp;&nbsp;<Typography variant="button">Регистрация</Typography>
                     </div>
                     :
                     <Button color="secondary" onClick={this.handleOpenLoginDialog}>
-                        Регистрация
+                        <PersonAdd/>&nbsp;&nbsp;Регистрация
                     </Button>}
 
                 <Dialog open={this.state.openDialogWindow} onClose={this.handleClose}

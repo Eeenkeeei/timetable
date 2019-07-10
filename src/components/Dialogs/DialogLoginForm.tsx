@@ -11,6 +11,8 @@ import {
 import Http from "../../serverApi/http";
 import {DataStorage} from "../../serverApi/dataStorage";
 import {LocalStorage} from "../../serverApi/localStorage";
+import {Input, MeetingRoom} from "@material-ui/icons";
+import MenuItem from "../Main";
 
 interface DialogLoginFormProps {
     mobile: boolean
@@ -115,11 +117,11 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
 
                 {this.props.mobile === true ?
                     <div onClick={this.handleOpenLoginDialog} style={{height: '2rem', width: '7rem'}}>
-                        <Typography variant="button">Вход</Typography>
+                        <Typography variant="button"><MeetingRoom/>&nbsp;&nbsp;Вход</Typography>
                     </div>
                     :
                     <Button color="secondary" onClick={this.handleOpenLoginDialog}>
-                        Вход
+                        <MeetingRoom/>&nbsp;&nbsp;Вход
                     </Button>}
 
                 <Dialog open={this.state.openDialogWindow} onClose={this.handleClose} aria-labelledby="form-dialog-title">

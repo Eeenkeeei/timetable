@@ -30,4 +30,13 @@ export default class Http {
 
         });
     }
+
+    public getNewsList (path: string){
+        return fetch(this.url + path, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+    }
 }

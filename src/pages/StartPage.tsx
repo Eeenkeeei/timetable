@@ -1,11 +1,55 @@
 import * as React from "react";
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
+import {DataStorage} from "../serverApi/dataStorage";
+import {LocalStorage} from "../serverApi/localStorage";
+import Http from "../serverApi/http";
+import {LoadingComponent} from "../components/UniversalComponents";
+
+interface newsData {
+    _id: string
+    header: string,
+    body: string,
+    img: string
+}
 
 export default class StartPage extends React.Component {
+
+    state = {
+        news: []
+    }
+
+    public componentDidMount(): void {
+        const http = new Http();
+        http.getNewsList('/getNewsList')
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        news: [...result]
+                    })
+                }
+            )
+    }
 
 
     public render() {
         document.title = 'Стартовая страница';
+
+        const NewsBlock = () => {
+            this.state.news.map((newsData: newsData) => {
+                // @ts-ignore
+                return (
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h6">{newsData.header}</Typography>
+                        </CardContent>
+                        <CardContent>
+                            <Typography variant="body1">{newsData.body}</Typography>
+                        </CardContent>
+                    </Card>
+                )
+            })
+        };
 
         const cardTextArray = [
             {
@@ -56,18 +100,28 @@ export default class StartPage extends React.Component {
             <div>
                 <div style={{flexGrow: 1}}>
                     <Grid container spacing={3}>
-                        <Grid style={{textAlign: 'center'}} item xs={12} sm={12} >
-                            <Card>
+                        <Grid style={{textAlign: 'center'}} item xs={12} sm={12}>
 
-                                <CardContent>
-                                    <Typography variant="h5">
-                                        ЗДЕСЬ БУДЕТ БЛОК С НОВОСТЯМИ
-                                    </Typography>
-                                    <Typography color="textSecondary">
-                                        КОГДА-НИБУДЬ
-                                    </Typography>
-                                </CardContent>
-                            </Card>
+                                {this.state.news.length === 0 ?
+                                    <CardContent>
+                                        {LoadingComponent}
+                                    </CardContent> :
+                                    <div>
+                                        {this.state.news.map((newsData: newsData) => {
+                                            return (
+                                                <Card key={newsData._id} style={{ marginTop: '1rem'}}>
+                                                    <CardContent>
+                                                        <Typography variant="h6">{newsData.header}</Typography>
+                                                    </CardContent>
+                                                    <CardContent>
+                                                        <Typography variant="body1">{newsData.body}</Typography>
+                                                    </CardContent>
+                                                </Card>
+                                            )
+                                        })}
+                                    </div>
+                                }
+
                         </Grid>
                         {cardTextArray.map((cardBody) => {
                             return (

@@ -1,6 +1,6 @@
 import {Switch, Route, Link, NavLink, Redirect} from 'react-router-dom'
 import React from 'react'
-import {AppBar, Button, CircularProgress, Container, Menu, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, CircularProgress, Container, Icon, Menu, Toolbar, Typography} from "@material-ui/core";
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import {theme} from "../Theme";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -11,7 +11,7 @@ import {DialogRegisterForm} from "./Dialogs/DialogRegisterForm";
 import {DataStorage} from "../serverApi/dataStorage";
 import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
-import {Input, Star} from "@material-ui/icons";
+import {Input, PersonAdd, Star} from "@material-ui/icons";
 import CustomizedSnackbars from "./Dialogs/SnackBar";
 import StartPage from "../pages/StartPage";
 import HelpPage from "../pages/HelpPage";
@@ -21,14 +21,15 @@ interface pageData {
     path: string;
     buttonText: string;
     isDataConfirmed: boolean;
-    component: any
+    component: any,
+    icon: any
 }
 
 interface MainState {
     menuEl: any,
     mobileOpenDialogLoginForm: any,
     isDataConfirmed: any,
-    data: any
+    data: any,
 }
 
 export default class Main extends React.Component {
@@ -39,7 +40,7 @@ export default class Main extends React.Component {
         menuEl: null,
         mobileOpenDialogLoginForm: false,
         isDataConfirmed: null, // флаг становится true только в том случае, если пришли данные по токену. Флаг прокидывается в детей и внутри проходят запросы
-        data: null
+        data: null,
     };
 
     // вспомогательное для меню
@@ -143,6 +144,7 @@ export default class Main extends React.Component {
                 isDataConfirmed: false
             })
         }
+
     }
 
     public render() {
@@ -162,10 +164,12 @@ export default class Main extends React.Component {
                         <div>
                             {pagesForMenus.pages.map((dataPage: pageData) => {
                                     return (
-                                        <div key={dataPage.buttonText + 'logged'}  onClick={this.changePage}>
+                                        <div key={dataPage.buttonText + 'logged'}  onClick={this.changePage} style={{width: '180px'}}>
                                             <NavLink to={dataPage.path} style={{color: "black"}}
                                                      activeStyle={{color: "black", fontWeight: "bold"}}>
                                                 <MenuItem onClick={this.handleClose}>
+                                                    <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;
+
                                                     <Typography
                                                         variant="button">{dataPage.buttonText}</Typography>
                                                 </MenuItem>
@@ -201,10 +205,12 @@ export default class Main extends React.Component {
                         {pagesForMenus.pages.map((dataPage: pageData) => {
                             if (dataPage.isDataConfirmed === false){
                                 return (
-                                    <div key={dataPage.buttonText}  onClick={this.changePage}>
+                                    <div key={dataPage.buttonText}  onClick={this.changePage} style={{width: '180px'}}>
                                         <NavLink to={dataPage.path} style={{color: "black"}}
                                                  activeStyle={{color: "black", fontWeight: "bold"}}>
                                             <MenuItem onClick={this.handleClose}>
+                                                <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;
+
                                                 <Typography
                                                     variant="button">{dataPage.buttonText}</Typography>
                                             </MenuItem>
@@ -261,7 +267,7 @@ export default class Main extends React.Component {
                                     <div key={dataPage.buttonText + 'logged'}>
                                         <Link to={dataPage.path}>
                                             <Button color="secondary"  onClick={this.changePage}>
-                                                {dataPage.buttonText}
+                                                <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;{dataPage.buttonText}
                                             </Button>
                                         </Link>
                                     </div>
@@ -312,7 +318,7 @@ export default class Main extends React.Component {
                                             <div key={dataPage.buttonText}>
                                                 <Link to={dataPage.path}>
                                                     <Button color="secondary" onClick={this.changePage}>
-                                                        {dataPage.buttonText}
+                                                        <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;{dataPage.buttonText}
                                                     </Button>
                                                 </Link>
                                             </div>
