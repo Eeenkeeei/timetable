@@ -1,5 +1,5 @@
 import {theme} from "../Theme";
-import {CircularProgress} from "@material-ui/core";
+import {CircularProgress, Typography} from "@material-ui/core";
 import {MuiThemeProvider} from "@material-ui/core/styles";
 import React from "react";
 import {DataStorage} from "../serverApi/dataStorage";
@@ -9,6 +9,9 @@ import Http from "../serverApi/http";
 export const LoadingComponent = (
     <MuiThemeProvider theme={theme}>
         <CircularProgress/>
+        <div>
+            <Typography variant={"h6"}>Пожалуйста, подождите. Данные обновляются.</Typography>
+        </div>
     </MuiThemeProvider>
 )
 

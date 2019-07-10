@@ -3,7 +3,7 @@ import {DataStorage} from "../serverApi/dataStorage";
 import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
 import {LoadingComponent} from "../components/UniversalComponents";
-import {AppBar, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Card, CardContent, Grid, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
 import SwipeableViews from 'react-swipeable-views';
 import {theme} from "../Theme";
 import {Dashboard, Fingerprint, ListAlt, Person, Security} from "@material-ui/icons";
@@ -80,11 +80,6 @@ export default class AccountPage extends React.Component<AccountPageState> {
     }
 
     componentWillUnmount(): void {
-        this.setState({
-            data: {email: '', registrationDate: '', password: '', admin: false, lastLoginDate: ''},
-            tabValue: 0,
-            isDataConfirmed: null
-        })
     }
 
     public render() {
@@ -100,7 +95,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
             {label: 'Безопасность', icon: <Security/>},
             {label: 'Сервисы', icon: <Dashboard/>},
             {label: 'Админ', icon: <Fingerprint/>, admin: true}
-        ]
+        ];
 
         const mobileMenu = (
             <AppBar position="static" color="default" className="topBarMin top">
@@ -128,49 +123,68 @@ export default class AccountPage extends React.Component<AccountPageState> {
                     })}
                 </Tabs>
             </AppBar>
+        );
+
+        const fullMenu = (
+            <AppBar position="static" color="default" className="topBarMax">
+                <Tabs
+                    value={this.state.tabValue}
+                    onChange={this.handleChangeTab}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    variant="fullWidth"
+                >
+                    {tabsArray.map((tabData: any) => {
+                        if (this.state.data.admin === true && tabData.label === 'Админ') {
+                            return (
+                                <Tab label={tabData.label} icon={tabData.icon} style={stylesForTab}
+                                     key={tabData.label}/>
+                            )
+                        } else {
+                            if (tabData.admin === undefined) {
+                                return (
+                                    <Tab label={tabData.label} icon={tabData.icon} style={stylesForTab}
+                                         key={tabData.label}/>
+                                )
+                            }
+                        }
+                    })}
+                </Tabs>
+            </AppBar>
+        );
+
+        const accountDataComponent = (
+            <div style={{marginTop: '1rem', overflow: 'hidden'}}>
+                <Grid container spacing={3}>
+                    <Grid style={{textAlign: 'center'}} item xs={6} sm={6}>
+
+                        <Typography variant="body1">
+                            Email:
+                        </Typography>
+
+                    </Grid>
+                    <Grid style={{textAlign: 'center'}} item xs={6} sm={6}>
+
+                        <Typography variant="body1">
+                            {this.state.data.email}
+                        </Typography>
+
+                    </Grid>
+                </Grid>
+            </div>
         )
 
         const accountPageBody = (
             <div>
                 {mobileMenu}
-
-
-                <AppBar position="static" color="default" className="topBarMax">
-                    <Tabs
-                        value={this.state.tabValue}
-                        onChange={this.handleChangeTab}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        variant="fullWidth"
-                    >
-                        {tabsArray.map((tabData: any) => {
-                            if (this.state.data.admin === true && tabData.label === 'Админ') {
-                                return (
-                                    <Tab label={tabData.label} icon={tabData.icon} style={stylesForTab}
-                                         key={tabData.label}/>
-                                )
-                            } else {
-                                if (tabData.admin === undefined) {
-                                    return (
-                                        <Tab label={tabData.label} icon={tabData.icon} style={stylesForTab}
-                                             key={tabData.label}/>
-                                    )
-                                }
-                            }
-                        })}
-                    </Tabs>
-                </AppBar>
-
-
+                {fullMenu}
                 <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={this.state.tabValue}
                                 onChangeIndex={this.handleChangeIndexTab}>
-                    <div dir={theme.direction}>text1</div>
+                    {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div></div>}
                     <div dir={theme.direction}>text2</div>
                     <div dir={theme.direction}>text3</div>
                     <div dir={theme.direction}>text4</div>
                     <div dir={theme.direction}>admin</div>
-
-
                 </SwipeableViews>
             </div>
         );

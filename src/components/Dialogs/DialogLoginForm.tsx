@@ -95,8 +95,6 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
                     console.log(error)
                 }
             );
-
-
     };
 
     public handleEmailChange = (event: any) => {
