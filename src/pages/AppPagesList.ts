@@ -1,13 +1,12 @@
 import HelpPage from "./HelpPage";
 import StartPage from "./StartPage";
 import AccountPage from "./AccountPage";
-import {Home, LiveHelp, Person} from "@material-ui/icons";
 
 export const pagesForMenus =  {
     pages:
         [
-            {path: '/', buttonText: 'Главная', isDataConfirmed: false,  component: StartPage, icon: 'home'},
-            {path: '/help', buttonText: 'Помощь', isDataConfirmed: false, component: HelpPage, icon: 'live_help'},
-            {path: '/account', buttonText: 'Аккаунт', isDataConfirmed: true, component: AccountPage, icon: 'person'},
+            {path: '/React-timetable/', buttonText: 'Главная', isDataConfirmed: false,  component: StartPage, icon: 'home'},
+            {path: '/React-timetable/help', buttonText: 'Помощь', isDataConfirmed: false, component: HelpPage, icon: 'live_help'},
+            {path: '/React-timetable/account', buttonText: 'Аккаунт', isDataConfirmed: true, component: AccountPage, icon: 'person'},
         ]
 };

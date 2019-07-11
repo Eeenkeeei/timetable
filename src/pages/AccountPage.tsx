@@ -3,10 +3,11 @@ import {DataStorage} from "../serverApi/dataStorage";
 import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
 import {LoadingComponent} from "../components/UniversalComponents";
-import {AppBar, Card, CardContent, Grid, Tab, Tabs, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Grid, Tab, Tabs, Typography} from "@material-ui/core";
 import SwipeableViews from 'react-swipeable-views';
 import {theme} from "../Theme";
 import {Dashboard, Fingerprint, ListAlt, Person, Security} from "@material-ui/icons";
+import AdminComponent from "./AdminComponent";
 
 interface AccountPageState {
     isDataConfirmed: boolean | null,
@@ -94,7 +95,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
             {label: 'Мое расписание', icon: <ListAlt/>},
             {label: 'Безопасность', icon: <Security/>},
             {label: 'Сервисы', icon: <Dashboard/>},
-            {label: 'Админ', icon: <Fingerprint/>, admin: true}
+            {label: 'Админ', icon: <Fingerprint/>, admin: true},
         ];
 
         const mobileMenu = (
@@ -184,7 +185,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                     <div dir={theme.direction}>text2</div>
                     <div dir={theme.direction}>text3</div>
                     <div dir={theme.direction}>text4</div>
-                    <div dir={theme.direction}>admin</div>
+                    <div dir={theme.direction}><AdminComponent/></div>
                 </SwipeableViews>
             </div>
         );

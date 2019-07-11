@@ -1,22 +1,22 @@
 import * as React from "react";
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
-import {DataStorage} from "../serverApi/dataStorage";
-import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
 import {LoadingComponent} from "../components/UniversalComponents";
 
-interface newsData {
+export interface newsData {
     _id: string
     header: string,
     body: string,
-    img: string
+    img: string,
+    author: string,
+    data: string
 }
 
 export default class StartPage extends React.Component {
 
     state = {
         news: []
-    }
+    };
 
     public componentDidMount(): void {
         const http = new Http();
@@ -35,21 +35,6 @@ export default class StartPage extends React.Component {
     public render() {
         document.title = 'Стартовая страница';
 
-        const NewsBlock = () => {
-            this.state.news.map((newsData: newsData) => {
-                // @ts-ignore
-                return (
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h6">{newsData.header}</Typography>
-                        </CardContent>
-                        <CardContent>
-                            <Typography variant="body1">{newsData.body}</Typography>
-                        </CardContent>
-                    </Card>
-                )
-            })
-        };
 
         const cardTextArray = [
             {
@@ -109,13 +94,16 @@ export default class StartPage extends React.Component {
                                     <div>
                                         {this.state.news.map((newsData: newsData) => {
                                             return (
+
                                                 <Card key={newsData._id} style={{ marginTop: '1rem'}}>
                                                     <CardContent>
-                                                        <Typography variant="h6">{newsData.header}</Typography>
+                                                        <Typography
+                                                            variant="h6">{newsData.header}</Typography>
                                                     </CardContent>
-                                                    <CardContent>
-                                                        <Typography variant="body1">{newsData.body}</Typography>
-                                                    </CardContent>
+                                                    <Typography variant="body1">{newsData.body}</Typography>
+                                                    <Typography variant="subtitle1"
+                                                                style={{color: 'grey'}}>Дата:&nbsp; {newsData.data}, &nbsp; Автор: &nbsp;{newsData.author}
+                                                    </Typography>
                                                 </Card>
                                             )
                                         })}

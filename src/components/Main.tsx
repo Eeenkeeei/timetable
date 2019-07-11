@@ -11,10 +11,8 @@ import {DialogRegisterForm} from "./Dialogs/DialogRegisterForm";
 import {DataStorage} from "../serverApi/dataStorage";
 import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
-import {Input, PersonAdd, Star} from "@material-ui/icons";
-import CustomizedSnackbars from "./Dialogs/SnackBar";
+import {Input} from "@material-ui/icons";
 import StartPage from "../pages/StartPage";
-import HelpPage from "../pages/HelpPage";
 
 
 interface pageData {
@@ -293,7 +291,7 @@ export default class Main extends React.Component {
                                     </div>
                                 )
                             })}
-                            <Redirect to="/"/>
+                            <Redirect to="/React-timetable"/>
                         </div>
                     </Container>
                 </MuiThemeProvider>
@@ -344,7 +342,7 @@ export default class Main extends React.Component {
                                         )
                                     }
                                 })}
-                                <Redirect to="/"/>
+                                <Redirect to="/React-timetable"/>
                             </div>
                         </Container>
                 </MuiThemeProvider>
