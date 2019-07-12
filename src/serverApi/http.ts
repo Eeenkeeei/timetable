@@ -80,4 +80,34 @@ export default class Http {
             body: JSON.stringify({email: body})
         });
     }
+
+    public getUserDataFromAdmin(body: string, path: '/getUserDataFromAdmin') {
+        return fetch(this.url + path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email: body})
+        });
+    }
+
+    public removeUserAdmin(body: string, path: '/removeUserAdmin'){
+        return fetch(this.url + path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email: body})
+        });
+    }
+
+    public deleteAccount(body: string, path: '/deleteAccount'){
+        return fetch(this.url + path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email: body})
+        });
+    }
 }

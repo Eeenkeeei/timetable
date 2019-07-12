@@ -95,7 +95,7 @@ export default class StartPage extends React.Component {
                                     <div>
                                         {this.state.news.map((newsData: newsData) => {
                                             return (
-                                                <NewsComponent newsData={newsData} admin={false} />
+                                                <NewsComponent key={newsData._id} newsData={newsData} admin={false} />
                                             )
                                         })}
                                     </div>

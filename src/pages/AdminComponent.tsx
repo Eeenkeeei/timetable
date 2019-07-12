@@ -110,7 +110,7 @@ export default class AdminComponent extends React.Component {
                                         <div>
                                             {this.state.news.map((newsData: newsData) => {
                                                 return (
-                                                    <NewsComponent newsData={newsData} admin={true} getNewsCb={this.getNewsList}/>
+                                                    <NewsComponent key={newsData._id} newsData={newsData} admin={true} getNewsCb={this.getNewsList}/>
                                                 )
                                             })}
                                         </div>
@@ -122,15 +122,15 @@ export default class AdminComponent extends React.Component {
                     </ExpansionPanel>
 
 
-                    <ExpansionPanel expanded={true}
-                                    onChange={this.handleChangeExpand('setAsAdmin')}
+                    <ExpansionPanel expanded={this.state.expanded === 'getUserData'}
+                                    onChange={this.handleChangeExpand('getUserData')}
                                     style={{width: '95%', margin: '1em auto'}}>
                         <ExpansionPanelSummary
                             expandIcon={<ExpandMoreIcon/>}
                             aria-controls="panel3bh-content"
                             id="panel3bh-header"
                         >
-                            <Typography>Дать права админа</Typography>
+                            <Typography>Найти пользователя</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                             <SetAdmin/>

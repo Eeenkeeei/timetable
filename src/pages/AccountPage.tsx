@@ -181,12 +181,13 @@ export default class AccountPage extends React.Component<AccountPageState> {
                 {fullMenu}
                 <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={this.state.tabValue}
                                 onChangeIndex={this.handleChangeIndexTab}>
-                    <div dir={theme.direction}><AdminComponent/></div>
 
                     {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div></div>}
                     <div dir={theme.direction}>text2</div>
                     <div dir={theme.direction}>text3</div>
                     <div dir={theme.direction}>text4</div>
+                    <div dir={theme.direction}><AdminComponent/></div>
+
                 </SwipeableViews>
             </div>
         );

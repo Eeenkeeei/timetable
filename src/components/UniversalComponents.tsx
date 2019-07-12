@@ -27,16 +27,12 @@ export function checkUserData () {
             .then(res => res.json())
             .then(
                 (result) => {
-                    console.log(result)
                     if (result.email !== undefined) {
-                        console.log('true')
-                        flag = true
+                        flag = true;
                         return (flag)
-
                     } else {
-                        console.log(false)
-                        storage.logOut()
-                        flag = false
+                        storage.logOut();
+                        flag = false;
                         return (flag)
 
                     }
