@@ -1,7 +1,5 @@
 import * as React from "react";
 import {
-    Button,
-    Card,
     CardContent,
     ExpansionPanel,
     ExpansionPanelDetails,
@@ -11,10 +9,7 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Http from "../serverApi/http";
 import {newsData} from "./StartPage";
-import {LoadingComponent} from "../components/UniversalComponents";
-import {Delete} from "@material-ui/icons";
-import {DialogDeleteNews} from "../components/Dialogs/DialogDeleteNews";
-import {DialogEditNews} from "../components/Dialogs/DialogEditNews";
+import NewsComponent, {LoadingComponent} from "../components/UniversalComponents";
 import {DialogAddNews} from "../components/Dialogs/DialogAddNews";
 import SetAdmin from "../components/SetAdmin";
 
@@ -91,8 +86,10 @@ export default class AdminComponent extends React.Component {
             <div style={{marginTop: '1rem'}}>
                 <div>
                     {/* ПРОСМОТР ВСЕХ НОВОСТЕЙ */}
+
                     <ExpansionPanel expanded={this.state.expanded === 'getNews'}
-                                    onChange={this.handleChangeExpand('getNews')}>
+                                    onChange={this.handleChangeExpand('getNews')}
+                                    style={{width: '95%', margin: '1em auto'}}>
                         <ExpansionPanelSummary
                             expandIcon={<ExpandMoreIcon/>}
                             aria-controls="panel1bh-content"
@@ -103,6 +100,7 @@ export default class AdminComponent extends React.Component {
                         <ExpansionPanelDetails>
                             <Grid container spacing={3}>
                                 <Grid item xs={12} sm={12}>
+                                    <DialogAddNews getNews={this.getNewsList}/>
 
                                     {this.state.news.length === 0 ?
                                         <CardContent>
@@ -110,40 +108,23 @@ export default class AdminComponent extends React.Component {
                                                 <Typography>Новостей нет</Typography> : LoadingComponent}
                                         </CardContent> :
                                         <div>
-                                            <DialogAddNews getNews={this.getNewsList}/>
                                             {this.state.news.map((newsData: newsData) => {
                                                 return (
-                                                    <div key={newsData._id}>
-                                                        <Card style={{marginTop: '1rem'}}>
-                                                            <div style={{display: 'flex', margin: '10px'}}>
-                                                                <DialogDeleteNews newsData={newsData}
-                                                                                  getNews={this.getNewsList}/>
-                                                                <DialogEditNews newsData={newsData}
-                                                                                getNews={this.getNewsList}/>
-                                                            </div>
-                                                            <div style={{textAlign: 'center'}}>
-                                                                <CardContent>
-                                                                    <Typography
-                                                                        variant="h6">{newsData.header}</Typography>
-                                                                </CardContent>
-                                                                <Typography variant="body1">{newsData.body}</Typography>
-                                                                <Typography variant="subtitle1"
-                                                                            style={{color: 'grey'}}>Дата:&nbsp; {newsData.data}, &nbsp; Автор: &nbsp;{newsData.author}
-                                                                </Typography>
-                                                            </div>
-                                                        </Card>
-                                                    </div>
+                                                    <NewsComponent newsData={newsData} admin={true} getNewsCb={this.getNewsList}/>
                                                 )
                                             })}
                                         </div>
+
                                     }
                                 </Grid>
                             </Grid>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
 
-                    <ExpansionPanel expanded={this.state.expanded === 'panel3'}
-                                    onChange={this.handleChangeExpand('panel3')}>
+
+                    <ExpansionPanel expanded={true}
+                                    onChange={this.handleChangeExpand('setAsAdmin')}
+                                    style={{width: '95%', margin: '1em auto'}}>
                         <ExpansionPanelSummary
                             expandIcon={<ExpandMoreIcon/>}
                             aria-controls="panel3bh-content"
@@ -152,7 +133,7 @@ export default class AdminComponent extends React.Component {
                             <Typography>Дать права админа</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                               <SetAdmin/>
+                            <SetAdmin/>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
 

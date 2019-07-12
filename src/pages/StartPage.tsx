@@ -1,7 +1,8 @@
 import * as React from "react";
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
 import Http from "../serverApi/http";
-import {LoadingComponent} from "../components/UniversalComponents";
+import NewsComponent, {LoadingComponent} from "../components/UniversalComponents";
+
 
 export interface newsData {
     _id: string
@@ -33,7 +34,7 @@ export default class StartPage extends React.Component {
 
 
     public render() {
-        document.title = 'Стартовая страница';
+        document.title = 'Главная';
 
 
         const cardTextArray = [
@@ -94,17 +95,7 @@ export default class StartPage extends React.Component {
                                     <div>
                                         {this.state.news.map((newsData: newsData) => {
                                             return (
-
-                                                <Card key={newsData._id} style={{ marginTop: '1rem'}}>
-                                                    <CardContent>
-                                                        <Typography
-                                                            variant="h6">{newsData.header}</Typography>
-                                                    </CardContent>
-                                                    <Typography variant="body1">{newsData.body}</Typography>
-                                                    <Typography variant="subtitle1"
-                                                                style={{color: 'grey'}}>Дата:&nbsp; {newsData.data}, &nbsp; Автор: &nbsp;{newsData.author}
-                                                    </Typography>
-                                                </Card>
+                                                <NewsComponent newsData={newsData} admin={false} />
                                             )
                                         })}
                                     </div>
@@ -117,10 +108,10 @@ export default class StartPage extends React.Component {
                                     <Card>
                                         {cardBody.img.length > 0 ? <CardMedia
                                             component="img"
-                                            alt="Contemplative Reptile"
+                                            alt=""
                                             height="140"
                                             image={cardBody.img}
-                                            title="Contemplative Reptile"
+                                            title=""
                                         /> : null}
 
                                         <CardContent style={{height: '130px'}}>

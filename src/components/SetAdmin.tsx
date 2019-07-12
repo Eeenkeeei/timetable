@@ -7,7 +7,7 @@ export default class SetAdmin extends React.Component {
 
     state = {
         adminEmail: '',
-        addConfirmed: false,
+        addConfirm: '',
         isLoading: false
     };
 
@@ -19,7 +19,8 @@ export default class SetAdmin extends React.Component {
 
     public addUserAsAdmin = () => {
         this.setState({
-            isLoading: true
+            isLoading: true,
+            addConfirm: ''
         })
         const http = new Http();
         http.addUserAsAdmin(this.state.adminEmail, '/addAdmin')
@@ -28,10 +29,17 @@ export default class SetAdmin extends React.Component {
                 (result)=>{
                     if (result === true){
                       this.setState({
-                          addConfirmed: true,
+                          addConfirm: 'Пользователь успешно добавлен',
                           adminEmail: '',
                           isLoading: false
                       })
+                    }
+                    if (result === false){
+                        console.log('false')
+                        this.setState({
+                            isLoading: false,
+                            addConfirm: 'Пользователь не найден',
+                        })
                     }
                 }
             )
@@ -52,7 +60,7 @@ export default class SetAdmin extends React.Component {
                     Сделать пользователя администратором
                 </Button>
                 {this.state.isLoading ? LoadingComponent : null}
-                {this.state.addConfirmed ? <Typography variant="body1">Пользователь успешно добавлен</Typography> : null}
+                {<Typography variant="body1">{this.state.addConfirm}</Typography>}
             </div>
         )
     }

@@ -291,7 +291,7 @@ export default class Main extends React.Component {
                                     </div>
                                 )
                             })}
-                            <Redirect to="/React-timetable"/>
+                            <Redirect to="/account"/>
                         </div>
                     </Container>
                 </MuiThemeProvider>
@@ -342,7 +342,7 @@ export default class Main extends React.Component {
                                         )
                                     }
                                 })}
-                                <Redirect to="/React-timetable"/>
+                                <Redirect to="/"/>
                             </div>
                         </Container>
                 </MuiThemeProvider>

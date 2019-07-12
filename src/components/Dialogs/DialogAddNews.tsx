@@ -136,7 +136,6 @@ export class DialogAddNews extends React.Component<DialogAddNewsProps> {
                             onChange={this.handleImgChange}
                         />
 
-
                     </DialogContent>
 
                     <DialogActions>
