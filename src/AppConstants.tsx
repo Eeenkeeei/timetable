@@ -1,2 +1,2 @@
-export const serverApi = 'https://react-timetable-server.herokuapp.com\n';
+export const serverApi = 'http://192.168.0.122:7777';
 // https://react-timetable-server.herokuapp.com

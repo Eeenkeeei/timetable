@@ -1,5 +1,6 @@
 import {serverApi} from "../AppConstants";
 import {newsData} from "../pages/StartPage";
+import {User} from "../pages/AccountPage";
 
 interface loginData {
     email: string;
@@ -108,6 +109,16 @@ export default class Http {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({email: body})
+        });
+    }
+
+    public updateUserData(body: User, path: '/updateData') {
+        return fetch(this.url + path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
         });
     }
 }

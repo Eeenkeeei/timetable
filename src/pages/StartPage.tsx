@@ -50,7 +50,7 @@ export default class StartPage extends React.Component {
                 title: 'Новости',
                 subtitle: '',
                 textBody: 'Получай всегда актуальные новости КАИ и не только',
-                img: 'https://i.imgur.com/plWb1GA.jpg'
+                img: 'https://c.pxhere.com/photos/dd/d8/blogging_computer_desk_notebook_notes_pen_writing-971343.jpg!d'
             },
             {
                 id: '2',
@@ -78,7 +78,7 @@ export default class StartPage extends React.Component {
                 title: 'Сохрани все важные ссылки',
                 subtitle: '',
                 textBody: 'Сохрани важные ссылки, чтобы не забыть прочитать их позже! Редактируй, добавляй теги, используй поиск по названиям и тегам!',
-                img: 'https://i.imgur.com/plWb1GA.jpg'
+                img: 'https://i.pinimg.com/originals/a2/5f/69/a25f69c7252cc082307310bf76c42d95.jpg'
             },
 
         ];

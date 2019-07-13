@@ -8,27 +8,35 @@ import SwipeableViews from 'react-swipeable-views';
 import {theme} from "../Theme";
 import {Dashboard, Fingerprint, ListAlt, Person, Security} from "@material-ui/icons";
 import AdminComponent from "./AdminComponent";
+import AddTimetable from "../components/AddTimetable";
+import {newLesson} from "../components/Dialogs/DialogAddLesson";
 
 interface AccountPageState {
     isDataConfirmed: boolean | null,
-    data: AccountData,
+    data: User,
     tabValue: number
 }
 
-interface AccountData {
+export interface User {
     email: string,
     registrationDate: string,
     password: string,
     admin: boolean,
-    lastLoginDate: string
+    lastLoginDate: string,
+    lessons: {
+        evenWeek: newLesson[],
+        unevenWeek: newLesson[]
+    }
+
 }
+
 
 export default class AccountPage extends React.Component<AccountPageState> {
 
     state = {
         isDataConfirmed: null,
         tabValue: 0,
-        data: {email: '', registrationDate: '', password: '', admin: false, lastLoginDate: ''}
+        data: {email: '', registrationDate: '', password: '', admin: false, lastLoginDate: '', lessons: {evenWeek: [], unevenWeek: []}}
     };
 
     public theme: any;
@@ -78,10 +86,69 @@ export default class AccountPage extends React.Component<AccountPageState> {
         this.setState({
             tabValue: index
         })
-    }
+    };
 
-    componentWillUnmount(): void {
-    }
+    public updateHandler = (data: User) => {
+        const storage = new DataStorage(new LocalStorage());
+        const http = new Http();
+        if (storage.getUserData !== null) {
+            http.updateUserData(data, '/updateData')
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        if (result.email !== undefined) {
+                            this.setState({
+                                data: result
+                            }, () => {
+                                this.setState({
+                                    isDataConfirmed: true
+                                })
+                            })
+                        } else {
+                            this.setState({
+                                isDataConfirmed: false
+                            }, () => {
+                                storage.logOut()
+                            })
+                        }
+                    }, (error) => {
+                        console.log(error)
+                    }
+                );
+        } else {
+            this.setState({
+                isDataConfirmed: false
+            })
+        }
+    };
+
+    // TODO
+    public addLessonInData = (lesson: newLesson ) => {
+
+        const newData:User = this.state.data;
+        if (lesson.lessonWeek === 'Четная'){
+            newData.lessons.evenWeek.push(lesson)
+        }
+
+        if (lesson.lessonWeek === 'Нечетная'){
+            newData.lessons.unevenWeek.push(lesson)
+        }
+        this.updateHandler(newData)
+
+    };
+
+    public deleteLessonInData = (lesson: newLesson) => {
+        const newData:User = this.state.data;
+        if (lesson.lessonWeek === 'Четная'){
+            newData.lessons.evenWeek.splice(newData.lessons.evenWeek.indexOf(lesson),1)
+        }
+
+        if (lesson.lessonWeek === 'Нечетная'){
+            newData.lessons.unevenWeek.splice(newData.lessons.unevenWeek.indexOf(lesson),1)
+        }
+        this.updateHandler(newData)
+    };
+
 
     public render() {
 
@@ -173,7 +240,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                     </Grid>
                 </Grid>
             </div>
-        )
+        );
 
         const accountPageBody = (
             <div>
@@ -182,12 +249,11 @@ export default class AccountPage extends React.Component<AccountPageState> {
                 <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={this.state.tabValue}
                                 onChangeIndex={this.handleChangeIndexTab}>
 
-                    {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div></div>}
-                    <div dir={theme.direction}>text2</div>
+                    {this.state.isDataConfirmed ? <div dir={theme.direction}><AddTimetable lessons={this.state.data.lessons} addLessonInData={this.addLessonInData} deleteLessonInData={this.deleteLessonInData}/></div> : <div/>}
+                    {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div/>}
                     <div dir={theme.direction}>text3</div>
                     <div dir={theme.direction}>text4</div>
                     <div dir={theme.direction}><AdminComponent/></div>
-
                 </SwipeableViews>
             </div>
         );
@@ -197,7 +263,6 @@ export default class AccountPage extends React.Component<AccountPageState> {
                 <Typography variant={"h6"}>Пожалуйста, подождите. Данные обновляются.</Typography>
             </div>
         );
-
 
         return (
             <div>
