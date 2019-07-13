@@ -95,7 +95,6 @@ export default class AddTimetable extends React.Component<AddTimetableProps> {
                                         </ListItemSecondaryAction>
                                     </ListItem>
 
-                                    // eslint-disable-next-line
                                             {this.props.lessons.evenWeek.map((lesson: newLesson) => {
                                                 if (lesson.lessonDay === day && lesson.lessonWeek === week) {
                                                     return (
