@@ -6,7 +6,6 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Typography
 } from "@material-ui/core";
 import Http from "../../serverApi/http";
 

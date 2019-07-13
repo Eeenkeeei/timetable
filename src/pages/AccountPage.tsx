@@ -36,7 +36,14 @@ export default class AccountPage extends React.Component<AccountPageState> {
     state = {
         isDataConfirmed: null,
         tabValue: 0,
-        data: {email: '', registrationDate: '', password: '', admin: false, lastLoginDate: '', lessons: {evenWeek: [], unevenWeek: []}}
+        data: {
+            email: '',
+            registrationDate: '',
+            password: '',
+            admin: false,
+            lastLoginDate: '',
+            lessons: {evenWeek: [], unevenWeek: []}
+        }
     };
 
     public theme: any;
@@ -123,14 +130,14 @@ export default class AccountPage extends React.Component<AccountPageState> {
     };
 
     // TODO
-    public addLessonInData = (lesson: newLesson ) => {
+    public addLessonInData = (lesson: newLesson) => {
 
-        const newData:User = this.state.data;
-        if (lesson.lessonWeek === 'Четная'){
+        const newData: User = this.state.data;
+        if (lesson.lessonWeek === 'Четная') {
             newData.lessons.evenWeek.push(lesson)
         }
 
-        if (lesson.lessonWeek === 'Нечетная'){
+        if (lesson.lessonWeek === 'Нечетная') {
             newData.lessons.unevenWeek.push(lesson)
         }
         this.updateHandler(newData)
@@ -138,13 +145,26 @@ export default class AccountPage extends React.Component<AccountPageState> {
     };
 
     public deleteLessonInData = (lesson: newLesson) => {
-        const newData:User = this.state.data;
-        if (lesson.lessonWeek === 'Четная'){
-            newData.lessons.evenWeek.splice(newData.lessons.evenWeek.indexOf(lesson),1)
+        const newData: User = this.state.data;
+        if (lesson.lessonWeek === 'Четная') {
+            newData.lessons.evenWeek.splice(newData.lessons.evenWeek.indexOf(lesson), 1)
         }
 
-        if (lesson.lessonWeek === 'Нечетная'){
-            newData.lessons.unevenWeek.splice(newData.lessons.unevenWeek.indexOf(lesson),1)
+        if (lesson.lessonWeek === 'Нечетная') {
+            newData.lessons.unevenWeek.splice(newData.lessons.unevenWeek.indexOf(lesson), 1)
+        }
+        this.updateHandler(newData)
+    };
+
+    public editLessonInData = (lessons: any) => {
+        const newData: User = this.state.data;
+        console.log(lessons.newLesson.lessonName)
+        if (lessons.newLesson.lessonWeek === 'Четная') {
+            newData.lessons.evenWeek[newData.lessons.evenWeek.indexOf(lessons.oldLesson)] = lessons.newLesson
+        }
+
+        if (lessons.newLesson.lessonWeek === 'Нечетная') {
+            newData.lessons.unevenWeek[newData.lessons.unevenWeek.indexOf(lessons.oldLesson)] = lessons.newLesson
         }
         this.updateHandler(newData)
     };
@@ -249,8 +269,19 @@ export default class AccountPage extends React.Component<AccountPageState> {
                 <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={this.state.tabValue}
                                 onChangeIndex={this.handleChangeIndexTab}>
 
-                    {this.state.isDataConfirmed ? <div dir={theme.direction}><AddTimetable lessons={this.state.data.lessons} addLessonInData={this.addLessonInData} deleteLessonInData={this.deleteLessonInData}/></div> : <div/>}
+
                     {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div/>}
+                    {this.state.isDataConfirmed ?
+                        <div dir={theme.direction}>
+                            <AddTimetable lessons={this.state.data.lessons}
+                                          addLessonInData={this.addLessonInData}
+                                          deleteLessonInData={this.deleteLessonInData}
+                                          editLessonInData={this.editLessonInData}
+                            />
+                        </div>
+                        :
+                        <div/>
+                    }
                     <div dir={theme.direction}>text3</div>
                     <div dir={theme.direction}>text4</div>
                     <div dir={theme.direction}><AdminComponent/></div>

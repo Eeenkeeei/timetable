@@ -5,13 +5,12 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle, Fade,
+    DialogTitle,
     TextField, Typography
 } from "@material-ui/core";
 import Http from "../../serverApi/http";
 import {DataStorage} from "../../serverApi/dataStorage";
 import {LocalStorage} from "../../serverApi/localStorage";
-import CustomizedSnackbars from "./SnackBar";
 import {PersonAdd} from "@material-ui/icons";
 
 interface DialogRegisterFormProps {

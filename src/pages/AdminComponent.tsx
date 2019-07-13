@@ -13,13 +13,6 @@ import NewsComponent, {LoadingComponent} from "../components/UniversalComponents
 import {DialogAddNews} from "../components/Dialogs/DialogAddNews";
 import SetAdmin from "../components/SetAdmin";
 
-
-interface AdminComponentState {
-    expanded: string
-    news: []
-    isNoOneNews: boolean
-}
-
 export default class AdminComponent extends React.Component {
 
     state = {

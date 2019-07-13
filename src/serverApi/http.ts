@@ -1,5 +1,4 @@
 import {serverApi} from "../AppConstants";
-import {newsData} from "../pages/StartPage";
 import {User} from "../pages/AccountPage";
 
 interface loginData {

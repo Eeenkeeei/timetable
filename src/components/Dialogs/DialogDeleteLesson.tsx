@@ -6,9 +6,7 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Typography
 } from "@material-ui/core";
-import Http from "../../serverApi/http";
 
 import {Delete} from "@material-ui/icons";
 import {newLesson} from "./DialogAddLesson";
@@ -44,7 +42,7 @@ export class DialogDeleteLesson extends React.Component<DialogDeleteLessonProps>
     public render() {
         return (
             <div>
-                <Button onClick={this.handleOpenLoginDialog} style={{paddingRight: 0, paddingLeft: 0, marginRight: '1rem'}}>
+                <Button onClick={this.handleOpenLoginDialog} style={{paddingRight: 0, paddingLeft: 0}}>
                     <Delete/>
                 </Button>
 

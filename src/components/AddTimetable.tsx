@@ -1,13 +1,11 @@
 import * as React from "react";
 import {
     AppBar,
-    Card,
-    CardContent, Divider, Grid,
-    IconButton,
+    Divider, Grid,
     List,
     ListItem, ListItemSecondaryAction,
     ListItemText,
-    Tab, Table, TableBody, TableCell, TableRow,
+    Tab,
     Tabs,
     Typography
 } from "@material-ui/core";
@@ -15,11 +13,13 @@ import {theme} from "../Theme";
 import SwipeableViews from "react-swipeable-views";
 import {DialogAddLesson, newLesson} from "./Dialogs/DialogAddLesson";
 import {DialogDeleteLesson} from "./Dialogs/DialogDeleteLesson";
+import {DialogEditLesson} from "./Dialogs/DialogEditLesson";
 
 interface AddTimetableProps {
     lessons: { evenWeek: newLesson[], unevenWeek: newLesson[] }
     addLessonInData: any,
     deleteLessonInData: any
+    editLessonInData: any
 }
 
 export default class AddTimetable extends React.Component<AddTimetableProps> {
@@ -48,6 +48,10 @@ export default class AddTimetable extends React.Component<AddTimetableProps> {
         this.props.deleteLessonInData(lessonObject)
     };
 
+    public editLessonInData = (lessonObject: newLesson) => {
+        this.props.editLessonInData(lessonObject)
+    }
+
 
     public render() {
         const stylesForTab = {
@@ -74,10 +78,6 @@ export default class AddTimetable extends React.Component<AddTimetableProps> {
             </AppBar>
         );
 
-        const tableCellStyle = {
-            width: '1000px',
-        } as React.CSSProperties;
-
         const dayListComponent = (week: string) => {
             return (
                 <div>
@@ -95,45 +95,61 @@ export default class AddTimetable extends React.Component<AddTimetableProps> {
                                         </ListItemSecondaryAction>
                                     </ListItem>
 
-                                    <Table size="small">
-                                        <TableBody>
+                                    // eslint-disable-next-line
                                             {this.props.lessons.evenWeek.map((lesson: newLesson) => {
                                                 if (lesson.lessonDay === day && lesson.lessonWeek === week) {
-
                                                     return (
-                                                        <TableRow key={Math.random()}>
-                                                            <Grid container spacing={3}>
-                                                            <Grid item style={{maxWidth: '10%', paddingRight: '5px'}}><Typography>{lesson.lessonName}</Typography><Typography  style={{color: 'grey'}}>{lesson.lessonNumber}</Typography>
+                                                        <div key={Math.random()}>
+                                                            <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem'}}>
+                                                            <Grid item xs={12} sm={3}>
+                                                                <Typography variant="h6">{lesson.lessonName}</Typography>
+                                                                <Typography  style={{color: 'grey'}}>{lesson.lessonNumber}</Typography>
                                                             </Grid>
-                                                            <TableCell style={{maxWidth: '20%', padding: 0}}><Typography>{lesson.lessonType}</Typography> <Typography style={{color: 'grey'}}>{lesson.lessonTeacher}</Typography>
-                                                            </TableCell>
-                                                            <TableCell style={{maxWidth: '40%', paddingRight: 0}}><Typography>{lesson.lessonLocation}</Typography></TableCell>
-                                                            <TableCell style={{padding: 0}}>
-                                                                <DialogDeleteLesson lesson={lesson} deleteLessonInData={this.deleteLessonInData}/>
-                                                                <DialogDeleteLesson lesson={lesson} deleteLessonInData={this.deleteLessonInData}/>
-                                                            </TableCell>
+                                                            <Grid item xs={12} sm={3}>
+                                                                <Typography >{lesson.lessonType}</Typography>
+                                                                <Typography style={{color: 'grey'}}>{lesson.lessonTeacher}</Typography>
                                                             </Grid>
-                                                        </TableRow>
+                                                            <Grid item xs={6} sm={3} >
+                                                                <Typography>{lesson.lessonLocation}</Typography>
+                                                            </Grid>
+                                                            <Grid item sm={3} style={{display: 'flex', justifyContent: 'center' }}>
+                                                                <DialogDeleteLesson lesson={lesson} deleteLessonInData={this.deleteLessonInData}/>
+                                                                <DialogEditLesson lesson={lesson} editLessonInData={this.editLessonInData}/>
+
+                                                            </Grid>
+                                                            </Grid>
+                                                            <Divider/>
+                                                        </div>
                                                     )
                                                 }
                                             })}
                                             {this.props.lessons.unevenWeek.map((lesson: newLesson) => {
                                                 if (lesson.lessonDay === day && lesson.lessonWeek === week) {
-
                                                     return (
-                                                        <TableRow key={Math.random()}>
-                                                            <TableCell style={{width: '15%'}}><Typography>{lesson.lessonName}</Typography><Typography  style={{color: 'grey'}}>{lesson.lessonNumber}</Typography>
-                                                            </TableCell>
-                                                            <TableCell style={{width: '35%'}}><Typography>{lesson.lessonType}</Typography> <Typography style={{color: 'grey'}}>{lesson.lessonTeacher}</Typography>
-                                                            </TableCell>
-                                                            <TableCell style={{width: '30%'}}><Typography>{lesson.lessonLocation}</Typography></TableCell>
-                                                            <TableCell style={{width: '20%'}}><DialogDeleteLesson lesson={lesson} deleteLessonInData={this.deleteLessonInData}/></TableCell>
-                                                        </TableRow>
+                                                        <div key={Math.random()}>
+                                                            <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem'}}>
+                                                                <Grid item xs={12} sm={3}>
+                                                                    <Typography variant="h6">{lesson.lessonName}</Typography>
+                                                                    <Typography  style={{color: 'grey'}}>{lesson.lessonNumber}</Typography>
+                                                                </Grid>
+                                                                <Grid item xs={12} sm={3}>
+                                                                    <Typography >{lesson.lessonType}</Typography>
+                                                                    <Typography style={{color: 'grey'}}>{lesson.lessonTeacher}</Typography>
+                                                                </Grid>
+                                                                <Grid item xs={6} sm={3} >
+                                                                    <Typography>{lesson.lessonLocation}</Typography>
+                                                                </Grid>
+                                                                <Grid item sm={3} style={{display: 'flex', justifyContent: 'center' }}>
+                                                                    <DialogDeleteLesson lesson={lesson} deleteLessonInData={this.deleteLessonInData}/>
+                                                                    <DialogEditLesson lesson={lesson} editLessonInData={this.editLessonInData}/>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Divider/>
+                                                        </div>
                                                     )
                                                 }
                                             })}
-                                        </TableBody>
-                                    </Table>
+
                                 </div>
                             )
                         })}

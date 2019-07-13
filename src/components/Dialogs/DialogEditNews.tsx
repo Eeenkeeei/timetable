@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import Http from "../../serverApi/http";
 
-import {Delete, Edit} from "@material-ui/icons";
+import {Edit} from "@material-ui/icons";
 import {newsData} from "../../pages/StartPage";
 
 interface DialogEditNewsProps {

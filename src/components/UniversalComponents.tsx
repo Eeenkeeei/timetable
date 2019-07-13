@@ -8,7 +8,6 @@ import Http from "../serverApi/http";
 import {DialogDeleteNews} from "./Dialogs/DialogDeleteNews";
 import {DialogEditNews} from "./Dialogs/DialogEditNews";
 import {newsData} from "../pages/StartPage";
-import {newLesson} from "./Dialogs/DialogAddLesson";
 
 export const LoadingComponent = (
     <MuiThemeProvider theme={theme}>
