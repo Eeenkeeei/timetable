@@ -99,7 +99,7 @@ export default class AddTimetable extends React.Component<AddTimetableProps> {
                                                 if (lesson.lessonDay === day && lesson.lessonWeek === week) {
                                                     return (
                                                         <div key={Math.random()}>
-                                                            <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem'}}>
+                                                            <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem', width: '95%'}}>
                                                             <Grid item xs={12} sm={3}>
                                                                 <Typography variant="h6">{lesson.lessonName}</Typography>
                                                                 <Typography  style={{color: 'grey'}}>{lesson.lessonNumber}</Typography>
@@ -111,7 +111,7 @@ export default class AddTimetable extends React.Component<AddTimetableProps> {
                                                             <Grid item xs={6} sm={3} >
                                                                 <Typography>{lesson.lessonLocation}</Typography>
                                                             </Grid>
-                                                            <Grid item sm={3} style={{display: 'flex', justifyContent: 'center' }}>
+                                                            <Grid item sm={3} style={{display: 'flex', justifyContent: 'flex-end'}}>
                                                                 <DialogDeleteLesson lesson={lesson} deleteLessonInData={this.deleteLessonInData}/>
                                                                 <DialogEditLesson lesson={lesson} editLessonInData={this.editLessonInData}/>
 
@@ -126,7 +126,7 @@ export default class AddTimetable extends React.Component<AddTimetableProps> {
                                                 if (lesson.lessonDay === day && lesson.lessonWeek === week) {
                                                     return (
                                                         <div key={Math.random()}>
-                                                            <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem'}}>
+                                                            <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem', width: '95%'}}>
                                                                 <Grid item xs={12} sm={3}>
                                                                     <Typography variant="h6">{lesson.lessonName}</Typography>
                                                                     <Typography  style={{color: 'grey'}}>{lesson.lessonNumber}</Typography>
