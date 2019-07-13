@@ -101,7 +101,7 @@ export default class AdminComponent extends React.Component {
                                                 <Typography>Новостей нет</Typography> : LoadingComponent}
                                         </CardContent> :
                                         <div>
-                                            {this.state.news.map((newsData: newsData) => {
+                                            {this.state.news.reverse().map((newsData: newsData) => {
                                                 return (
                                                     <NewsComponent key={newsData._id} newsData={newsData} admin={true} getNewsCb={this.getNewsList}/>
                                                 )

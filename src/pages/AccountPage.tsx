@@ -158,7 +158,6 @@ export default class AccountPage extends React.Component<AccountPageState> {
 
     public editLessonInData = (lessons: any) => {
         const newData: User = this.state.data;
-        console.log(lessons.newLesson.lessonName)
         if (lessons.newLesson.lessonWeek === 'Четная') {
             newData.lessons.evenWeek[newData.lessons.evenWeek.indexOf(lessons.oldLesson)] = lessons.newLesson
         }
@@ -268,6 +267,9 @@ export default class AccountPage extends React.Component<AccountPageState> {
                 {fullMenu}
                 <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={this.state.tabValue}
                                 onChangeIndex={this.handleChangeIndexTab}>
+
+
+                    {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div/>}
                     {this.state.isDataConfirmed ?
                         <div dir={theme.direction}>
                             <AddTimetable lessons={this.state.data.lessons}
@@ -279,9 +281,6 @@ export default class AccountPage extends React.Component<AccountPageState> {
                         :
                         <div/>
                     }
-
-                    {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div/>}
-
                     <div dir={theme.direction}>text3</div>
                     <div dir={theme.direction}>text4</div>
                     <div dir={theme.direction}><AdminComponent/></div>

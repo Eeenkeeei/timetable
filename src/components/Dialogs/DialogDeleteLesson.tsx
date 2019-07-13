@@ -42,7 +42,7 @@ export class DialogDeleteLesson extends React.Component<DialogDeleteLessonProps>
     public render() {
         return (
             <div>
-                <Button onClick={this.handleOpenLoginDialog} style={{paddingRight: 0, paddingLeft: 0}}>
+                <Button onClick={this.handleOpenLoginDialog} style={{paddingRight: 0, paddingLeft: 0, marginTop: '5px'}}>
                     <Delete/>
                 </Button>
 
