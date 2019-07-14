@@ -93,7 +93,7 @@ export default class StartPage extends React.Component {
                                         {LoadingComponent}
                                     </CardContent> :
                                     <div>
-                                        {this.state.news.reverse().map((newsData: newsData) => {
+                                        {this.state.news.map((newsData: newsData) => {
                                             return (
                                                 <NewsComponent key={newsData._id} newsData={newsData} admin={false} />
                                             )

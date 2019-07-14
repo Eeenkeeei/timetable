@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, {SyntheticEvent} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
@@ -6,12 +6,12 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
-import { amber, green } from '@material-ui/core/colors';
+import {amber, green} from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import {makeStyles, Theme} from '@material-ui/core/styles';
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -55,7 +55,7 @@ export interface Props {
 
 function MySnackbarContentWrapper(props: Props) {
     const classes = useStyles1();
-    const { className, message, onClose, variant, ...other } = props;
+    const {className, message, onClose, variant, ...other} = props;
     const Icon = variantIcon[variant];
 
     return (
@@ -64,14 +64,12 @@ function MySnackbarContentWrapper(props: Props) {
             aria-describedby="client-snackbar"
             message={
                 <span id="client-snackbar" className={classes.message}>
-          <Icon className={clsx(classes.icon, classes.iconVariant)} />
+          <Icon className={clsx(classes.icon, classes.iconVariant)}/>
                     {message}
         </span>
             }
             action={[
-                <IconButton key="close" aria-label="Close" color="inherit" onClick={onClose}>
-                    <CloseIcon className={classes.icon} />
-                </IconButton>,
+
             ]}
             {...other}
         />
@@ -91,43 +89,52 @@ const useStyles2 = makeStyles((theme: Theme) => ({
     },
 }));
 
-export default function CustomizedSnackbars() {
-    const classes = useStyles2();
-    const [open, setOpen] = React.useState(false);
+interface SnackbarProps {
+    variant: "success" | "error" | "warning" | "info"
+    message: string,
+}
 
-    function handleClick() {
-        setOpen(true);
-    }
+export default class SnackbarComponent extends React.Component<SnackbarProps> {
 
-    function handleClose(event?: SyntheticEvent, reason?: string) {
+    state = {
+        open: false
+    };
+
+    public handleOpen = () => {
+        this.setState({
+            open: true
+        })
+    };
+
+    public handleClose = (event?: SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
+        this.setState({
+            open: false
+        })
+    };
 
-        setOpen(false);
+    public render() {
+        return (
+            <div>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={true}
+                    autoHideDuration={4000}
+                    onClose={this.handleClose}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={this.handleClose}
+                        variant={this.props.variant}
+                        message={this.props.message}
+                    />
+                </Snackbar>
+            </div>
+        )
     }
 
-    return (
-        <div>
-            <Button variant="outlined" className={classes.margin} onClick={handleClick}>
-                Open success snackbar
-            </Button>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-            >
-                <MySnackbarContentWrapper
-                    onClose={handleClose}
-                    variant="success"
-                    message="This is a success message!"
-                />
-            </Snackbar>
-
-        </div>
-    );
 }

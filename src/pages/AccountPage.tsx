@@ -10,11 +10,14 @@ import {Dashboard, Fingerprint, ListAlt, Person, Security} from "@material-ui/ic
 import AdminComponent from "./AdminComponent";
 import AddTimetable from "../components/AddTimetable";
 import {newLesson} from "../components/Dialogs/DialogAddLesson";
+import {newTaskLesson} from "../components/Dialogs/DialogAddTaskLesson";
+import SnackbarComponent from "../components/Dialogs/SnackBar";
 
 interface AccountPageState {
     isDataConfirmed: boolean | null,
     data: User,
-    tabValue: number
+    tabValue: number,
+    openSnackbar: boolean
 }
 
 export interface User {
@@ -26,8 +29,8 @@ export interface User {
     lessons: {
         evenWeek: newLesson[],
         unevenWeek: newLesson[]
-    }
-
+    },
+    lessonTasks: newTaskLesson[]
 }
 
 
@@ -42,8 +45,10 @@ export default class AccountPage extends React.Component<AccountPageState> {
             password: '',
             admin: false,
             lastLoginDate: '',
-            lessons: {evenWeek: [], unevenWeek: []}
-        }
+            lessons: {evenWeek: [], unevenWeek: []},
+            lessonTasks: []
+        },
+        openSnackbar: false
     };
 
     public theme: any;
@@ -109,7 +114,15 @@ export default class AccountPage extends React.Component<AccountPageState> {
                             }, () => {
                                 this.setState({
                                     isDataConfirmed: true
-                                })
+                                });
+                                this.setState({
+                                    openSnackbar: true
+                                });
+                                setTimeout(()=>{
+                                    this.setState({
+                                        openSnackbar: false
+                                    })
+                                }, 4000)
                             })
                         } else {
                             this.setState({
@@ -129,7 +142,6 @@ export default class AccountPage extends React.Component<AccountPageState> {
         }
     };
 
-    // TODO
     public addLessonInData = (lesson: newLesson) => {
 
         const newData: User = this.state.data;
@@ -268,8 +280,6 @@ export default class AccountPage extends React.Component<AccountPageState> {
                 <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={this.state.tabValue}
                                 onChangeIndex={this.handleChangeIndexTab}>
 
-
-                    {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div/>}
                     {this.state.isDataConfirmed ?
                         <div dir={theme.direction}>
                             <AddTimetable lessons={this.state.data.lessons}
@@ -281,6 +291,8 @@ export default class AccountPage extends React.Component<AccountPageState> {
                         :
                         <div/>
                     }
+                    {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div/>}
+
                     <div dir={theme.direction}>text3</div>
                     <div dir={theme.direction}>text4</div>
                     <div dir={theme.direction}><AdminComponent/></div>
@@ -298,6 +310,8 @@ export default class AccountPage extends React.Component<AccountPageState> {
             <div>
                 {this.state.isDataConfirmed === null ? LoadingComponent : null}
                 {this.state.data !== undefined ? accountPageBody : waitingComponent}
+                {this.state.openSnackbar ? <SnackbarComponent variant="success" message="Данные обновлены"/> : null}
+
             </div>
         )
     }
