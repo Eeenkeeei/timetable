@@ -5,7 +5,7 @@ import {MuiThemeProvider} from '@material-ui/core/styles';
 import {theme} from "../Theme";
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from "@material-ui/core/MenuItem";
-import {pagesForMenus} from "../pages/AppPagesList";
+import {pagesForMenus} from "../AppPagesList";
 import {DialogLoginForm} from "./Dialogs/DialogLoginForm";
 import {DialogRegisterForm} from "./Dialogs/DialogRegisterForm";
 import {DataStorage} from "../serverApi/dataStorage";
