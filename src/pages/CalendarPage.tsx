@@ -24,7 +24,8 @@ export default class CalendarPage extends React.Component {
             admin: false,
             lastLoginDate: '',
             lessons: {evenWeek: [], unevenWeek: []},
-            lessonTasks: []
+            lessonTasks: [],
+            teachers: []
         },
         openSnackbar: false,
         months: [[]]

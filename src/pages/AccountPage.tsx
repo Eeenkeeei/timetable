@@ -3,21 +3,37 @@ import {DataStorage} from "../serverApi/dataStorage";
 import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
 import {LoadingComponent} from "../components/UniversalComponents";
-import {AppBar, Grid, Tab, Tabs, Typography} from "@material-ui/core";
+import {
+    AppBar,
+    Grid, IconButton,
+    List,
+    ListItem,
+    ListItemSecondaryAction,
+    ListItemText,
+    Tab,
+    Tabs,
+    Typography
+} from "@material-ui/core";
 import SwipeableViews from 'react-swipeable-views';
 import {theme} from "../Theme";
-import {Dashboard, Fingerprint, ListAlt, Person, Security} from "@material-ui/icons";
+import {Dashboard, Edit, Fingerprint, ListAlt, Person, Security} from "@material-ui/icons";
 import AdminComponent from "./AdminComponent";
 import AddTimetable from "../components/AddTimetable";
 import {newLesson} from "../components/Dialogs/DialogAddLesson";
 import {newTaskLesson} from "../components/Dialogs/DialogAddTaskLesson";
 import SnackbarComponent from "../components/Dialogs/SnackBar";
+import {DialogAddNewTeacher} from "../components/Dialogs/DialogAddNewTeacher";
 
 interface AccountPageState {
     isDataConfirmed: boolean | null,
     data: User,
     tabValue: number,
     openSnackbar: boolean
+}
+
+export interface TeacherData {
+    name: string
+    id: number
 }
 
 export interface User {
@@ -30,7 +46,8 @@ export interface User {
         evenWeek: newLesson[],
         unevenWeek: newLesson[]
     },
-    lessonTasks: newTaskLesson[]
+    lessonTasks: newTaskLesson[],
+    teachers: TeacherData[]
 }
 
 
@@ -46,7 +63,8 @@ export default class AccountPage extends React.Component<AccountPageState> {
             admin: false,
             lastLoginDate: '',
             lessons: {evenWeek: [], unevenWeek: []},
-            lessonTasks: []
+            lessonTasks: [],
+            teachers: []
         },
         openSnackbar: false
     };
@@ -118,7 +136,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                                 this.setState({
                                     openSnackbar: true
                                 });
-                                setTimeout(()=>{
+                                setTimeout(() => {
                                     this.setState({
                                         openSnackbar: false
                                     })
@@ -177,6 +195,16 @@ export default class AccountPage extends React.Component<AccountPageState> {
         if (lessons.newLesson.lessonWeek === 'Нечетная') {
             newData.lessons.unevenWeek[newData.lessons.unevenWeek.indexOf(lessons.oldLesson)] = lessons.newLesson
         }
+        this.updateHandler(newData)
+    };
+
+    public addTeacherInData = (teacher: TeacherData) => {
+        const newData: User = this.state.data;
+        const newTeacher: TeacherData = {
+            name: teacher.name,
+            id: this.state.data.teachers.length + 1
+        }
+        newData.teachers.push(newTeacher);
         this.updateHandler(newData)
     };
 
@@ -273,6 +301,31 @@ export default class AccountPage extends React.Component<AccountPageState> {
             </div>
         );
 
+        const ServiceComponent = () => {
+            return (
+                <div>
+                    <Typography variant={"h6"}>Список преподавателей <DialogAddNewTeacher addNewTeacher={this.addTeacherInData}/>
+                    </Typography>
+                    <List>
+                        {this.state.data.teachers.map((teacher: TeacherData) => {
+                            return (
+                                <ListItem key={teacher.id}>
+                                    <ListItemText>
+                                        {teacher.name}
+                                    </ListItemText>
+                                    <ListItemSecondaryAction>
+                                        <IconButton>
+                                            <Edit/>
+                                        </IconButton>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            )
+                        })}
+                    </List>
+                </div>
+            )
+        };
+
         const accountPageBody = (
             <div>
                 {mobileMenu}
@@ -294,7 +347,13 @@ export default class AccountPage extends React.Component<AccountPageState> {
                         <div/>
                     }
                     <div dir={theme.direction}>text3</div>
-                    <div dir={theme.direction}>text4</div>
+                    {this.state.isDataConfirmed ?
+                        <div dir={theme.direction}>
+                            <ServiceComponent/>
+                        </div>
+                        :
+                        <div/>
+                    }
                     <div dir={theme.direction}><AdminComponent/></div>
                 </SwipeableViews>
             </div>
@@ -311,7 +370,6 @@ export default class AccountPage extends React.Component<AccountPageState> {
                 {this.state.isDataConfirmed === null ? LoadingComponent : null}
                 {this.state.data !== undefined ? accountPageBody : waitingComponent}
                 {this.state.openSnackbar ? <SnackbarComponent variant="success" message="Данные обновлены"/> : null}
-
             </div>
         )
     }
