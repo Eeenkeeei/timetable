@@ -9,10 +9,12 @@ import {
 } from "@material-ui/core";
 import {Edit} from "@material-ui/icons";
 import {newLesson} from "./DialogAddLesson";
+import {TeacherData} from "../../pages/AccountPage";
 
 interface DialogEditLessonProps {
     lesson: newLesson
     editLessonInData: any // cb для добавления
+    teachers: TeacherData[]
 }
 
 
@@ -140,15 +142,21 @@ export class DialogEditLesson extends React.Component<DialogEditLessonProps> {
                             fullWidth
                             onChange={this.handleLessonLocationChange}
                         />
-                        <TextField
-                            margin="dense"
-                            id="login"
-                            label={<Typography>Преподаватель: </Typography>}
-                            value={this.state.lessonTeacher}
-                            fullWidth
-                            onChange={this.handleLessonTeacherChange}
-                        />
-
+                        <FormControl style={{width: '100%'}}>
+                            <InputLabel htmlFor="selectTeacher">Преподаватель</InputLabel>
+                            <Select
+                                value={this.props.lesson.lessonTeacher}
+                                onChange={this.handleLessonTeacherChange}
+                                input={<Input id="selectTeacher"/>}
+                                fullWidth
+                            >
+                                {this.props.teachers.map((teacher: TeacherData) => {
+                                    return (
+                                        <MenuItem value={teacher.name} key={teacher.id}>{teacher.name}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
 
                     </DialogContent>
 

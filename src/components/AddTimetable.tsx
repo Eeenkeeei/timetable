@@ -8,12 +8,14 @@ import {theme} from "../Theme";
 import SwipeableViews from "react-swipeable-views";
 import {newLesson} from "./Dialogs/DialogAddLesson";
 import {scheduleListComponent} from "./UniversalComponents";
+import {TeacherData} from "../pages/AccountPage";
 
 interface AddTimetableProps {
     lessons: { evenWeek: newLesson[], unevenWeek: newLesson[] }
-    addLessonInData: any,
+    addLessonInData: any
     deleteLessonInData: any
     editLessonInData: any
+    teachers: TeacherData[]
 }
 
 export default class AddTimetable extends React.Component<AddTimetableProps> {
@@ -76,10 +78,10 @@ export default class AddTimetable extends React.Component<AddTimetableProps> {
                 <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={this.state.tabValue}
                                 onChangeIndex={this.handleChangeIndexTab}>
                     <div dir={theme.direction}>
-                        {scheduleListComponent(this.handleAddLesson, this.editLessonInData, this.deleteLessonInData, 'Четная', this.props.lessons.evenWeek, this.props.lessons.unevenWeek)}
+                        {scheduleListComponent(this.props.teachers, this.handleAddLesson, this.editLessonInData, this.deleteLessonInData, 'Четная', this.props.lessons.evenWeek, this.props.lessons.unevenWeek)}
                     </div>
                     <div dir={theme.direction}>
-                        {scheduleListComponent(this.handleAddLesson, this.editLessonInData, this.deleteLessonInData, 'Нечетная', this.props.lessons.evenWeek, this.props.lessons.unevenWeek)}
+                        {scheduleListComponent(this.props.teachers, this.handleAddLesson, this.editLessonInData, this.deleteLessonInData, 'Нечетная', this.props.lessons.evenWeek, this.props.lessons.unevenWeek)}
                     </div>
                 </SwipeableViews>
 

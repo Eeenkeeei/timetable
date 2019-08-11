@@ -23,6 +23,7 @@ import {newLesson} from "../components/Dialogs/DialogAddLesson";
 import {newTaskLesson} from "../components/Dialogs/DialogAddTaskLesson";
 import SnackbarComponent from "../components/Dialogs/SnackBar";
 import {DialogAddNewTeacher} from "../components/Dialogs/DialogAddNewTeacher";
+const uuidv4 = require('uuid/v4');
 
 interface AccountPageState {
     isDataConfirmed: boolean | null,
@@ -202,12 +203,12 @@ export default class AccountPage extends React.Component<AccountPageState> {
         const newData: User = this.state.data;
         const newTeacher: TeacherData = {
             name: teacher.name,
-            id: this.state.data.teachers.length + 1
-        }
+            id: uuidv4()
+        };
+        console.log(newTeacher)
         newData.teachers.push(newTeacher);
         this.updateHandler(newData)
     };
-
 
     public render() {
 
@@ -311,7 +312,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                             return (
                                 <ListItem key={teacher.id}>
                                     <ListItemText>
-                                        {teacher.name}
+                                        <Typography variant="h6">{teacher.name}</Typography>
                                     </ListItemText>
                                     <ListItemSecondaryAction>
                                         <IconButton>
@@ -338,6 +339,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                     {this.state.isDataConfirmed ?
                         <div dir={theme.direction}>
                             <AddTimetable lessons={this.state.data.lessons}
+                                          teachers={this.state.data.teachers}
                                           addLessonInData={this.addLessonInData}
                                           deleteLessonInData={this.deleteLessonInData}
                                           editLessonInData={this.editLessonInData}

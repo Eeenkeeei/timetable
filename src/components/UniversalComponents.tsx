@@ -22,6 +22,7 @@ import {DialogAddLesson, newLesson} from "./Dialogs/DialogAddLesson";
 import {DialogDeleteLesson} from "./Dialogs/DialogDeleteLesson";
 import {DialogEditLesson} from "./Dialogs/DialogEditLesson";
 import {DialogAddTaskLesson} from "./Dialogs/DialogAddTaskLesson";
+import {TeacherData} from "../pages/AccountPage";
 
 export const LoadingComponent = (
     <MuiThemeProvider theme={theme}>
@@ -125,7 +126,7 @@ export default class NewsComponent extends React.Component<NewsComponentProps> {
 
 const daysInWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 
-const scheduleString = (lesson: newLesson, editLessonInData: any, deleteLessonInData: any, addNewTaskLesson?: any) => {
+const scheduleString = (teachers: TeacherData[], lesson: newLesson, editLessonInData: any, deleteLessonInData: any, addNewTaskLesson?: any ) => {
     return (
         <div key={Math.random()} style={{marginTop: '7px'}}>
             <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem', width: '95%'}}>
@@ -144,7 +145,7 @@ const scheduleString = (lesson: newLesson, editLessonInData: any, deleteLessonIn
                     {editLessonInData === false ? null :
                         <DialogDeleteLesson lesson={lesson} deleteLessonInData={deleteLessonInData}/>}
                     {editLessonInData === false ? null :
-                        <DialogEditLesson lesson={lesson} editLessonInData={editLessonInData}/>}
+                        <DialogEditLesson teachers={teachers} lesson={lesson} editLessonInData={editLessonInData}/>}
                     {addNewTaskLesson === undefined ? null :
                         <DialogAddTaskLesson lesson={lesson} addNewTaskLesson={addNewTaskLesson}/>}
                 </Grid>
@@ -155,7 +156,7 @@ const scheduleString = (lesson: newLesson, editLessonInData: any, deleteLessonIn
 };
 
 
-export const scheduleListComponent = (handleAddLesson: any, editLessonInData: any, deleteLessonInData: any, week: 'Четная' | 'Нечетная', evenWeek: newLesson[], unevenWeek: newLesson[], addNewTaskLesson?: any) => {
+export const scheduleListComponent = (teachers: TeacherData[], handleAddLesson: any, editLessonInData: any, deleteLessonInData: any, week: 'Четная' | 'Нечетная', evenWeek: newLesson[], unevenWeek: newLesson[], addNewTaskLesson?: any) => {
     return (
         <div>
             <List dense={true}>
@@ -169,17 +170,17 @@ export const scheduleListComponent = (handleAddLesson: any, editLessonInData: an
                                 <ListItemSecondaryAction>
                                     {addNewTaskLesson !== undefined ? null :
                                         <DialogAddLesson lessonDay={day} lessonWeek={week}
-                                                         addLesson={handleAddLesson}/>}
+                                                         addLesson={handleAddLesson} teachers={teachers}/>}
                                 </ListItemSecondaryAction>
                             </ListItem>
                             {evenWeek.map((lesson: newLesson) => {
                                 if (lesson.lessonDay === day && lesson.lessonWeek === week) {
-                                    return (scheduleString(lesson, editLessonInData, deleteLessonInData, addNewTaskLesson))
+                                    return (scheduleString(teachers, lesson, editLessonInData, deleteLessonInData, addNewTaskLesson))
                                 }
                             })}
                             {unevenWeek.map((lesson: newLesson) => {
                                 if (lesson.lessonDay === day && lesson.lessonWeek === week) {
-                                    return (scheduleString(lesson, editLessonInData, deleteLessonInData, addNewTaskLesson))
+                                    return (scheduleString(teachers, lesson, editLessonInData, deleteLessonInData, addNewTaskLesson))
                                 }
                             })}
                         </div>

@@ -14,7 +14,7 @@ import {
 } from '@material-ui/pickers';
 import MomentUtils from "@date-io/moment";
 import "moment/locale/ru";
-import moment from 'moment';
+
 
 interface DialogAddTaskLessonProps {
     lesson: newLesson
@@ -32,15 +32,7 @@ export interface newLesson {
 }
 
 export interface newTaskLesson {
-    lesson: {
-        lessonWeek: string;
-        lessonDay: string;
-        lessonName: string;
-        lessonType: string;
-        lessonNumber: string;
-        lessonLocation: string;
-        lessonTeacher: string;
-    },
+    lesson: newLesson,
     taskDate: any,
     taskText: string
 }
@@ -76,6 +68,7 @@ export class DialogAddTaskLesson extends React.Component<DialogAddTaskLessonProp
                 lessonNumber: this.props.lesson.lessonNumber,
                 lessonLocation: this.props.lesson.lessonLocation,
                 lessonTeacher: this.props.lesson.lessonTeacher
+
             },
             taskDate: new Date(this.state.dateForTaskLesson),
             taskText: this.state.textForTaskLesson

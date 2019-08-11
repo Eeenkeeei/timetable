@@ -8,7 +8,6 @@ import Http from "../serverApi/http";
 import SwipeableViews from "react-swipeable-views";
 import {newTaskLesson} from "../components/Dialogs/DialogAddTaskLesson";
 import {User} from "./AccountPage";
-import CustomizedSnackbars from "../components/Dialogs/SnackBar";
 import SnackbarComponent from "../components/Dialogs/SnackBar";
 
 export default class SchedulePage extends React.Component {
@@ -152,6 +151,7 @@ export default class SchedulePage extends React.Component {
                             onChangeIndex={this.handleChangeIndexTab}>
                 <div dir={theme.direction}>
                     {scheduleListComponent(
+                        this.state.data.teachers,
                         false,
                         false,
                         false,
@@ -162,7 +162,7 @@ export default class SchedulePage extends React.Component {
                     )}
                 </div>
                 <div dir={theme.direction}>
-                    {scheduleListComponent(false, false, false, 'Нечетная', this.state.data.lessons.evenWeek, this.state.data.lessons.unevenWeek, this.handleAddNewTaskLesson)}
+                    {scheduleListComponent(this.state.data.teachers, false, false, false, 'Нечетная', this.state.data.lessons.evenWeek, this.state.data.lessons.unevenWeek, this.handleAddNewTaskLesson)}
                 </div>
             </SwipeableViews>
         );

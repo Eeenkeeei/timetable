@@ -7,16 +7,10 @@ import {
     DialogTitle, TextField,
     Typography
 } from "@material-ui/core";
-import {Add, PlaylistAdd} from "@material-ui/icons";
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
-import MomentUtils from "@date-io/moment";
+import {Add} from "@material-ui/icons";
 import "moment/locale/ru";
 
 interface DialogAddTaskLessonProps {
-
     addNewTeacher: any // cb для добавления
 }
 
@@ -49,7 +43,7 @@ export class DialogAddNewTeacher extends React.Component<DialogAddTaskLessonProp
 
     public addNewTeacher = () => {
         this.props.addNewTeacher({name: this.state.teacherName})
-    }
+    };
 
     public render() {
         return (
