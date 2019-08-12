@@ -51,7 +51,7 @@ export class DialogViewDay extends React.Component<DialogViewDayProps> {
                     <DialogContent>
                         {this.props.tasks.map((task: newTaskLesson) => {
                             return (
-                                <div>
+                                <div key={Math.random()}>
                                     <Typography variant="h6">{this.props.tasks.indexOf(task) + 1}</Typography>
                                     <Typography variant="subtitle2">{task.lesson.lessonWeek} неделя</Typography>
                                     <Typography variant="subtitle2">{task.taskText}</Typography>
@@ -59,12 +59,8 @@ export class DialogViewDay extends React.Component<DialogViewDayProps> {
                                 </div>
                                 )
                         })}
-
-
                     </DialogContent>
-
                     <DialogActions>
-
                         <Button onClick={this.handleClose} color="primary">
                             Сохранить
                         </Button>

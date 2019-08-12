@@ -3,20 +3,31 @@ import {DataStorage} from "../serverApi/dataStorage";
 import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
 import {newTaskLesson} from "../components/Dialogs/DialogAddTaskLesson";
-import {User} from "./AccountPage";
+import {TeacherData, User} from "./AccountPage";
 import SnackbarComponent from "../components/Dialogs/SnackBar";
 import moment from 'moment';
 import {theme} from "../Theme";
 import {LoadingComponent} from "../components/UniversalComponents";
 import SwipeableViews from "react-swipeable-views";
-import {AppBar, Badge, Tab, Table, TableBody, TableCell, TableRow, Tabs, Typography} from "@material-ui/core";
+import {
+    AppBar,
+    Badge, FormControl, Input,
+    InputLabel, MenuItem, Select,
+    Tab,
+    Table,
+    TableBody,
+    TableCell,
+    TableRow,
+    Tabs,
+    Typography
+} from "@material-ui/core";
 import {DialogViewDay} from "../components/Dialogs/DialogViewDay";
 
 export default class CalendarPage extends React.Component {
 
     state = {
         isDataConfirmed: null,
-        tabValue: 6,
+        tabValue: new Date().getMonth(),
         data: {
             email: '',
             registrationDate: '',
@@ -28,7 +39,8 @@ export default class CalendarPage extends React.Component {
             teachers: []
         },
         openSnackbar: false,
-        months: [[]]
+        months: [[]],
+        selectedMonth: ''
     };
 
     componentDidMount(): void {
@@ -47,9 +59,9 @@ export default class CalendarPage extends React.Component {
         }
 
         this.setState({
-            months: months
-        })
-
+            months: months,
+            selectedMonth: this.returnRussianMonthName(new Date().toDateString().split(' ')[1])
+        });
 
         const storage = new DataStorage(new LocalStorage());
         const http = new Http();
@@ -62,7 +74,6 @@ export default class CalendarPage extends React.Component {
                             this.setState({
                                 data: result
                             }, () => {
-                                console.log(this.state.data.lessonTasks)
                                 this.setState({
                                     isDataConfirmed: true
                                 })
@@ -98,7 +109,6 @@ export default class CalendarPage extends React.Component {
     };
 
     public updateHandler = (data: User) => {
-
 
         const storage = new DataStorage(new LocalStorage());
         const http = new Http();
@@ -147,55 +157,60 @@ export default class CalendarPage extends React.Component {
         }, 4000)
     };
 
+    public returnRussianMonthName = (monthName: string) => {
+        const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+        if (monthName === 'Jan') {
+            return (monthNames[0])
+        }
+        if (monthName === 'Feb') {
+            return (monthNames[1])
+        }
+        if (monthName === 'Mar') {
+            return (monthNames[2])
+        }
+        if (monthName === 'Apr') {
+            return (monthNames[3])
+        }
+        if (monthName === 'May') {
+            return (monthNames[4])
+        }
+        if (monthName === 'Jun') {
+            return (monthNames[5])
+        }
+        if (monthName === 'Jul') {
+            return (monthNames[6])
+        }
+        if (monthName === 'Aug') {
+            return (monthNames[7])
+        }
+        if (monthName === 'Sep') {
+            return (monthNames[8])
+        }
+        if (monthName === 'Oct') {
+            return (monthNames[9])
+        }
+        if (monthName === 'Nov') {
+            return (monthNames[10])
+        }
+        if (monthName === 'Dec') {
+            return (monthNames[11])
+        }
+    }
+
+    public handleChangeMonthInMobileVersion = (event: any) => {
+        this.setState({
+            selectedMonth: event.target.value
+        })
+    };
 
     public render() {
-        const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
         const stylesForTab = {
             textTransform: 'none',
             minWidth: 72,
         } as React.CSSProperties;
 
-        const returnRussianMonthName = (monthName: string) => {
-            if (monthName === 'Jan') {
-                return (monthNames[0])
-            }
-            if (monthName === 'Feb') {
-                return (monthNames[1])
-            }
-            if (monthName === 'Mar') {
-                return (monthNames[2])
-            }
-            if (monthName === 'Apr') {
-                return (monthNames[3])
-            }
-            if (monthName === 'May') {
-                return (monthNames[4])
-            }
-            if (monthName === 'Jun') {
-                return (monthNames[5])
-            }
-            if (monthName === 'Jul') {
-                return (monthNames[6])
-            }
-            if (monthName === 'Aug') {
-                return (monthNames[7])
-            }
-            if (monthName === 'Sep') {
-                return (monthNames[8])
-            }
-            if (monthName === 'Oct') {
-                return (monthNames[9])
-            }
-            if (monthName === 'Nov') {
-                return (monthNames[10])
-            }
-            if (monthName === 'Dec') {
-                return (monthNames[11])
-            }
-        };
-
-        const calendarMenu = (
+        const calendarMenuFullVersion = (
             <AppBar position="static" color="default" style={{marginTop: '1rem'}}>
                 <Tabs
                     value={this.state.tabValue}
@@ -206,18 +221,19 @@ export default class CalendarPage extends React.Component {
                 >
                     {this.state.months.map(month => {
                         return (
-                            <Tab label={returnRussianMonthName(new Date(month[0]).toDateString().split(' ')[1])}
+                            <Tab label={this.returnRussianMonthName(new Date(month[0]).toDateString().split(' ')[1])}
                                  style={stylesForTab}
                                  key={Math.random()}/>
                         )
                     })}
-
                 </Tabs>
             </AppBar>
         );
 
         const dayCard = (day: string) => {
             const tasks: newTaskLesson[] = [];
+            const engMonthName = new Date(day).toDateString().split(' ')[1]
+            const rusMonthName = this.returnRussianMonthName(engMonthName)
             this.state.data.lessonTasks.map((task: newTaskLesson) => {
                 if (task.taskDate !== undefined && new Date(task.taskDate).toDateString() === day) {
                     tasks.push(task)
@@ -232,10 +248,9 @@ export default class CalendarPage extends React.Component {
                     borderLeft: '1px solid rgba(224, 224, 224, 1)',
                     marginTop: '7px'
                 }}>
-                    {/*{tasks.length >= 1 ? isTasks : null}*/}
 
                     <Typography style={{color: 'grey'}} variant="subtitle1">
-                        {returnRussianMonthName(new Date(day).toDateString().split(' ')[1])}
+                        {rusMonthName}
                     </Typography>
                     <Typography style={{color: 'grey'}} variant="h4">
                         {Number(day.split(' ')[2])}
@@ -246,31 +261,31 @@ export default class CalendarPage extends React.Component {
             )
         };
 
-
         const swipeableViews = (
             <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={this.state.tabValue}
                             onChangeIndex={this.handleChangeIndexTab}>
                 {this.state.months.map((month) => {
                     let cells: string[] = [];
-                    if (new Date(month[0]).toDateString().split(' ')[0] === 'Mon') {
+                    const monthName = new Date(month[0]).toDateString().split(' ')[0]
+                    if (monthName=== 'Mon') {
                         cells = month
                     }
-                    if (new Date(month[0]).toDateString().split(' ')[0] === 'Tue') {
+                    if (monthName === 'Tue') {
                         cells = ['empty', ...month]
                     }
-                    if (new Date(month[0]).toDateString().split(' ')[0] === 'Wed') {
+                    if (monthName === 'Wed') {
                         cells = ['empty', 'empty', ...month]
                     }
-                    if (new Date(month[0]).toDateString().split(' ')[0] === 'Thu') {
+                    if (monthName === 'Thu') {
                         cells = ['empty', 'empty', 'empty', ...month]
                     }
-                    if (new Date(month[0]).toDateString().split(' ')[0] === 'Fri') {
+                    if (monthName === 'Fri') {
                         cells = ['empty', 'empty', 'empty', 'empty', ...month]
                     }
-                    if (new Date(month[0]).toDateString().split(' ')[0] === 'Sat') {
+                    if (monthName === 'Sat') {
                         cells = ['empty', 'empty', 'empty', 'empty', 'empty', ...month]
                     }
-                    if (new Date(month[0]).toDateString().split(' ')[0] === 'Sun') {
+                    if (monthName === 'Sun') {
                         cells = ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', ...month]
                     }
                     return (
@@ -360,12 +375,40 @@ export default class CalendarPage extends React.Component {
             </SwipeableViews>
         );
 
+        const CalendarMenuMobileVersion = () => {
+
+            return (
+                <FormControl style={{width: '100%'}}>
+                    <InputLabel htmlFor="selectTeacher">Выберите месяц</InputLabel>
+                    <Select
+                        value={this.state.selectedMonth}
+                        onChange={this.handleChangeMonthInMobileVersion}
+                        input={<Input id="selectTeacher"/>}
+                        fullWidth
+                    >
+                        {this.state.months.map((monthArray: any) => {
+                            const month = this.returnRussianMonthName(new Date(monthArray[0]).toDateString().split(' ')[1])
+                            return (
+                                <MenuItem value={month} key={Math.random()}>{month}</MenuItem>
+                            )
+                        })}
+                    </Select>
+                </FormControl>
+            )
+        }
+
         return (
             <div>
-                {calendarMenu}
+                <div className="top" style={{marginTop: '5rem'}}>
+                    <CalendarMenuMobileVersion/>
+                </div>
+
+                <div style={{minWidth: '1216px', overflow: 'auto'}} className="topBarMax">
+                {calendarMenuFullVersion}
+
 
                 {this.state.isDataConfirmed ? swipeableViews : LoadingComponent}
-
+                </div>
                 {this.state.openSnackbar ? <SnackbarComponent variant="success" message="Задание добавлено"/> : null}
             </div>
         )
