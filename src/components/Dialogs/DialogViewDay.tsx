@@ -40,7 +40,7 @@ export class DialogViewDay extends React.Component<DialogViewDayProps> {
     public render() {
         return (
             <div>
-                <IconButton onClick={this.handleOpenLoginDialog}>
+                <IconButton onClick={this.handleOpenLoginDialog} style={{padding: 0, marginBottom: '1rem'}}>
                     <MoreHoriz/>
                 </IconButton>
 

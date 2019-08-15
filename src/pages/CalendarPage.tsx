@@ -11,7 +11,7 @@ import {LoadingComponent} from "../components/UniversalComponents";
 import SwipeableViews from "react-swipeable-views";
 import {
     AppBar,
-    Badge, FormControl, Input,
+    Badge, FormControl, Grid, Input,
     InputLabel, MenuItem, Select,
     Tab,
     Table,
@@ -240,23 +240,24 @@ export default class CalendarPage extends React.Component {
                 }
             });
             return (
-                <Badge style={{}} badgeContent={tasks.length} color="error" >
-                <div style={{
-                    width: '140px',
-                    height: '110px',
-                    textAlign: 'right',
-                    borderLeft: '1px solid rgba(224, 224, 224, 1)',
-                    marginTop: '7px'
-                }}>
+                <Badge style={{}} badgeContent={tasks.length} color="error">
+                    <div style={{
+                        width: '140px',
+                        height: '110px',
+                        textAlign: 'right',
+                        borderLeft: '1px solid rgba(224, 224, 224, 1)',
+                        marginTop: '7px'
+                    }}>
 
-                    <Typography style={{color: 'grey'}} variant="subtitle1">
-                        {rusMonthName}
-                    </Typography>
-                    <Typography style={{color: 'grey'}} variant="h4">
-                        {Number(day.split(' ')[2])}
-                    </Typography>
-                    {tasks.length >= 1 ? <div style={{marginRight: '100%'}}><DialogViewDay tasks={tasks} day={day}/></div> : null }
-                </div>
+                        <Typography style={{color: 'grey'}} variant="subtitle1">
+                            {rusMonthName}
+                        </Typography>
+                        <Typography style={{color: 'grey'}} variant="h4">
+                            {Number(day.split(' ')[2])}
+                        </Typography>
+                        {tasks.length >= 1 ?
+                            <div style={{marginRight: '100%'}}><DialogViewDay tasks={tasks} day={day}/></div> : null}
+                    </div>
                 </Badge>
             )
         };
@@ -266,26 +267,26 @@ export default class CalendarPage extends React.Component {
                             onChangeIndex={this.handleChangeIndexTab}>
                 {this.state.months.map((month) => {
                     let cells: string[] = [];
-                    const monthName = new Date(month[0]).toDateString().split(' ')[0]
-                    if (monthName=== 'Mon') {
+                    const dayName = new Date(month[0]).toDateString().split(' ')[0]
+                    if (dayName === 'Mon') {
                         cells = month
                     }
-                    if (monthName === 'Tue') {
+                    if (dayName === 'Tue') {
                         cells = ['empty', ...month]
                     }
-                    if (monthName === 'Wed') {
+                    if (dayName === 'Wed') {
                         cells = ['empty', 'empty', ...month]
                     }
-                    if (monthName === 'Thu') {
+                    if (dayName === 'Thu') {
                         cells = ['empty', 'empty', 'empty', ...month]
                     }
-                    if (monthName === 'Fri') {
+                    if (dayName === 'Fri') {
                         cells = ['empty', 'empty', 'empty', 'empty', ...month]
                     }
-                    if (monthName === 'Sat') {
+                    if (dayName === 'Sat') {
                         cells = ['empty', 'empty', 'empty', 'empty', 'empty', ...month]
                     }
-                    if (monthName === 'Sun') {
+                    if (dayName === 'Sun') {
                         cells = ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', ...month]
                     }
                     return (
@@ -376,10 +377,9 @@ export default class CalendarPage extends React.Component {
         );
 
         const CalendarMenuMobileVersion = () => {
-
             return (
                 <FormControl style={{width: '100%'}}>
-                    <InputLabel htmlFor="selectTeacher">Выберите месяц</InputLabel>
+                    <InputLabel htmlFor="selectTeacher">Выбранный месяц</InputLabel>
                     <Select
                         value={this.state.selectedMonth}
                         onChange={this.handleChangeMonthInMobileVersion}
@@ -387,7 +387,7 @@ export default class CalendarPage extends React.Component {
                         fullWidth
                     >
                         {this.state.months.map((monthArray: any) => {
-                            const month = this.returnRussianMonthName(new Date(monthArray[0]).toDateString().split(' ')[1])
+                            const month = this.returnRussianMonthName(new Date(monthArray[0]).toDateString().split(' ')[1]);
                             return (
                                 <MenuItem value={month} key={Math.random()}>{month}</MenuItem>
                             )
@@ -395,19 +395,172 @@ export default class CalendarPage extends React.Component {
                     </Select>
                 </FormControl>
             )
-        }
+        };
+
+        const CalendarBodyMobileVersion = () => {
+
+            const dayCardMobile = (day: string) => {
+                const tasks: newTaskLesson[] = [];
+                this.state.data.lessonTasks.map((task: newTaskLesson) => {
+                    if (task.taskDate !== undefined && new Date(task.taskDate).toDateString() === day) {
+                        tasks.push(task)
+                    }
+                });
+                return (
+                    <Badge style={{}} badgeContent={tasks.length} color="error">
+                        <div style={{
+                            width: '20px',
+                            maxWidth: '20px',
+                            height: '30px',
+                            textAlign: 'right',
+                            borderLeft: '1px solid rgba(224, 224, 224, 1)',
+                            marginTop: '7px'
+                        }}>
+
+                            <Typography style={{color: 'grey', marginLeft: '0.5rem'}} variant="h6">
+                                {Number(day.split(' ')[2])}
+                            </Typography>
+                            {tasks.length >= 1 ?
+                                <div style={{marginBottom: '3rem'}}><DialogViewDay tasks={tasks} day={day}/></div> : null}
+                        </div>
+                    </Badge>
+                )
+            }
+
+            const CalendarBody = () => {
+                let monthArr: any[] = []
+                this.state.months.map((month) => {
+                    const monthName = new Date(month[0]).toDateString().split(' ')[1];
+                    if (this.returnRussianMonthName(monthName) === this.state.selectedMonth) {
+                        monthArr = month
+                    }
+                });
+                const dayName = new Date(monthArr[0]).toDateString().split(' ')[0];
+                let cells: string[] = [];
+
+                if (dayName === 'Mon') {
+                    cells = monthArr
+                }
+                if (dayName === 'Tue') {
+                    cells = ['empty', ...monthArr]
+                }
+                if (dayName === 'Wed') {
+                    cells = ['empty', 'empty', ...monthArr]
+                }
+                if (dayName === 'Thu') {
+                    cells = ['empty', 'empty', 'empty', ...monthArr]
+                }
+                if (dayName === 'Fri') {
+                    cells = ['empty', 'empty', 'empty', 'empty', ...monthArr]
+                }
+                if (dayName === 'Sat') {
+                    cells = ['empty', 'empty', 'empty', 'empty', 'empty', ...monthArr]
+                }
+                if (dayName === 'Sun') {
+                    cells = ['empty', 'empty', 'empty', 'empty', 'empty', 'empty', ...monthArr]
+                }
+                return (
+                    <Table style={{tableLayout: 'fixed'}} key={Math.random()}>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell style={{width: '14,28%', paddingLeft: '0px'}}>
+                                    <Typography style={{marginLeft: '1rem'}}>Пн</Typography>
+                                </TableCell>
+                                <TableCell style={{paddingLeft: '0px'}}>
+                                    <Typography style={{marginLeft: '1rem'}}>Вт</Typography>
+                                </TableCell>
+                                <TableCell style={{paddingLeft: '0px'}}>
+                                    <Typography style={{marginLeft: '1rem'}}>Ср</Typography>
+                                </TableCell>
+                                <TableCell style={{paddingLeft: '0px'}}>
+                                    <Typography style={{marginLeft: '1rem'}}>Чт</Typography>
+                                </TableCell>
+                                <TableCell style={{paddingLeft: '0px'}}>
+                                    <Typography style={{marginLeft: '1rem'}}>Пт</Typography>
+                                </TableCell>
+                                <TableCell style={{paddingLeft: '0px'}}>
+                                    <Typography style={{marginLeft: '1rem'}}>Сб</Typography>
+                                </TableCell>
+                                <TableCell style={{paddingLeft: '0px'}}>
+                                    <Typography style={{marginLeft: '1rem'}}>Вс</Typography>
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                {cells.slice(0, 7).map((day: any) => {
+                                    return (
+                                        <TableCell style={{paddingLeft: '0px'}} key={Math.random()}>
+                                            {day === 'empty' ? <div/> : dayCardMobile(new Date(day).toDateString())}
+                                        </TableCell>
+                                    )
+                                })}
+                            </TableRow>
+                            <TableRow>
+                                {cells.slice(7, 14).map((day: any) => {
+                                    return (
+                                        <TableCell style={{paddingLeft: '0px'}} key={Math.random()}>
+                                            {day === 'empty' ? <div/> : dayCardMobile(new Date(day).toDateString())}
+                                        </TableCell>
+                                    )
+                                })}
+                            </TableRow>
+                            <TableRow>
+                                {cells.slice(14, 21).map((day: any) => {
+                                    return (
+                                        <TableCell style={{paddingLeft: '0px'}} key={Math.random()}>
+                                            {day === 'empty' ? <div/> : dayCardMobile(new Date(day).toDateString())}
+                                        </TableCell>
+                                    )
+                                })}
+                            </TableRow>
+                            <TableRow>
+                                {cells.slice(21, 28).map((day: any) => {
+                                    return (
+                                        <TableCell style={{paddingLeft: '0px'}} key={Math.random()}>
+                                            {day === 'empty' ? <div/> : dayCardMobile(new Date(day).toDateString())}
+                                        </TableCell>
+                                    )
+                                })}
+                            </TableRow>
+                            <TableRow>
+                                {cells.slice(28, 35).map((day: any) => {
+                                    return (
+                                        <TableCell style={{paddingLeft: '0px'}} key={Math.random()}>
+                                            {day === 'empty' ? <div/> : dayCardMobile(new Date(day).toDateString())}
+                                        </TableCell>
+                                    )
+                                })}
+                            </TableRow>
+                            <TableRow>
+                                {cells.slice(35, 42).map((day: any) => {
+                                    return (
+                                        <TableCell style={{paddingLeft: '0px'}} key={Math.random()}>
+                                            {day === 'empty' ? <div/> : dayCardMobile(new Date(day).toDateString())}
+                                        </TableCell>
+                                    )
+                                })}
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                );
+            };
+
+
+            return (
+                <CalendarBody/>
+            )
+        };
 
         return (
             <div>
                 <div className="top" style={{marginTop: '5rem'}}>
                     <CalendarMenuMobileVersion/>
+                    <CalendarBodyMobileVersion/>
                 </div>
 
                 <div style={{minWidth: '1216px', overflow: 'auto'}} className="topBarMax">
-                {calendarMenuFullVersion}
+                    {calendarMenuFullVersion}
 
-
-                {this.state.isDataConfirmed ? swipeableViews : LoadingComponent}
+                    {this.state.isDataConfirmed ? swipeableViews : LoadingComponent}
                 </div>
                 {this.state.openSnackbar ? <SnackbarComponent variant="success" message="Задание добавлено"/> : null}
             </div>
