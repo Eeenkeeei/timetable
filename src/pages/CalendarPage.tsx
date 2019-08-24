@@ -409,14 +409,13 @@ export default class CalendarPage extends React.Component {
                 return (
                     <Badge style={{}} badgeContent={tasks.length} color="error">
                         <div style={{
-                            width: '20px',
-                            maxWidth: '20px',
-                            height: '30px',
+                            width: '30px',
+                            maxWidth: '30px',
+                            height: '50px',
                             textAlign: 'right',
                             borderLeft: '1px solid rgba(224, 224, 224, 1)',
                             marginTop: '7px'
                         }}>
-
                             <Typography style={{color: 'grey', marginLeft: '0.5rem'}} variant="h6">
                                 {Number(day.split(' ')[2])}
                             </Typography>
@@ -425,10 +424,10 @@ export default class CalendarPage extends React.Component {
                         </div>
                     </Badge>
                 )
-            }
+            };
 
             const CalendarBody = () => {
-                let monthArr: any[] = []
+                let monthArr: any[] = [];
                 this.state.months.map((month) => {
                     const monthName = new Date(month[0]).toDateString().split(' ')[1];
                     if (this.returnRussianMonthName(monthName) === this.state.selectedMonth) {
