@@ -4,7 +4,7 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle, IconButton, TextField,
+    DialogTitle, Divider, IconButton, TextField,
     Typography
 } from "@material-ui/core";
 import Http from "../../serverApi/http";
@@ -12,9 +12,12 @@ import Http from "../../serverApi/http";
 import {MoreHoriz} from "@material-ui/icons";
 import {newTaskLesson} from "./DialogAddTaskLesson";
 import moment from 'moment'
+import {DialogEditTaskLesson} from "./DialogEditTaskLesson";
+
 interface DialogViewDayProps {
     tasks: newTaskLesson[],
-    day: string
+    day: string,
+    handleEditTaskLesson: (taskLesson: newTaskLesson) => void // cb для сохранения редактирования задания
 }
 
 
@@ -22,7 +25,7 @@ export class DialogViewDay extends React.Component<DialogViewDayProps> {
 
     state = {
         openDialogWindow: false
-    }
+    };
 
     public handleOpenLoginDialog = () => {
         this.setState({
@@ -52,10 +55,13 @@ export class DialogViewDay extends React.Component<DialogViewDayProps> {
                         {this.props.tasks.map((task: newTaskLesson) => {
                             return (
                                 <div key={Math.random()}>
-                                    <Typography variant="h6">{this.props.tasks.indexOf(task) + 1}</Typography>
+                                    <Typography variant="caption" style={{fontSize: '1.2rem'}}>Задание №{this.props.tasks.indexOf(task) + 1}</Typography>
                                     <Typography variant="subtitle2">{task.lesson.lessonWeek} неделя</Typography>
-                                    <Typography variant="subtitle2">{task.taskText}</Typography>
-                                    <Typography variant="subtitle2">{task.lesson.lessonName}, {task.lesson.lessonTeacher}</Typography>
+                                    <Typography variant="subtitle2">Текст задания: {task.taskText}</Typography>
+                                    <Typography variant="subtitle2">{task.lesson.lessonName}</Typography>
+                                    <Typography variant="caption">{task.lesson.lessonTeacher}</Typography>
+                                    <DialogEditTaskLesson handleEditTaskLesson={this.props.handleEditTaskLesson} lesson={task}/>
+                                    <Divider style={{marginTop: '1rem', marginBottom: '1rem'}} />
                                 </div>
                                 )
                         })}

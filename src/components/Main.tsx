@@ -291,7 +291,7 @@ export default class Main extends React.Component {
                                     </div>
                                 )
                             })}
-                            <Redirect to="/schedule"/>
+                            <Redirect to="/calendar"/>
                         </div>
                     </Container>
                 </MuiThemeProvider>

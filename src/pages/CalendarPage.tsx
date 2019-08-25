@@ -157,6 +157,21 @@ export default class CalendarPage extends React.Component {
         }, 4000)
     };
 
+    public handleEditTaskLesson = (taskLesson: newTaskLesson) => {
+        const newData: User = this.state.data;
+        newData.lessonTasks.forEach((taskLessonForEdit: newTaskLesson) => {
+            if (taskLessonForEdit.id === taskLesson.id){
+                taskLessonForEdit.taskText = taskLesson.taskText;
+                taskLessonForEdit.taskDate = taskLesson.taskDate
+            }
+        });
+        this.updateHandler(newData);
+    };
+
+    public handleCheckboxTaskLesson = (taskLesson: newTaskLesson) => {
+        // TODO: обновление выполнения задания
+    };
+
     public returnRussianMonthName = (monthName: string) => {
         const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
         if (monthName === 'Jan') {
@@ -256,7 +271,7 @@ export default class CalendarPage extends React.Component {
                             {Number(day.split(' ')[2])}
                         </Typography>
                         {tasks.length >= 1 ?
-                            <div style={{marginRight: '100%'}}><DialogViewDay tasks={tasks} day={day}/></div> : null}
+                            <div style={{marginRight: '100%'}}><DialogViewDay handleEditTaskLesson={this.handleEditTaskLesson} tasks={tasks} day={day}/></div> : null}
                     </div>
                 </Badge>
             )
@@ -420,7 +435,7 @@ export default class CalendarPage extends React.Component {
                                 {Number(day.split(' ')[2])}
                             </Typography>
                             {tasks.length >= 1 ?
-                                <div style={{marginBottom: '3rem'}}><DialogViewDay tasks={tasks} day={day}/></div> : null}
+                                <div style={{marginBottom: '3rem'}}><DialogViewDay handleEditTaskLesson={this.handleEditTaskLesson}  tasks={tasks} day={day}/></div> : null}
                         </div>
                     </Badge>
                 )

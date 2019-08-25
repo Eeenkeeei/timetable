@@ -14,6 +14,7 @@ import {
 } from '@material-ui/pickers';
 import MomentUtils from "@date-io/moment";
 import "moment/locale/ru";
+const uuidv4 = require('uuid/v4');
 
 
 interface DialogAddTaskLessonProps {
@@ -34,7 +35,8 @@ export interface newLesson {
 export interface newTaskLesson {
     lesson: newLesson,
     taskDate: any,
-    taskText: string
+    taskText: string,
+    id: string
 }
 
 
@@ -71,7 +73,8 @@ export class DialogAddTaskLesson extends React.Component<DialogAddTaskLessonProp
 
             },
             taskDate: new Date(this.state.dateForTaskLesson),
-            taskText: this.state.textForTaskLesson
+            taskText: this.state.textForTaskLesson,
+            id: uuidv4()
         };
         this.props.addNewTaskLesson(newTaskLesson);
         this.handleClose()
