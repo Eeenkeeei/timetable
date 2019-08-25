@@ -118,6 +118,7 @@ export default class Main extends React.Component {
                 .then(res => res.json())
                 .then(
                     (result) => {
+                        console.log(result)
                         if (result.email !== undefined) {
                             this.setState({
                                 data: result
@@ -351,6 +352,7 @@ export default class Main extends React.Component {
 
         // ВОЗВРАЩАЕТСЯ ЕСЛИ ОЖИДАНИЕ ЗАПРОСА
         if (this.state.isDataConfirmed === null) {
+
             return (isLoadingComponent)
         }
         // ВОЗВРАЩАЕТСЯ ЕСЛИ ДАННЫЕ НЕ ПРИШЛИ

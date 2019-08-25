@@ -162,7 +162,7 @@ export const scheduleListComponent = (teachers: TeacherData[], handleAddLesson: 
             <List dense={true}>
                 {daysInWeek.map((day: string) => {
                     return (
-                        <div key={'day' + Math.random()}>
+                        <div key={'day' + Math.random()} style={{overflowY: 'hidden'}}>
                             <ListItem>
                                 <ListItemText
                                     primary={<Typography variant='h6'>{day}</Typography>}
