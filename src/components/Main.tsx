@@ -291,7 +291,7 @@ export default class Main extends React.Component {
                                     </div>
                                 )
                             })}
-                            <Redirect to="/calendar"/>
+                            <Redirect to="/account"/>
                         </div>
                     </Container>
                 </MuiThemeProvider>
@@ -303,8 +303,8 @@ export default class Main extends React.Component {
             <Switch>
                 <MuiThemeProvider theme={theme}>
                         {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
-
                         {isDataNotConfirmedMobileMenu}
+
                         {/* МЕНЮ В ПОЛНОЙ ВЕРСИИ */}
                         <AppBar>
                             <Toolbar className="topBarMax" style={{textAlign: 'right'}}>

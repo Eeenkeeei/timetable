@@ -23,6 +23,7 @@ import {newLesson} from "../components/Dialogs/DialogAddLesson";
 import {newTaskLesson} from "../components/Dialogs/DialogAddTaskLesson";
 import SnackbarComponent from "../components/Dialogs/SnackBar";
 import {DialogAddNewTeacher} from "../components/Dialogs/DialogAddNewTeacher";
+import {DialogDeleteTeacher} from "../components/Dialogs/DialogDeleteTeacher";
 const uuidv4 = require('uuid/v4');
 
 interface AccountPageState {
@@ -205,8 +206,17 @@ export default class AccountPage extends React.Component<AccountPageState> {
             name: teacher.name,
             id: uuidv4()
         };
-        console.log(newTeacher)
         newData.teachers.push(newTeacher);
+        this.updateHandler(newData)
+    };
+
+    public deleteTeacherInData = (teacher: TeacherData) => {
+        const newData: User = this.state.data;
+        newData.teachers.forEach((teacherForDelete: TeacherData) => {
+            if (teacherForDelete.id === teacher.id) {
+                newData.teachers.splice(newData.teachers.indexOf(teacherForDelete), 1)
+            }
+        });
         this.updateHandler(newData)
     };
 
@@ -315,9 +325,8 @@ export default class AccountPage extends React.Component<AccountPageState> {
                                         <Typography variant="h6">{teacher.name}</Typography>
                                     </ListItemText>
                                     <ListItemSecondaryAction>
-                                        <IconButton>
-                                            <Edit/>
-                                        </IconButton>
+                                        <DialogDeleteTeacher teacher={teacher} deleteTeacherInData={this.deleteTeacherInData}/>
+
                                     </ListItemSecondaryAction>
                                 </ListItem>
                             )
