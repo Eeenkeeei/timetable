@@ -120,7 +120,8 @@ export class DialogAddLesson extends React.Component<DialogAddLessonProps> {
                                 <MenuItem value={'2: 9:40 - 11:10'}>2: 9:40 - 11:10</MenuItem>
                                 <MenuItem value={'3: 11:20 - 12:50'}>3: 11:20 - 12:50</MenuItem>
                                 <MenuItem value={'4: 13:30 - 15:00'}>4: 13:30 - 15:00</MenuItem>
-                                <MenuItem value={'5: 16:40 - 18:10'}>5: 16:40 - 18:10</MenuItem>
+                                <MenuItem value={'5: 15:10 - 16:40'}>5: 15:10 - 16:40</MenuItem>
+                                <MenuItem value={'6: 16:40 - 18:10'}>6: 16:50 - 18:10</MenuItem>
                             </Select>
                         </FormControl>
                         <TextField

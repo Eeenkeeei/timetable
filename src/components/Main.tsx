@@ -118,7 +118,6 @@ export default class Main extends React.Component {
                 .then(res => res.json())
                 .then(
                     (result) => {
-                        console.log(result)
                         if (result.email !== undefined) {
                             this.setState({
                                 data: result
