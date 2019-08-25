@@ -131,7 +131,7 @@ const scheduleString = (teachers: TeacherData[], lesson: newLesson, editLessonIn
         <div key={Math.random()} style={{marginTop: '7px'}}>
             <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem', width: '95%'}}>
                 <Grid item xs={12} sm={3}>
-                    <Typography variant="h6">{lesson.lessonName}</Typography>
+                    <Typography>{lesson.lessonName}</Typography>
                     <Typography style={{color: 'grey'}}>{lesson.lessonNumber}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={3}>
