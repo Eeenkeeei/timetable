@@ -142,7 +142,6 @@ export default class Main extends React.Component {
                 isDataConfirmed: false
             })
         }
-
     }
 
     public render() {
@@ -162,19 +161,18 @@ export default class Main extends React.Component {
                         <div>
                             {pagesForMenus.pages.map((dataPage: pageData) => {
                                     return (
-                                        <div key={dataPage.buttonText + 'logged'}  onClick={this.changePage} style={{width: '180px'}}>
+                                        <div key={dataPage.buttonText + 'logged'} onClick={this.changePage}
+                                             style={{width: '180px'}}>
                                             <NavLink to={dataPage.path} style={{color: "black"}}
                                                      activeStyle={{color: "black", fontWeight: "bold"}}>
                                                 <MenuItem onClick={this.handleClose}>
                                                     <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;
-
                                                     <Typography
                                                         variant="button">{dataPage.buttonText}</Typography>
                                                 </MenuItem>
                                             </NavLink>
                                         </div>
                                     )
-
                                 }
                             )}
                             <MenuItem onClick={this.handleExitButton}>
@@ -187,7 +185,7 @@ export default class Main extends React.Component {
                                     variant="subtitle2">Привет, {this.state.data.email}</Typography>}
                 </Toolbar>
             </AppBar>
-        )
+        );
 
         const isDataNotConfirmedMobileMenu = (
             <AppBar>
@@ -201,26 +199,24 @@ export default class Main extends React.Component {
                         open={Boolean(this.state.menuEl)} onClose={this.handleClose}
                         style={{marginTop: '2rem'}}>
                         {pagesForMenus.pages.map((dataPage: pageData) => {
-                            if (dataPage.isDataConfirmed === false){
-                                return (
-                                    <div key={dataPage.buttonText}  onClick={this.changePage} style={{width: '180px'}}>
-                                        <NavLink to={dataPage.path} style={{color: "black"}}
-                                                 activeStyle={{color: "black", fontWeight: "bold"}}>
-                                            <MenuItem onClick={this.handleClose}>
-                                                <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;
+                                if (dataPage.isDataConfirmed === false) {
+                                    return (
+                                        <div key={dataPage.buttonText} onClick={this.changePage} style={{width: '180px'}}>
+                                            <NavLink to={dataPage.path} style={{color: "black"}}
+                                                     activeStyle={{color: "black", fontWeight: "bold"}}>
+                                                <MenuItem onClick={this.handleClose}>
+                                                    <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;
 
-                                                <Typography
-                                                    variant="button">{dataPage.buttonText}</Typography>
-                                            </MenuItem>
-                                        </NavLink>
-                                    </div>
-                                )
-                            }
-
+                                                    <Typography
+                                                        variant="button">{dataPage.buttonText}</Typography>
+                                                </MenuItem>
+                                            </NavLink>
+                                        </div>
+                                    )
+                                }
                             }
                         )}
                         {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
-
                         <div>
                             <MenuItem>
                                 <DialogLoginForm mobile={true} isLoginSuccess={this.isLoginSuccess}/>
@@ -264,7 +260,7 @@ export default class Main extends React.Component {
                                 return (
                                     <div key={dataPage.buttonText + 'logged'}>
                                         <Link to={dataPage.path}>
-                                            <Button color="secondary"  onClick={this.changePage}>
+                                            <Button color="secondary" onClick={this.changePage}>
                                                 <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;{dataPage.buttonText}
                                             </Button>
                                         </Link>
@@ -291,7 +287,7 @@ export default class Main extends React.Component {
                                     </div>
                                 )
                             })}
-                            <Redirect to="/calendar"/>
+                            <Redirect to="/account"/>
                         </div>
                     </Container>
                 </MuiThemeProvider>
@@ -299,64 +295,61 @@ export default class Main extends React.Component {
             </Switch>
         );
 
-        const isDataNotConfrimed = (
+        const isDataNotConfirmed = (
             <Switch>
                 <MuiThemeProvider theme={theme}>
-                        {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
-                        {isDataNotConfirmedMobileMenu}
+                    {/* МЕНЮ В МОБИЛЬНОЙ ВЕРСИИ */}
+                    {isDataNotConfirmedMobileMenu}
 
-                        {/* МЕНЮ В ПОЛНОЙ ВЕРСИИ */}
-                        <AppBar>
-                            <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
-                                {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
+                    {/* МЕНЮ В ПОЛНОЙ ВЕРСИИ */}
+                    <AppBar>
+                        <Toolbar className="topBarMax" style={{textAlign: 'right'}}>
+                            {/* ОТДЕЛЬНО ВОЗВРАЩАЕТСЯ КНОПКА ВХОДА */}
 
-                                {pagesForMenus.pages.map((dataPage: pageData) => {
-                                    if (dataPage.isDataConfirmed === false) {
-                                        return (
-                                            <div key={dataPage.buttonText}>
-                                                <Link to={dataPage.path}>
-                                                    <Button color="secondary" onClick={this.changePage}>
-                                                        <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;{dataPage.buttonText}
-                                                    </Button>
-                                                </Link>
-                                            </div>
-                                        )
-                                    }
-                                })}
+                            {pagesForMenus.pages.map((dataPage: pageData) => {
+                                if (dataPage.isDataConfirmed === false) {
+                                    return (
+                                        <div key={dataPage.buttonText}>
+                                            <Link to={dataPage.path}>
+                                                <Button color="secondary" onClick={this.changePage}>
+                                                    <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;{dataPage.buttonText}
+                                                </Button>
+                                            </Link>
+                                        </div>
+                                    )
+                                }
+                            })}
+                            <DialogLoginForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
+                            <DialogRegisterForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
+                        </Toolbar>
+                    </AppBar>
 
-                                <DialogLoginForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
-                                <DialogRegisterForm mobile={false} isLoginSuccess={this.isLoginSuccess}/>
-
-                            </Toolbar>
-                        </AppBar>
-
-                        {/* ТЕЛО ВСЕЙ СТРАНИЦЫ */}
-                        <Container>
-                            <div style={{marginTop: '5rem'}}>
-                                {pagesForMenus.pages.map((dataPage: pageData) => {
-                                    if (dataPage.isDataConfirmed === false){
-                                        return (
-                                            <div key={dataPage.buttonText}>
-                                                <Route exact path={dataPage.path} component={dataPage.component}/>
-                                            </div>
-                                        )
-                                    }
-                                })}
-                                <Redirect to="/"/>
-                            </div>
-                        </Container>
+                    {/* ТЕЛО ВСЕЙ СТРАНИЦЫ */}
+                    <Container>
+                        <div style={{marginTop: '5rem'}}>
+                            {pagesForMenus.pages.map((dataPage: pageData) => {
+                                if (dataPage.isDataConfirmed === false) {
+                                    return (
+                                        <div key={dataPage.buttonText}>
+                                            <Route exact path={dataPage.path} component={dataPage.component}/>
+                                        </div>
+                                    )
+                                }
+                            })}
+                            <Redirect to="/"/>
+                        </div>
+                    </Container>
                 </MuiThemeProvider>
             </Switch>
         );
 
         // ВОЗВРАЩАЕТСЯ ЕСЛИ ОЖИДАНИЕ ЗАПРОСА
         if (this.state.isDataConfirmed === null) {
-
             return (isLoadingComponent)
         }
         // ВОЗВРАЩАЕТСЯ ЕСЛИ ДАННЫЕ НЕ ПРИШЛИ
         if (!this.state.isDataConfirmed) {
-            return (isDataNotConfrimed)
+            return (isDataNotConfirmed)
         } else {
             return (isDataConfirmed)
         }

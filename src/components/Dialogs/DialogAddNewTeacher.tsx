@@ -48,8 +48,8 @@ export class DialogAddNewTeacher extends React.Component<DialogAddTaskLessonProp
     public render() {
         return (
             <div>
-                <Button color="primary" onClick={this.handleOpenLoginDialog}>
-                    <Add/>
+                <Button color="primary" onClick={this.handleOpenLoginDialog} style={{marginLeft: '1rem'}}>
+                    Добавить преподавателя
                 </Button>
                 <Dialog open={this.state.openDialogWindow} onClose={this.handleClose}
                         aria-labelledby="form-dialog-title">

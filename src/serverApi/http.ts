@@ -11,7 +11,7 @@ export default class Http {
 
     public url = serverApi;
 
-    public loginForToken (data: loginData, path: string) {
+    public loginForToken(data: loginData, path: string) {
         return fetch(this.url + path, {
             method: 'POST',
             headers: {
@@ -21,18 +21,17 @@ export default class Http {
         });
     }
 
-    public loginWithToken (token: string, path: string) {
+    public loginWithToken(token: string, path: string) {
         return fetch(this.url + path, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-
         });
     }
 
-    public getNewsList (path: string){
+    public getNewsList(path: string) {
         return fetch(this.url + path, {
             method: 'GET',
             headers: {
@@ -41,7 +40,7 @@ export default class Http {
         });
     }
 
-    public removeNews (body: string, path: string) {
+    public removeNews(body: string, path: string) {
         return fetch(this.url + path, {
             method: 'POST',
             headers: {
@@ -51,7 +50,7 @@ export default class Http {
         });
     }
 
-    public editNews (body: any, path: string) {
+    public editNews(body: any, path: string) {
         return fetch(this.url + path, {
             method: 'POST',
             headers: {
@@ -61,7 +60,7 @@ export default class Http {
         });
     }
 
-    public addNews (body: any, path: '/addNews') {
+    public addNews(body: any, path: '/addNews') {
         return fetch(this.url + path, {
             method: 'POST',
             headers: {
@@ -71,7 +70,7 @@ export default class Http {
         });
     }
 
-    public addUserAsAdmin (body: string, path: '/addAdmin') {
+    public addUserAsAdmin(body: string, path: '/addAdmin') {
         return fetch(this.url + path, {
             method: 'POST',
             headers: {
@@ -91,7 +90,7 @@ export default class Http {
         });
     }
 
-    public removeUserAdmin(body: string, path: '/removeUserAdmin'){
+    public removeUserAdmin(body: string, path: '/removeUserAdmin') {
         return fetch(this.url + path, {
             method: 'POST',
             headers: {
@@ -101,7 +100,7 @@ export default class Http {
         });
     }
 
-    public deleteAccount(body: string, path: '/deleteAccount'){
+    public deleteAccount(body: string, path: '/deleteAccount') {
         return fetch(this.url + path, {
             method: 'POST',
             headers: {

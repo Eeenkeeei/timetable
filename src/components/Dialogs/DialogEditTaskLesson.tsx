@@ -14,6 +14,7 @@ import {
 import MomentUtils from "@date-io/moment";
 import "moment/locale/ru";
 import {newTaskLesson} from "./DialogAddTaskLesson";
+import {Edit} from "@material-ui/icons";
 
 
 interface DialogEditTaskLessonProps {
@@ -90,9 +91,7 @@ export class DialogEditTaskLesson extends React.Component<DialogEditTaskLessonPr
                 </Button>
                 <Dialog open={this.state.openDialogWindow} onClose={this.handleClose}
                         aria-labelledby="form-dialog-title">
-
                     <DialogTitle id="form-dialog-title">Редактирование задания: {this.props.lesson.lesson.lessonDay}, {this.props.lesson.lesson.lessonWeek} неделя</DialogTitle>
-
                     <DialogContent>
                         <Typography variant="body1">Предмет: {this.props.lesson.lesson.lessonName}</Typography>
                         <Typography variant="body1">Тип занятия: {this.props.lesson.lesson.lessonType}</Typography>

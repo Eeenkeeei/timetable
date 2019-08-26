@@ -23,7 +23,8 @@ export default class SchedulePage extends React.Component {
             lastLoginDate: '',
             lessons: {evenWeek: [], unevenWeek: []},
             lessonTasks: [],
-            teachers: []
+            teachers: [],
+            lessonTime: []
         },
         openSnackbar: false
     };

@@ -36,7 +36,8 @@ export default class CalendarPage extends React.Component {
             lastLoginDate: '',
             lessons: {evenWeek: [], unevenWeek: []},
             lessonTasks: [],
-            teachers: []
+            teachers: [],
+            lessonTime: []
         },
         openSnackbar: false,
         months: [[]],

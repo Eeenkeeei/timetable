@@ -82,7 +82,7 @@ export default class AdminComponent extends React.Component {
 
                     <ExpansionPanel expanded={this.state.expanded === 'getNews'}
                                     onChange={this.handleChangeExpand('getNews')}
-                                    style={{width: '95%', margin: '1em auto'}}>
+                                    style={{width: '98%', margin: '1em auto'}}>
                         <ExpansionPanelSummary
                             expandIcon={<ExpandMoreIcon/>}
                             aria-controls="panel1bh-content"
@@ -117,7 +117,7 @@ export default class AdminComponent extends React.Component {
 
                     <ExpansionPanel expanded={this.state.expanded === 'getUserData'}
                                     onChange={this.handleChangeExpand('getUserData')}
-                                    style={{width: '95%', margin: '1em auto'}}>
+                                    style={{width: '98%', margin: '1em auto'}}>
                         <ExpansionPanelSummary
                             expandIcon={<ExpandMoreIcon/>}
                             aria-controls="panel3bh-content"

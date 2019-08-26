@@ -33,35 +33,7 @@ export const LoadingComponent = (
             </div>
         </div>
     </MuiThemeProvider>
-)
-
-export function checkUserData() {
-    let flag: boolean;
-    const storage = new DataStorage(new LocalStorage());
-    const http = new Http();
-    if (storage.getUserData !== null) {
-        http.loginWithToken(storage.getUserData, '/user')
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    if (result.email !== undefined) {
-                        flag = true;
-                        return (flag)
-                    } else {
-                        storage.logOut();
-                        flag = false;
-                        return (flag)
-
-                    }
-                }, (error) => {
-                    console.log(error)
-                }
-            );
-    } else {
-        flag = false;
-        return (flag)
-    }
-}
+);
 
 interface NewsComponentProps {
     newsData: newsData,

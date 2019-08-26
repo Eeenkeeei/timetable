@@ -104,7 +104,6 @@ export class DialogEditLesson extends React.Component<DialogEditLessonProps> {
                                 onChange={this.handleLessonNumberChange}
                                 input={<Input id="selectLessonNumber" />}
                                 fullWidth
-
                             >
                                 <MenuItem value={'1: 8:00 - 9:30'}>1: 8:00 - 9:30</MenuItem>
                                 <MenuItem value={'2: 9:40 - 11:10'}>2: 9:40 - 11:10</MenuItem>

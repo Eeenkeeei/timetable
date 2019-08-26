@@ -51,7 +51,7 @@ export class DialogViewDay extends React.Component<DialogViewDayProps> {
                         aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Просмотр дня: {moment(this.props.day).format(' Do MMM ')}</DialogTitle>
 
-                    <DialogContent>
+                    <DialogContent style={{width: '300px'}}>
                         {this.props.tasks.map((task: newTaskLesson) => {
                             return (
                                 <div key={Math.random()}>

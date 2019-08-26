@@ -4,7 +4,7 @@ import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
 import {LoadingComponent} from "../components/UniversalComponents";
 import {
-    AppBar,
+    AppBar, Divider, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary,
     Grid, IconButton,
     List,
     ListItem,
@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import SwipeableViews from 'react-swipeable-views';
 import {theme} from "../Theme";
-import {Dashboard, Edit, Fingerprint, ListAlt, Person, Security} from "@material-ui/icons";
+import {Dashboard, Edit, Fingerprint, Group, ListAlt, Person, Security} from "@material-ui/icons";
 import AdminComponent from "./AdminComponent";
 import AddTimetable from "../components/AddTimetable";
 import {newLesson} from "../components/Dialogs/DialogAddLesson";
@@ -24,6 +24,9 @@ import {newTaskLesson} from "../components/Dialogs/DialogAddTaskLesson";
 import SnackbarComponent from "../components/Dialogs/SnackBar";
 import {DialogAddNewTeacher} from "../components/Dialogs/DialogAddNewTeacher";
 import {DialogDeleteTeacher} from "../components/Dialogs/DialogDeleteTeacher";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {TimeIcon} from "@material-ui/pickers/_shared/icons/TimeIcon";
+
 const uuidv4 = require('uuid/v4');
 
 interface AccountPageState {
@@ -38,6 +41,13 @@ export interface TeacherData {
     id: number
 }
 
+export interface LessonTimeData {
+    lessonNumber: number
+    lessonStartTime: string
+    lessonFinishTime: string
+    id: string
+}
+
 export interface User {
     email: string,
     registrationDate: string,
@@ -49,7 +59,8 @@ export interface User {
         unevenWeek: newLesson[]
     },
     lessonTasks: newTaskLesson[],
-    teachers: TeacherData[]
+    teachers: TeacherData[],
+    lessonTime: LessonTimeData[]
 }
 
 
@@ -66,7 +77,8 @@ export default class AccountPage extends React.Component<AccountPageState> {
             lastLoginDate: '',
             lessons: {evenWeek: [], unevenWeek: []},
             lessonTasks: [],
-            teachers: []
+            teachers: [],
+            lessonTime: []
         },
         openSnackbar: false
     };
@@ -228,9 +240,9 @@ export default class AccountPage extends React.Component<AccountPageState> {
         } as React.CSSProperties;
 
         const tabsArray = [
-            {label: 'Учетная запись', icon: <Person/>},
+            // {label: 'Учетная запись', icon: <Person/>},
             {label: 'Мое расписание', icon: <ListAlt/>},
-            {label: 'Безопасность', icon: <Security/>},
+            // {label: 'Безопасность', icon: <Security/>},
             {label: 'Сервисы', icon: <Dashboard/>},
             {label: 'Админ', icon: <Fingerprint/>, admin: true},
         ];
@@ -314,24 +326,62 @@ export default class AccountPage extends React.Component<AccountPageState> {
 
         const ServiceComponent = () => {
             return (
-                <div>
-                    <Typography variant={"h6"}>Список преподавателей <DialogAddNewTeacher addNewTeacher={this.addTeacherInData}/>
-                    </Typography>
-                    <List>
-                        {this.state.data.teachers.map((teacher: TeacherData) => {
-                            return (
-                                <ListItem key={teacher.id}>
-                                    <ListItemText>
-                                        <Typography variant="h6">{teacher.name}</Typography>
-                                    </ListItemText>
-                                    <ListItemSecondaryAction>
-                                        <DialogDeleteTeacher teacher={teacher} deleteTeacherInData={this.deleteTeacherInData}/>
+                <div >
+                    <ExpansionPanel style={{width: '98%', margin: '1em auto'}}>
+                        <ExpansionPanelSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Group style={{marginRight: '0.5rem'}}/><Typography>Список преподавателей</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails style={{display: 'block', padding: 0}}>
+                            <DialogAddNewTeacher addNewTeacher={this.addTeacherInData}/>
+                            <List>
+                            {this.state.data.teachers.map((teacher: TeacherData) => {
+                                return (
+                                    <ListItem key={teacher.id} >
+                                        <ListItemText>
+                                            <Typography variant="body1">{teacher.name}</Typography>
+                                        </ListItemText>
+                                        <ListItemSecondaryAction>
+                                            <DialogDeleteTeacher teacher={teacher} deleteTeacherInData={this.deleteTeacherInData}/>
+                                        </ListItemSecondaryAction>
+                                        <Divider/>
+                                    </ListItem>
+                                )
+                            })}
+                            </List>
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                    <ExpansionPanel style={{width: '98%', margin: '1em auto'}}>
+                        <ExpansionPanelSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header1"
+                        >
+                            <TimeIcon style={{marginRight: '0.5rem'}}/><Typography>Расписание занятий</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails style={{display: 'block', padding: 0}}>
+                            <DialogAddNewTeacher addNewTeacher={this.addTeacherInData}/>
 
-                                    </ListItemSecondaryAction>
-                                </ListItem>
-                            )
-                        })}
-                    </List>
+                            {/*<List>*/}
+                            {/*    {this.state.data.teachers.map((teacher: TeacherData) => {*/}
+                            {/*        return (*/}
+                            {/*            <ListItem key={teacher.id} >*/}
+                            {/*                <ListItemText>*/}
+                            {/*                    <Typography variant="body1">{teacher.name}</Typography>*/}
+                            {/*                </ListItemText>*/}
+                            {/*                <ListItemSecondaryAction>*/}
+                            {/*                    <DialogDeleteTeacher teacher={teacher} deleteTeacherInData={this.deleteTeacherInData}/>*/}
+                            {/*                </ListItemSecondaryAction>*/}
+                            {/*                <Divider/>*/}
+                            {/*            </ListItem>*/}
+                            {/*        )*/}
+                            {/*    })}*/}
+                            {/*</List>*/}
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>
                 </div>
             )
         };
@@ -343,8 +393,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                 <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'} index={this.state.tabValue}
                                 onChangeIndex={this.handleChangeIndexTab}>
 
-
-                    {this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div/>}
+                    {/*{this.state.isDataConfirmed ? <div dir={theme.direction}>{accountDataComponent}</div> : <div/>}*/}
                     {this.state.isDataConfirmed ?
                         <div dir={theme.direction}>
                             <AddTimetable lessons={this.state.data.lessons}
@@ -357,7 +406,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                         :
                         <div/>
                     }
-                    <div dir={theme.direction}>text3</div>
+                    {/*<div dir={theme.direction}>text3</div>*/}
                     {this.state.isDataConfirmed ?
                         <div dir={theme.direction}>
                             <ServiceComponent/>
