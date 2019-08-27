@@ -4,7 +4,7 @@ import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
 import {LoadingComponent} from "../components/UniversalComponents";
 import {
-    AppBar, Divider, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary,
+    AppBar, Avatar, Chip, Divider, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary,
     Grid, IconButton,
     List,
     ListItem,
@@ -26,6 +26,7 @@ import {DialogAddNewTeacher} from "../components/Dialogs/DialogAddNewTeacher";
 import {DialogDeleteTeacher} from "../components/Dialogs/DialogDeleteTeacher";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {TimeIcon} from "@material-ui/pickers/_shared/icons/TimeIcon";
+import {DialogEditLessonTime} from "../components/Dialogs/DialogEditLessonTime";
 
 const uuidv4 = require('uuid/v4');
 
@@ -344,9 +345,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                                         <ListItemText>
                                             <Typography variant="body1">{teacher.name}</Typography>
                                         </ListItemText>
-                                        <ListItemSecondaryAction>
-                                            <DialogDeleteTeacher teacher={teacher} deleteTeacherInData={this.deleteTeacherInData}/>
-                                        </ListItemSecondaryAction>
+                                        <DialogDeleteTeacher teacher={teacher} deleteTeacherInData={this.deleteTeacherInData}/>
                                         <Divider/>
                                     </ListItem>
                                 )
@@ -363,23 +362,20 @@ export default class AccountPage extends React.Component<AccountPageState> {
                             <TimeIcon style={{marginRight: '0.5rem'}}/><Typography>Расписание занятий</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails style={{display: 'block', padding: 0}}>
-                            <DialogAddNewTeacher addNewTeacher={this.addTeacherInData}/>
+                            <DialogEditLessonTime editLessonInData={()=>{}} lessonTime={this.state.data.lessonTime}/>
+                            {this.state.data.lessonTime.map((lessonTime: LessonTimeData) => {
+                                return (
+                                    <ListItem key={lessonTime.id} >
+                                        <Chip variant="outlined" color="primary" avatar={<Avatar>{lessonTime.lessonNumber}</Avatar>}
+                                              label={<Typography>{lessonTime.lessonStartTime} - {lessonTime.lessonFinishTime}</Typography>}
 
-                            {/*<List>*/}
-                            {/*    {this.state.data.teachers.map((teacher: TeacherData) => {*/}
-                            {/*        return (*/}
-                            {/*            <ListItem key={teacher.id} >*/}
-                            {/*                <ListItemText>*/}
-                            {/*                    <Typography variant="body1">{teacher.name}</Typography>*/}
-                            {/*                </ListItemText>*/}
-                            {/*                <ListItemSecondaryAction>*/}
-                            {/*                    <DialogDeleteTeacher teacher={teacher} deleteTeacherInData={this.deleteTeacherInData}/>*/}
-                            {/*                </ListItemSecondaryAction>*/}
-                            {/*                <Divider/>*/}
-                            {/*            </ListItem>*/}
-                            {/*        )*/}
-                            {/*    })}*/}
-                            {/*</List>*/}
+                                        />
+                                        <Divider/>
+                                    </ListItem>
+                                )
+                            })}
+
+
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                 </div>
