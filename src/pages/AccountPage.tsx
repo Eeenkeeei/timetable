@@ -21,12 +21,14 @@ import AdminComponent from "./AdminComponent";
 import AddTimetable from "../components/AddTimetable";
 import {newLesson} from "../components/Dialogs/DialogAddLesson";
 import {newTaskLesson} from "../components/Dialogs/DialogAddTaskLesson";
-import SnackbarComponent from "../components/Dialogs/SnackBar";
+import SnackbarComponent, {MySnackbarContentWrapper} from "../components/Dialogs/SnackBar";
 import {DialogAddNewTeacher} from "../components/Dialogs/DialogAddNewTeacher";
 import {DialogDeleteTeacher} from "../components/Dialogs/DialogDeleteTeacher";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {TimeIcon} from "@material-ui/pickers/_shared/icons/TimeIcon";
 import {DialogEditLessonTime} from "../components/Dialogs/DialogEditLessonTime";
+import Snackbar from "@material-ui/core/Snackbar";
+import {SyntheticEvent} from "react";
 
 const uuidv4 = require('uuid/v4');
 
@@ -151,11 +153,6 @@ export default class AccountPage extends React.Component<AccountPageState> {
                                 this.setState({
                                     openSnackbar: true
                                 });
-                                setTimeout(() => {
-                                    this.setState({
-                                        openSnackbar: false
-                                    })
-                                }, 4000)
                             })
                         } else {
                             this.setState({
@@ -421,11 +418,33 @@ export default class AccountPage extends React.Component<AccountPageState> {
             </div>
         );
 
+        const handleClose = (event?: SyntheticEvent, reason?: string) => {
+            if (reason === 'clickaway') {
+                return;
+            }
+
+           this.setState({
+               openSnackbar: false
+           })
+        };
         return (
             <div>
                 {this.state.isDataConfirmed === null ? LoadingComponent : null}
                 {this.state.data !== undefined ? accountPageBody : waitingComponent}
-                {this.state.openSnackbar ? <SnackbarComponent variant="success" message="Данные обновлены"/> : null}
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={this.state.openSnackbar}
+                    onClose={handleClose}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={handleClose}
+                        variant={"success"}
+                        message={'Данные обновлены'}
+                    />
+                </Snackbar>
             </div>
         )
     }

@@ -12,9 +12,6 @@ import {
 } from "@material-ui/core";
 import {MuiThemeProvider} from "@material-ui/core/styles";
 import React from "react";
-import {DataStorage} from "../serverApi/dataStorage";
-import {LocalStorage} from "../serverApi/localStorage";
-import Http from "../serverApi/http";
 import {DialogDeleteNews} from "./Dialogs/DialogDeleteNews";
 import {DialogEditNews} from "./Dialogs/DialogEditNews";
 import {newsData} from "../pages/StartPage";
@@ -57,10 +54,10 @@ export default class NewsComponent extends React.Component<NewsComponentProps> {
 
                     <div style={{textAlign: 'center'}}>
                         <Grid container spacing={3}>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={6}>
                                 <CardMedia
                                     style={{
-                                        width: '220px',
+                                        width: '240',
                                         height: '220px',
                                         marginLeft: 'auto',
                                         marginRight: 'auto',
@@ -74,7 +71,7 @@ export default class NewsComponent extends React.Component<NewsComponentProps> {
                                 />
 
                             </Grid>
-                            <Grid item xs={12} sm={8}>
+                            <Grid item xs={12} sm={6}>
                                 <CardContent>
                                     <Typography
                                         variant="h6">{this.props.newsData.header}</Typography>

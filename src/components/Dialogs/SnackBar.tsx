@@ -1,5 +1,4 @@
 import React, {SyntheticEvent} from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -9,15 +8,16 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import {makeStyles, Theme} from '@material-ui/core/styles';
-
-const variantIcon = {
+import {IconButton} from "@material-ui/core";
+import CloseIcon from '@material-ui/icons/Close';
+export const variantIcon = {
     success: CheckCircleIcon,
     warning: WarningIcon,
     error: ErrorIcon,
     info: InfoIcon,
 };
 
-const useStyles1 = makeStyles((theme: Theme) => ({
+export const useStyles1 = makeStyles((theme: Theme) => ({
     success: {
         backgroundColor: green[600],
     },
@@ -50,7 +50,7 @@ export interface Props {
     variant: keyof typeof variantIcon;
 }
 
-function MySnackbarContentWrapper(props: Props) {
+export function MySnackbarContentWrapper(props: Props) {
     const classes = useStyles1();
     const {className, message, onClose, variant, ...other} = props;
     const Icon = variantIcon[variant];
@@ -66,19 +66,14 @@ function MySnackbarContentWrapper(props: Props) {
         </span>
             }
             action={[
-
+                <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
+                    <CloseIcon className={classes.icon} />
+                </IconButton>,
             ]}
             {...other}
         />
     );
 }
-
-MySnackbarContentWrapper.propTypes = {
-    className: PropTypes.string,
-    message: PropTypes.node,
-    onClose: PropTypes.func,
-    variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
-};
 
 interface SnackbarProps {
     variant: "success" | "error" | "warning" | "info"
@@ -114,7 +109,7 @@ export default class SnackbarComponent extends React.Component<SnackbarProps> {
                         vertical: 'bottom',
                         horizontal: 'left',
                     }}
-                    open={true}
+                    open={this.state.open}
                     autoHideDuration={4000}
                     onClose={this.handleClose}
                 >
