@@ -81,8 +81,8 @@ export class DialogEditLessonTime extends React.Component<DialogEditLessonTimePr
     public render() {
         return (
             <div>
-                <Button color="primary" onClick={this.handleOpenLoginDialog} style={{marginLeft: '1rem'}}>
-                    Редактировать расписание
+                <Button color="primary" disabled={true} onClick={this.handleOpenLoginDialog} style={{marginLeft: '1rem'}}>
+                    Раздел в разработке
                 </Button>
 
                 <Dialog open={this.state.openDialogWindow} onClose={this.handleClose}
