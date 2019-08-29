@@ -12,6 +12,7 @@ import Http from "../../serverApi/http";
 import {DataStorage} from "../../serverApi/dataStorage";
 import {LocalStorage} from "../../serverApi/localStorage";
 import {PersonAdd} from "@material-ui/icons";
+import validator from 'validator';
 
 interface DialogRegisterFormProps {
     mobile: boolean
@@ -157,7 +158,7 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                     </div>
                     <DialogContent>
                         <DialogContentText>
-                            Для регистрации необходимо ввести свой email и пароль. Введенные пароли должны совпадать
+                            Для регистрации необходимо ввести свой email и пароль. Введенные пароли должны совпадать. Минимальная длина пароля - 8 символов
                         </DialogContentText>
 
                         <Typography variant="button">{this.state.registrationState}</Typography>
@@ -174,7 +175,7 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                         <TextField
                             margin="dense"
                             id="pass"
-                            label={<Typography>Пароль <span style={{color: 'red'}}>*</span></Typography>}
+                            label={<Typography>Пароль, не менее 8 символов <span style={{color: 'red'}}>*</span></Typography>}
                             type="password"
                             fullWidth
                             onChange={this.handlePasswordChange}
@@ -190,7 +191,7 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={this.login} color="primary">
+                        <Button onClick={this.login} color="primary" disabled={!validator.isEmail(this.state.email)}>
                             Зарегистрироваться
                         </Button>
                         <Button onClick={this.handleClose} color="primary">

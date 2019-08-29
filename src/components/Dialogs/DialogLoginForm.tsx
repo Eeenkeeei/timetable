@@ -13,7 +13,6 @@ import {DataStorage} from "../../serverApi/dataStorage";
 import {LocalStorage} from "../../serverApi/localStorage";
 import {MeetingRoom} from "@material-ui/icons";
 
-
 interface DialogLoginFormProps {
     mobile: boolean
     isLoginSuccess: any;
