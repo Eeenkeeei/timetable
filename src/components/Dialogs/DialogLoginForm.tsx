@@ -49,6 +49,12 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
         })
     };
 
+    public handleKeyDown = (evt: any) => {
+        if (evt.key === 'Enter') {
+            this.login()
+        }
+    }
+
     public login = () => {
         this.setState({
             isLoading: true
@@ -112,7 +118,7 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
 
     public render() {
         return (
-            <div>
+            <div onKeyDown={this.handleKeyDown}>
 
                 {this.props.mobile === true ?
                     <div onClick={this.handleOpenLoginDialog} style={{height: '2rem', width: '7rem'}}>
