@@ -128,6 +128,8 @@ export class DialogAddTaskLesson extends React.Component<DialogAddTaskLessonProp
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
+                                    cancelLabel={'Отмена'}
+                                    okLabel={'Сохранить'}
                                 />
 
                         </MuiPickersUtilsProvider>

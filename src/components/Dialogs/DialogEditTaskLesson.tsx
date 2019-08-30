@@ -117,6 +117,8 @@ export class DialogEditTaskLesson extends React.Component<DialogEditTaskLessonPr
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }}
+                                cancelLabel={'Отмена'}
+                                okLabel={'Сохранить'}
                             />
 
                         </MuiPickersUtilsProvider>
