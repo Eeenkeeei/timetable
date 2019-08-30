@@ -175,4 +175,16 @@ export const scheduleListComponent = (lessonTime: LessonTimeData[], teachers: Te
     )
 };
 
+export function getCurrentWeek () {
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth();
+    const today = new Date(year, month, 0).getTime();
+    const now = new Date().getTime();
+    const week = Math.round((now - today) / (1000 * 60 * 60 * 24 * 7));
+    if (week % 2) {
+        return ('Четная')
+    } else {
+        return ('Нечетная')
+    }
+}
 

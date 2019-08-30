@@ -13,6 +13,7 @@ import {LocalStorage} from "../serverApi/localStorage";
 import Http from "../serverApi/http";
 import {Input} from "@material-ui/icons";
 import StartPage from "../pages/StartPage";
+import {getCurrentWeek} from "./UniversalComponents";
 
 
 interface pageData {
@@ -181,8 +182,13 @@ export default class Main extends React.Component {
                         </div>
                     </Menu>
                     {this.state.data === null ? null :
-                        <Typography style={{marginLeft: 'auto'}}
-                                    variant="subtitle2">Привет, {this.state.data.email}</Typography>}
+                        <div  style={{marginLeft: 'auto'}}>
+                        <Typography
+                                    variant="subtitle2">Привет, {this.state.data.email}</Typography>
+                            <Typography
+                                        variant="subtitle2">{new Date().toLocaleDateString()}, {getCurrentWeek()} неделя</Typography>
+
+                        </div>}
                 </Toolbar>
             </AppBar>
         );
@@ -272,8 +278,16 @@ export default class Main extends React.Component {
                             </Button>
                             &nbsp;
                             {this.state.data === null ? null :
-                                <Typography style={{marginLeft: 'auto'}}
-                                            variant="subtitle2">Привет, {this.state.data.email}</Typography>}
+                                <div  style={{marginLeft: 'auto'}}>
+                                <Typography
+                                            variant="subtitle2"> Привет, {this.state.data.email}</Typography>
+                            <Typography
+                                        variant="subtitle2">
+                                {new Date().toLocaleDateString()}, {getCurrentWeek()} неделя
+                            </Typography>
+                                </div>
+                            }
+
                         </Toolbar>
                     </AppBar>
 
