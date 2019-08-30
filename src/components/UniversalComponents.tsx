@@ -96,12 +96,18 @@ export default class NewsComponent extends React.Component<NewsComponentProps> {
 const daysInWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 
 const scheduleString = (lessonTime: LessonTimeData[], teachers: TeacherData[], lesson: newLesson, editLessonInData: any, deleteLessonInData: any, addNewTaskLesson?: any ) => {
+
+    let lessonNumber = Number(lesson.lessonNumber.split(':')[0])-1;
+
+    const lessonNumberString = lessonTime[lessonNumber].lessonNumber + ': ' +
+        lessonTime[lessonNumber].lessonStartTime + ' - ' +
+        lessonTime[lessonNumber].lessonFinishTime;
     return (
         <div key={Math.random()} style={{marginTop: '7px'}}>
             <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem', width: '95%'}}>
                 <Grid item xs={12} sm={3}>
                     <Typography>{lesson.lessonName}</Typography>
-                    <Typography style={{color: 'grey'}}>{lesson.lessonNumber}</Typography>
+                    <Typography style={{color: 'grey'}}>{lessonNumberString}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={3}>
                     <Typography>{lesson.lessonType}</Typography>
