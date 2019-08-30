@@ -211,7 +211,7 @@ export default class CalendarPage extends React.Component {
         if (monthName === 'Dec') {
             return (monthNames[11])
         }
-    }
+    };
 
     public handleChangeMonthInMobileVersion = (event: any) => {
         this.setState({
@@ -256,7 +256,7 @@ export default class CalendarPage extends React.Component {
                 }
             });
             return (
-                <Badge style={{}} badgeContent={tasks.length} color="error">
+                <Badge style={{}} badgeContent={tasks.length > 0 ? <Typography variant={"h6"} style={{fontSize: '1rem'}}>{tasks.length}</Typography> : null} color="error">
                     <div style={{
                         width: '140px',
                         height: '110px',
@@ -272,7 +272,7 @@ export default class CalendarPage extends React.Component {
                             {Number(day.split(' ')[2])}
                         </Typography>
                         {tasks.length >= 1 ?
-                            <div style={{marginRight: '100%'}}><DialogViewDay handleEditTaskLesson={this.handleEditTaskLesson} tasks={tasks} day={day}/></div> : null}
+                            <div style={{marginRight: '70%'}}><DialogViewDay handleEditTaskLesson={this.handleEditTaskLesson} tasks={tasks} day={day}/></div> : null}
                     </div>
                 </Badge>
             )

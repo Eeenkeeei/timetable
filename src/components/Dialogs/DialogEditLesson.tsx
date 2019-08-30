@@ -122,7 +122,7 @@ export class DialogEditLesson extends React.Component<DialogEditLessonProps> {
                         <TextField
                             margin="dense"
                             id="login"
-                            label={<Typography>Название предмета: </Typography>}
+                            label={<Typography>Название предмета: <span style={{color: 'red'}}>*</span></Typography>}
                             value={this.state.lessonName}
                             fullWidth
                             onChange={this.handleLessonNameChange}
@@ -168,7 +168,7 @@ export class DialogEditLesson extends React.Component<DialogEditLessonProps> {
 
                     <DialogActions>
 
-                        <Button onClick={this.confirmEdit} color="primary">
+                        <Button onClick={this.confirmEdit} color="primary" disabled={this.state.lessonName.length === 0}>
                             Сохранить
                         </Button>
                         <Button onClick={this.handleClose} color="primary">

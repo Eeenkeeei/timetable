@@ -356,9 +356,9 @@ export default class AccountPage extends React.Component<AccountPageState> {
                             </List>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
-                    <ExpansionPanel style={{width: '98%', margin: '1em auto'}}>
+                    <ExpansionPanel style={{width: '98%', margin: '1em auto'}} expanded={true}>
                         <ExpansionPanelSummary
-                            expandIcon={<ExpandMoreIcon />}
+                            // expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header1"
                         >
