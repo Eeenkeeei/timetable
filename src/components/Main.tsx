@@ -149,7 +149,7 @@ export default class Main extends React.Component {
         const isDataConfirmedMobileMenu = (
             <AppBar>
                 <Toolbar className="topBarMin">
-                    <Button color="secondary" aria-controls="customized-menu" aria-haspopup="true"
+                    <Button style={{color: "white"}} aria-controls="customized-menu" aria-haspopup="true"
                             onClick={this.handleClick}>
                         <MenuIcon/>
                     </Button>
@@ -190,7 +190,7 @@ export default class Main extends React.Component {
         const isDataNotConfirmedMobileMenu = (
             <AppBar>
                 <Toolbar className="topBarMin">
-                    <Button color="secondary" aria-controls="customized-menu" aria-haspopup="true"
+                    <Button style={{color: "white"}} aria-controls="customized-menu" aria-haspopup="true"
                             onClick={this.handleClick}>
                         <MenuIcon/>
                     </Button>
@@ -238,7 +238,7 @@ export default class Main extends React.Component {
             <MuiThemeProvider theme={theme}>
                 <AppBar>
                     <Toolbar style={{textAlign: 'right'}}>
-                        <CircularProgress color="inherit"/>
+                        <CircularProgress style={{color: "white"}}/>
                     </Toolbar>
                 </AppBar>
             </MuiThemeProvider>
@@ -260,14 +260,14 @@ export default class Main extends React.Component {
                                 return (
                                     <div key={dataPage.buttonText + 'logged'}>
                                         <Link to={dataPage.path}>
-                                            <Button color="secondary" onClick={this.changePage}>
+                                            <Button style={{color: "white"}} onClick={this.changePage}>
                                                 <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;{dataPage.buttonText}
                                             </Button>
                                         </Link>
                                     </div>
                                 )
                             })}
-                            <Button onClick={this.handleExitButton} color="secondary">
+                            <Button onClick={this.handleExitButton} style={{color: "white"}}>
                                 <Input/>&nbsp;&nbsp;ВЫХОД
                             </Button>
                             &nbsp;
@@ -311,7 +311,7 @@ export default class Main extends React.Component {
                                     return (
                                         <div key={dataPage.buttonText}>
                                             <Link to={dataPage.path}>
-                                                <Button color="secondary" onClick={this.changePage}>
+                                                <Button style={{color: "white"}} onClick={this.changePage}>
                                                     <Icon>{dataPage.icon}</Icon>&nbsp;&nbsp;{dataPage.buttonText}
                                                 </Button>
                                             </Link>

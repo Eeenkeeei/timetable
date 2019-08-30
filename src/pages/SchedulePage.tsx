@@ -31,6 +31,20 @@ export default class SchedulePage extends React.Component {
 
     componentDidMount(): void {
         document.title = 'Расписание занятий';
+        const year = new Date().getFullYear();
+        const month = new Date().getMonth();
+        const today = new Date(year, month, 0).getTime();
+        const now = new Date().getTime();
+        const week = Math.round((now - today) / (1000 * 60 * 60 * 24 * 7));
+        if (week % 2) {
+            this.setState({
+                tabValue: 0
+            })
+        } else {
+            this.setState({
+                tabValue: 1
+            })
+        }
         const storage = new DataStorage(new LocalStorage());
         const http = new Http();
         if (storage.getUserData !== null) {

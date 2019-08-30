@@ -2,7 +2,7 @@ import {theme} from "../Theme";
 import {
     Card,
     CardContent,
-    CardMedia,
+    CardMedia, Chip,
     CircularProgress, Divider,
     Grid,
     List,
@@ -102,6 +102,15 @@ const scheduleString = (lessonTime: LessonTimeData[], teachers: TeacherData[], l
     const lessonNumberString = lessonTime[lessonNumber].lessonNumber + ': ' +
         lessonTime[lessonNumber].lessonStartTime + ' - ' +
         lessonTime[lessonNumber].lessonFinishTime;
+
+    let lessonColor: 'primary' | 'default' | 'secondary' = 'primary';
+
+    if (lesson.lessonType === 'Практика') {
+        lessonColor = 'default'
+    } else if (lesson.lessonType === 'Лабораторная работа') {
+        lessonColor = 'secondary'
+    }
+
     return (
         <div key={Math.random()} style={{marginTop: '7px'}}>
             <Grid container spacing={3} key={Math.random()} style={{marginLeft: '1rem', width: '95%'}}>
@@ -110,7 +119,7 @@ const scheduleString = (lessonTime: LessonTimeData[], teachers: TeacherData[], l
                     <Typography style={{color: 'grey'}}>{lessonNumberString}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={3}>
-                    <Typography>{lesson.lessonType}</Typography>
+                    <Chip size="small" label={lesson.lessonType} color={lessonColor}/>
                     <Typography style={{color: 'grey'}}>{lesson.lessonTeacher}</Typography>
                 </Grid>
                 <Grid item xs={6} sm={3}>
