@@ -110,7 +110,7 @@ export class DialogAddLesson extends React.Component<DialogAddLessonProps> {
 
                     <DialogContent>
                         <FormControl style={{width: '100%'}}>
-                            <InputLabel htmlFor="selectLessonNumber">Номер занятия</InputLabel>
+                            <InputLabel htmlFor="selectLessonNumber">Номер занятия <span style={{color: 'red'}}>*</span></InputLabel>
                             <Select
                                 value={this.state.lessonNumber}
                                 onChange={this.handleLessonNumberChange}
@@ -129,13 +129,13 @@ export class DialogAddLesson extends React.Component<DialogAddLessonProps> {
                         <TextField
                             margin="dense"
                             id="login"
-                            label={<Typography>Название предмета: </Typography>}
+                            label={<Typography>Название предмета: <span style={{color: 'red'}}>*</span></Typography>}
                             value={this.state.lessonName}
                             fullWidth
                             onChange={this.handleLessonNameChange}
                         />
                         <FormControl style={{width: '100%'}}>
-                            <InputLabel htmlFor="selectLesson">Вид занятия</InputLabel>
+                            <InputLabel htmlFor="selectLesson">Вид занятия <span style={{color: 'red'}}>*</span></InputLabel>
                             <Select
                                 value={this.state.lessonType}
                                 onChange={this.handleLessonTypeChange}
@@ -174,7 +174,7 @@ export class DialogAddLesson extends React.Component<DialogAddLessonProps> {
 
                     <DialogActions>
 
-                        <Button onClick={this.confirmAdd} color="primary">
+                        <Button onClick={this.confirmAdd} color="primary" disabled={this.state.lessonNumber.length === 0 || this.state.lessonName.length === 0 || this.state.lessonType.length === 0}>
                             Добавить
                         </Button>
                         <Button onClick={this.handleClose} color="primary">
