@@ -210,6 +210,12 @@ export default class AccountPage extends React.Component<AccountPageState> {
         this.updateHandler(newData)
     };
 
+    public handleEditLessonTimeInData = (lessonSchedule: LessonTimeData[]) => {
+        const newData: User = this.state.data;
+        newData.lessonTime = lessonSchedule;
+        this.updateHandler(newData)
+    };
+
     public addTeacherInData = (teacher: TeacherData) => {
         const newData: User = this.state.data;
         const newTeacher: TeacherData = {
@@ -359,7 +365,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                             <TimeIcon style={{marginRight: '0.5rem'}}/><Typography>Расписание занятий</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails style={{display: 'block', padding: 0}}>
-                            <DialogEditLessonTime editLessonInData={()=>{}} lessonTime={this.state.data.lessonTime}/>
+                            <DialogEditLessonTime editLessonTimeInData={this.handleEditLessonTimeInData} lessonTime={this.state.data.lessonTime}/>
                             {this.state.data.lessonTime.map((lessonTime: LessonTimeData) => {
                                 return (
                                     <ListItem key={lessonTime.id} >
