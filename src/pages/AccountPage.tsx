@@ -400,6 +400,7 @@ export default class AccountPage extends React.Component<AccountPageState> {
                                           addLessonInData={this.addLessonInData}
                                           deleteLessonInData={this.deleteLessonInData}
                                           editLessonInData={this.editLessonInData}
+                                          lessonTime={this.state.data.lessonTime}
                             />
                         </div>
                         :

@@ -9,20 +9,25 @@ import {
 } from "@material-ui/core";
 import {Edit} from "@material-ui/icons";
 import {newLesson} from "./DialogAddLesson";
-import {TeacherData} from "../../pages/AccountPage";
+import {LessonTimeData, TeacherData} from "../../pages/AccountPage";
 
 interface DialogEditLessonProps {
     lesson: newLesson
     editLessonInData: any // cb для добавления
     teachers: TeacherData[]
+    lessonTime: LessonTimeData[]
 }
 
 
 export class DialogEditLesson extends React.Component<DialogEditLessonProps> {
 
+    public lessonNumber = Number(this.props.lesson.lessonNumber.split(':')[0])-1;
+
     state = {
         openDialogWindow: false,
-        lessonNumber: this.props.lesson.lessonNumber,
+        lessonNumber: this.props.lessonTime[this.lessonNumber].lessonNumber + ': ' +
+            this.props.lessonTime[this.lessonNumber].lessonStartTime + ' - ' +
+            this.props.lessonTime[this.lessonNumber].lessonFinishTime,
         lessonName: this.props.lesson.lessonName,
         lessonType: this.props.lesson.lessonType,
         lessonLocation: this.props.lesson.lessonLocation,
@@ -105,12 +110,13 @@ export class DialogEditLesson extends React.Component<DialogEditLessonProps> {
                                 input={<Input id="selectLessonNumber" />}
                                 fullWidth
                             >
-                                <MenuItem value={'1: 8:00 - 9:30'}>1: 8:00 - 9:30</MenuItem>
-                                <MenuItem value={'2: 9:40 - 11:10'}>2: 9:40 - 11:10</MenuItem>
-                                <MenuItem value={'3: 11:20 - 12:50'}>3: 11:20 - 12:50</MenuItem>
-                                <MenuItem value={'4: 13:30 - 15:00'}>4: 13:30 - 15:00</MenuItem>
-                                <MenuItem value={'5: 15:10 - 16:40'}>5: 15:10 - 16:40</MenuItem>
-                                <MenuItem value={'6: 16:40 - 18:10'}>6: 16:50 - 18:10</MenuItem>
+                                {this.props.lessonTime.map (timeData => {
+                                    return (
+                                        <MenuItem key={Math.random()} value={timeData.lessonNumber + ': ' + timeData.lessonStartTime + ' - ' + timeData.lessonFinishTime}>
+                                            {timeData.lessonNumber + ': ' + timeData.lessonStartTime + ' - ' + timeData.lessonFinishTime}
+                                        </MenuItem>
+                                    )
+                                })}
                             </Select>
                         </FormControl>
                         <TextField

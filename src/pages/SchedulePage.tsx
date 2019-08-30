@@ -152,6 +152,7 @@ export default class SchedulePage extends React.Component {
                             onChangeIndex={this.handleChangeIndexTab}>
                 <div dir={theme.direction}>
                     {scheduleListComponent(
+                        this.state.data.lessonTime,
                         this.state.data.teachers,
                         false,
                         false,
@@ -163,7 +164,7 @@ export default class SchedulePage extends React.Component {
                     )}
                 </div>
                 <div dir={theme.direction}>
-                    {scheduleListComponent(this.state.data.teachers, false, false, false, 'Нечетная', this.state.data.lessons.evenWeek, this.state.data.lessons.unevenWeek, this.handleAddNewTaskLesson)}
+                    {scheduleListComponent(this.state.data.lessonTime, this.state.data.teachers, false, false, false, 'Нечетная', this.state.data.lessons.evenWeek, this.state.data.lessons.unevenWeek, this.handleAddNewTaskLesson)}
                 </div>
             </SwipeableViews>
         );

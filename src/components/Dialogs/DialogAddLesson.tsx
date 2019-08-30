@@ -8,13 +8,14 @@ import {
     Typography
 } from "@material-ui/core";
 import {Add} from "@material-ui/icons";
-import {TeacherData} from "../../pages/AccountPage";
+import {LessonTimeData, TeacherData} from "../../pages/AccountPage";
 
 interface DialogAddLessonProps {
     lessonDay: string,
     lessonWeek: string,
     addLesson: any // cb для добавления
     teachers: TeacherData[]
+    lessonTime: LessonTimeData[]
 }
 
 export interface newLesson {
@@ -116,12 +117,13 @@ export class DialogAddLesson extends React.Component<DialogAddLessonProps> {
                                 input={<Input id="selectLessonNumber"/>}
                                 fullWidth
                             >
-                                <MenuItem value={'1: 8:00 - 9:30'}>1: 8:00 - 9:30</MenuItem>
-                                <MenuItem value={'2: 9:40 - 11:10'}>2: 9:40 - 11:10</MenuItem>
-                                <MenuItem value={'3: 11:20 - 12:50'}>3: 11:20 - 12:50</MenuItem>
-                                <MenuItem value={'4: 13:30 - 15:00'}>4: 13:30 - 15:00</MenuItem>
-                                <MenuItem value={'5: 15:10 - 16:40'}>5: 15:10 - 16:40</MenuItem>
-                                <MenuItem value={'6: 16:40 - 18:10'}>6: 16:50 - 18:10</MenuItem>
+                                {this.props.lessonTime.map (timeData => {
+                                    return (
+                                        <MenuItem key={Math.random()} value={timeData.lessonNumber + ': ' + timeData.lessonStartTime + ' - ' + timeData.lessonFinishTime}>
+                                            {timeData.lessonNumber + ': ' + timeData.lessonStartTime + ' - ' + timeData.lessonFinishTime}
+                                        </MenuItem>
+                                    )
+                                })}
                             </Select>
                         </FormControl>
                         <TextField

@@ -8,8 +8,9 @@ import {
     DialogTitle, TextField, Typography,
 } from "@material-ui/core";
 import {LessonTimeData} from "../../pages/AccountPage";
-import { KeyboardTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {TimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
+
 const uuidv4 = require('uuid/v4');
 
 interface DialogEditLessonTimeProps {
@@ -217,126 +218,138 @@ export class DialogEditLessonTime extends React.Component<DialogEditLessonTimePr
                                 <Typography color={"primary"} variant={"caption"} style={{fontSize: '1.3rem'}}>
                                     1
                                 </Typography>
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
                                     label="Начало"
                                     value={'2018-01-01T' + `${this.state.firstLessonStart.split(':')[0].length === 1 ? '0' + this.state.firstLessonStart : this.state.firstLessonStart}` + ':00'}
                                     onChange={this.handleChangeStartTimeFirst}
                                     style={{width: '120px', marginLeft: '1rem'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
-                                    label="Начало"
+                                    label="Конец"
                                     value={'2018-01-01T' + `${this.state.firstLessonFinish.split(':')[0].length === 1 ? '0' + this.state.firstLessonFinish : this.state.firstLessonFinish}` + ':00'}
                                     onChange={this.handleChangeFinishTimeFirst}
                                     style={{width: '120px'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
                             </div>
                             <div style={{display: 'flex', marginTop: '0.5rem'}}>
                                 <Typography color={"primary"} variant={"caption"} style={{fontSize: '1.3rem'}}>
                                     2
                                 </Typography>
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
                                     label="Начало"
                                     value={'2018-01-01T' + `${this.state.secondLessonStart.split(':')[0].length === 1 ? '0' + this.state.secondLessonStart : this.state.secondLessonStart}` + ':00'}
                                     onChange={this.handleChangeStartTimeSecond}
                                     style={{width: '120px', marginLeft: '1rem'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
-                                    label="Начало"
+                                    label="Конец"
                                     value={'2018-01-01T' + `${this.state.secondLessonFinish.split(':')[0].length === 1 ? '0' + this.state.secondLessonFinish : this.state.secondLessonFinish}` + ':00'}
                                     onChange={this.handleChangeFinishTimeSecond}
                                     style={{width: '120px'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
                             </div>
                             <div style={{display: 'flex', marginTop: '0.5rem'}}>
                                 <Typography color={"primary"} variant={"caption"} style={{fontSize: '1.3rem'}}>
                                     3
                                 </Typography>
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
                                     label="Начало"
                                     value={'2018-01-01T' + `${this.state.thirdLessonStart.split(':')[0].length === 1 ? '0' + this.state.thirdLessonStart : this.state.thirdLessonStart}` + ':00'}
                                     onChange={this.handleChangeStartTimeThird}
                                     style={{width: '120px', marginLeft: '1rem'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
-                                    label="Начало"
+                                    label="Конец"
                                     value={'2018-01-01T' + `${this.state.thirdLessonFinish.split(':')[0].length === 1 ? '0' + this.state.thirdLessonFinish : this.state.thirdLessonFinish}` + ':00'}
                                     onChange={this.handleChangeFinishTimeThird}
                                     style={{width: '120px'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
                             </div>
                             <div style={{display: 'flex', marginTop: '0.5rem'}}>
                                 <Typography color={"primary"} variant={"caption"} style={{fontSize: '1.3rem'}}>
                                     4
                                 </Typography>
-                                <KeyboardTimePicker
-                                ampm={false}
-                                variant="inline"
-                                label="Начало"
-                                value={'2018-01-01T' + `${this.state.fourthLessonStart.split(':')[0].length === 1 ? '0' + this.state.fourthLessonStart : this.state.fourthLessonStart}` + ':00'}
-                                onChange={this.handleChangeStartTimeFourth}
-                                style={{width: '120px', marginLeft: '1rem'}}
-                            />
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
                                     label="Начало"
+                                    value={'2018-01-01T' + `${this.state.fourthLessonStart.split(':')[0].length === 1 ? '0' + this.state.fourthLessonStart : this.state.fourthLessonStart}` + ':00'}
+                                    onChange={this.handleChangeStartTimeFourth}
+                                    style={{width: '120px', marginLeft: '1rem'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
+                                />
+                                <TimePicker
+                                    ampm={false}
+                                    label="Конец"
                                     value={'2018-01-01T' + `${this.state.fourthLessonFinish.split(':')[0].length === 1 ? '0' + this.state.fourthLessonFinish : this.state.fourthLessonFinish}` + ':00'}
                                     onChange={this.handleChangeFinishTimeFourth}
                                     style={{width: '120px'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
                             </div>
                             <div style={{display: 'flex', marginTop: '0.5rem'}}>
                                 <Typography color={"primary"} variant={"caption"} style={{fontSize: '1.3rem'}}>
                                     5
                                 </Typography>
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
                                     label="Начало"
                                     value={'2018-01-01T' + `${this.state.fifthLessonStart.split(':')[0].length === 1 ? '0' + this.state.fifthLessonStart : this.state.fifthLessonStart}` + ':00'}
                                     onChange={this.handleChangeStartTimeFifth}
                                     style={{width: '120px', marginLeft: '1rem'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
-                                    label="Начало"
+                                    label="Конец"
                                     value={'2018-01-01T' + `${this.state.fifthLessonFinish.split(':')[0].length === 1 ? '0' + this.state.fifthLessonFinish : this.state.fifthLessonFinish}` + ':00'}
                                     onChange={this.handleChangeFinishTimeFifth}
                                     style={{width: '120px'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
                             </div>
                             <div style={{display: 'flex', marginTop: '0.5rem'}}>
                                 <Typography color={"primary"} variant={"caption"} style={{fontSize: '1.3rem'}}>
                                     6
                                 </Typography>
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
                                     label="Начало"
                                     value={'2018-01-01T' + `${this.state.sixthLessonStart.split(':')[0].length === 1 ? '0' + this.state.sixthLessonStart : this.state.sixthLessonStart}` + ':00'}
                                     onChange={this.handleChangeStartTimeSixth}
                                     style={{width: '120px', marginLeft: '1rem'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
-                                <KeyboardTimePicker
+                                <TimePicker
                                     ampm={false}
-                                    variant="inline"
-                                    label="Начало"
+                                    label="Конец"
                                     value={'2018-01-01T' + `${this.state.sixthLessonFinish.split(':')[0].length === 1 ? '0' + this.state.sixthLessonFinish : this.state.sixthLessonFinish}` + ':00'}
                                     onChange={this.handleChangeFinishTimeSixth}
                                     style={{width: '120px'}}
+                                    okLabel={'Сохранить'}
+                                    cancelLabel={'Отмена'}
                                 />
                             </div>
                         </DialogContent>
