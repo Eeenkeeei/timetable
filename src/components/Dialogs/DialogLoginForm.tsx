@@ -119,7 +119,7 @@ export class DialogLoginForm extends React.Component<DialogLoginFormProps, Dialo
                         <Typography variant="button"><MeetingRoom/>&nbsp;&nbsp;Вход</Typography>
                     </div>
                     :
-                    <Button color="secondary" onClick={this.handleOpenLoginDialog}>
+                    <Button color="secondary" onClick={this.handleOpenLoginDialog}  style={{color: 'white'}}>
                         <MeetingRoom/>&nbsp;&nbsp;Вход
                     </Button>}
 

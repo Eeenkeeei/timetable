@@ -142,10 +142,10 @@ export class DialogRegisterForm extends React.Component<DialogRegisterFormProps,
             <div>
                 {this.props.mobile === true ?
                     <div onClick={this.handleOpenLoginDialog} style={{height: '2rem', width: '7rem'}}>
-                        <PersonAdd/>&nbsp;&nbsp;<Typography variant="button">Регистрация</Typography>
+                        <PersonAdd/>&nbsp;&nbsp;<Typography variant="button" >Регистрация</Typography>
                     </div>
                     :
-                    <Button color="secondary" onClick={this.handleOpenLoginDialog}>
+                    <Button color="secondary" onClick={this.handleOpenLoginDialog} style={{color: 'white'}}>
                         <PersonAdd/>&nbsp;&nbsp;Регистрация
                     </Button>}
 
