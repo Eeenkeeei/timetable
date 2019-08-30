@@ -5,10 +5,11 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
+    DialogTitle, TextField,
 } from "@material-ui/core";
-import {Edit} from "@material-ui/icons";
 import {LessonTimeData} from "../../pages/AccountPage";
+import {KeyboardDatePicker, KeyboardTimePicker, MuiPickersUtilsProvider, TimePicker} from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
 interface DialogEditLessonTimeProps {
     editLessonInData: any // cb для добавления
@@ -30,6 +31,8 @@ export class DialogEditLessonTime extends React.Component<DialogEditLessonTimePr
         fourthLessonFinish: this.props.lessonTime[3].lessonFinishTime,
         fifthLessonStart: this.props.lessonTime[4].lessonStartTime,
         fifthLessonFinish: this.props.lessonTime[4].lessonFinishTime,
+        sixthLessonStart: this.props.lessonTime[5].lessonStartTime,
+        sixthLessonFinish: this.props.lessonTime[5].lessonFinishTime,
     };
 
     public handleOpenLoginDialog = () => {
@@ -76,21 +79,215 @@ export class DialogEditLessonTime extends React.Component<DialogEditLessonTimePr
 
     public confirmEdit = () => {
 
-    }
+    };
+
+    public normalizeLessonTime = (date: string) => {
+        let lessonTime = new Date(date).toString().split(' ')[4];  // 9:00:00
+        let normalizedLessonTime = lessonTime.split (':'); // ['9'], ['00'], ['00']
+        const resultTime = normalizedLessonTime[0] + ':' + normalizedLessonTime[1];
+        return (resultTime)
+    };
+
+    public handleChangeStartTimeFirst = (date: any) => {
+        this.setState({
+            firstLessonStart: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeFinishTimeFirst = (date: any) => {
+        this.setState({
+            firstLessonFinish: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeStartTimeSecond = (date: any) => {
+        this.setState({
+            secondLessonStart: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeFinishTimeSecond = (date: any) => {
+        this.setState({
+            secondLessonFinish: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeStartTimeThird = (date: any) => {
+        this.setState({
+            thirdLessonStart: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeFinishTimeThird = (date: any) => {
+        this.setState({
+            thirdLessonFinish: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeStartTimeFourth = (date: any) => {
+        this.setState({
+            fourthLessonStart: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeFinishTimeFourth = (date: any) => {
+        this.setState({
+            fourthLessonFinish: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeStartTimeFifth = (date: any) => {
+        this.setState({
+            fifthLessonStart: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeFinishTimeFifth = (date: any) => {
+        this.setState({
+            fifthLessonFinish: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeStartTimeSixth = (date: any) => {
+        this.setState({
+            sixthLessonStart: this.normalizeLessonTime(date)
+        })
+    };
+
+    public handleChangeFinishTimeSixth = (date: any) => {
+        this.setState({
+            sixthLessonFinish: this.normalizeLessonTime(date)
+        })
+    };
+
 
     public render() {
         return (
             <div>
-                <Button color="primary" disabled={true} onClick={this.handleOpenLoginDialog} style={{marginLeft: '1rem'}}>
-                    Раздел в разработке
+                <Button color="primary" onClick={this.handleOpenLoginDialog} style={{marginLeft: '1rem'}}>
+                    Изменить время занятий
                 </Button>
+                <MuiPickersUtilsProvider utils={MomentUtils} >
 
                 <Dialog open={this.state.openDialogWindow} onClose={this.handleClose}
                         aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Редактирование занятия</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Изменить время занятий</DialogTitle>
 
                     <DialogContent>
-                        <Avatar style={{backgroundColor: 'rgba(74, 144, 226, 1)'}}>1</Avatar>
+                        <div style={{display: 'flex'}}>
+                            <Avatar style={{backgroundColor: 'rgba(74, 144, 226, 1)', fontSize: '0.95rem'}}>1</Avatar>
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.firstLessonStart.split(':')[0].length === 1 ? '0' + this.state.firstLessonStart : this.state.firstLessonStart}` + ':00'}
+                                onChange={this.handleChangeStartTimeFirst}
+                                style={{width: '100px', marginLeft: '1rem'}}
+                            />
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.firstLessonFinish.split(':')[0].length === 1 ? '0' + this.state.firstLessonFinish : this.state.firstLessonFinish}` + ':00'}
+                                onChange={this.handleChangeFinishTimeFirst}
+                                style={{width: '100px'}}
+                            />
+                        </div>
+                        <div style={{display: 'flex', marginTop: '0.5rem'}}>
+                            <Avatar style={{backgroundColor: 'rgba(74, 144, 226, 1)', fontSize: '0.95rem'}}>2</Avatar>
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.secondLessonStart.split(':')[0].length === 1 ? '0' + this.state.secondLessonStart : this.state.secondLessonStart}` + ':00'}
+                                onChange={this.handleChangeStartTimeSecond}
+                                style={{width: '100px', marginLeft: '1rem'}}
+                            />
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.secondLessonFinish.split(':')[0].length === 1 ? '0' + this.state.secondLessonFinish : this.state.secondLessonFinish}` + ':00'}
+                                onChange={this.handleChangeFinishTimeSecond}
+                                style={{width: '100px'}}
+                            />
+                        </div>
+                        <div style={{display: 'flex', marginTop: '0.5rem'}}>
+                            <Avatar style={{backgroundColor: 'rgba(74, 144, 226, 1)', fontSize: '0.95rem'}}>3</Avatar>
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.thirdLessonStart.split(':')[0].length === 1 ? '0' + this.state.thirdLessonStart : this.state.thirdLessonStart}` + ':00'}
+                                onChange={this.handleChangeStartTimeThird}
+                                style={{width: '100px', marginLeft: '1rem'}}
+                            />
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.thirdLessonFinish.split(':')[0].length === 1 ? '0' + this.state.thirdLessonFinish : this.state.thirdLessonFinish}` + ':00'}
+                                onChange={this.handleChangeFinishTimeThird}
+                                style={{width: '100px'}}
+                            />
+                        </div>
+                        <div style={{display: 'flex', marginTop: '0.5rem'}}>
+                            <Avatar style={{backgroundColor: 'rgba(74, 144, 226, 1)', fontSize: '0.95rem'}}>4</Avatar>
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.fourthLessonStart.split(':')[0].length === 1 ? '0' + this.state.fourthLessonStart : this.state.fourthLessonStart}` + ':00'}
+                                onChange={this.handleChangeStartTimeFourth}
+                                style={{width: '100px', marginLeft: '1rem'}}
+                            />
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.fourthLessonFinish.split(':')[0].length === 1 ? '0' + this.state.fourthLessonFinish : this.state.fourthLessonFinish}` + ':00'}
+                                onChange={this.handleChangeFinishTimeFourth}
+                                style={{width: '100px'}}
+                            />
+                        </div>
+                        <div style={{display: 'flex', marginTop: '0.5rem'}}>
+                            <Avatar style={{backgroundColor: 'rgba(74, 144, 226, 1)', fontSize: '0.95rem'}}>5</Avatar>
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.fifthLessonStart.split(':')[0].length === 1 ? '0' + this.state.fifthLessonStart : this.state.fifthLessonStart}` + ':00'}
+                                onChange={this.handleChangeStartTimeFifth}
+                                style={{width: '100px', marginLeft: '1rem'}}
+                            />
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.fifthLessonFinish.split(':')[0].length === 1 ? '0' + this.state.fifthLessonFinish : this.state.fifthLessonFinish}` + ':00'}
+                                onChange={this.handleChangeFinishTimeFifth}
+                                style={{width: '100px'}}
+                            />
+                        </div>
+                        <div style={{display: 'flex', marginTop: '0.5rem'}}>
+                            <Avatar style={{backgroundColor: 'rgba(74, 144, 226, 1)', fontSize: '0.95rem'}}>6</Avatar>
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.sixthLessonStart.split(':')[0].length === 1 ? '0' + this.state.sixthLessonStart : this.state.sixthLessonStart}` + ':00'}
+                                onChange={this.handleChangeStartTimeSixth}
+                                style={{width: '100px', marginLeft: '1rem'}}
+                            />
+                            <KeyboardTimePicker
+                                ampm={false}
+                                variant="inline"
+                                label="Начало"
+                                value={'2018-01-01T' + `${this.state.sixthLessonFinish.split(':')[0].length === 1 ? '0' + this.state.sixthLessonFinish : this.state.sixthLessonFinish}` + ':00'}
+                                onChange={this.handleChangeFinishTimeSixth}
+                                style={{width: '100px'}}
+                            />
+                        </div>
                     </DialogContent>
 
                     <DialogActions>
@@ -103,6 +300,8 @@ export class DialogEditLessonTime extends React.Component<DialogEditLessonTimePr
                         </Button>
                     </DialogActions>
                 </Dialog>
+                </MuiPickersUtilsProvider>
+
             </div>
         )
     }
