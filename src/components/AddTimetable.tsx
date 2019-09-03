@@ -33,11 +33,11 @@ export default class AddTimetable extends React.Component<AddTimetableProps> {
         const week = Math.round((now - today) / (1000 * 60 * 60 * 24 * 7));
         if (week % 2) {
             this.setState({
-                tabValue: 0
+                tabValue: 1
             })
         } else {
             this.setState({
-                tabValue: 1
+                tabValue: 0
             })
         }
     }

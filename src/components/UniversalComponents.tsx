@@ -182,9 +182,9 @@ export function getCurrentWeek () {
     const now = new Date().getTime();
     const week = Math.round((now - today) / (1000 * 60 * 60 * 24 * 7));
     if (week % 2) {
-        return ('Четная')
-    } else {
         return ('Нечетная')
+    } else {
+        return ('Четная')
     }
 }
 
