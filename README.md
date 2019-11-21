@@ -1,4 +1,6 @@
- # Timetable
+[![Build Status](https://travis-ci.org/Eeenkeeei/timetable.svg?branch=master)](https://travis-ci.org/Eeenkeeei/timetable)
+
+# Timetable
  ## Что это за проект?
 
 Это сервис, который я сделал в меньшей части для себя чтобы закрыть учебную практику и потом пользоваться самому, и в большей части чтобы в будущем продавать его и обеспечить себе старость. 
