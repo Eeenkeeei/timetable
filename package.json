@@ -27,7 +27,7 @@
     "react-swipeable-views": "^0.13.3",
     "typescript": "3.5.2",
     "uuid": "^3.3.2",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
