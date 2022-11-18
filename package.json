@@ -23,7 +23,7 @@
     "react-browser-router": "^2.1.2",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "react-swipeable-views": "^0.13.3",
     "typescript": "3.5.2",
     "uuid": "^3.3.2",
